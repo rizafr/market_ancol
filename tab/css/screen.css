@@ -1,0 +1,53 @@
+/* ------------------------------
+Struktur Halaman
+------------------------------ */
+
+#container {
+	margin:0;
+}
+a{
+	color:#FF9900;
+	text-decoration:none;
+}
+a:hover{
+	color:#D65703;
+}
+
+/* ------------------------------
+Konten = Tabs + Konten Tab
+------------------------------ */
+#konten{
+	padding:20px;
+	background:#FFF;
+	color:#555;
+}
+#konten p{
+	text-indent:15px;
+	line-height:165%;
+}
+/* ------------------------------
+nav_tabigasi Tabs
+------------------------------ */
+ul#nav_tab {
+	padding:0 5px 10px 0;
+}
+ul#nav_tab li{
+	display:inline;
+	float:left;
+	position:relative;
+	margin-right:5px;
+}
+ul#nav_tab li a{
+	background:#a5a5a5;
+	padding:10px 25px;
+	color:#FFF;
+	text-decoration:none;
+	font-weight:bold;display: block;
+}
+ul#nav_tab li a:hover{
+	background:#FF9900;
+}
+ul#nav_tab li a.active, ul#nav_tab li a.active:hover{
+	background:#FFF;
+	color:#555;
+}

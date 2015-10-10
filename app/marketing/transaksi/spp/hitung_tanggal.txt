@@ -1,0 +1,26 @@
+/*
+				$pecah_tgl  = explode("-",$tgl_spp);
+				$tgl		= $pecah_tgl[0];
+				$bln		= $pecah_tgl[1];
+				$thn		= $pecah_tgl[2];
+				
+				if($tgl <= 28)
+				{
+					$tempo = 1;
+				}
+				else
+				{
+					$tempo = 2;
+				}
+				
+				$next_bln	= $bln + $tempo;  
+				$next_thn	= $thn;
+				if($next_bln > 12)
+				{
+					$next_bln = $nexy_bln % 12;
+					$next_thn = $next_thn + 1;
+					
+				}
+				
+				$tanggal = '25-'.$nextbln.'-'.$next_thn;
+				*/

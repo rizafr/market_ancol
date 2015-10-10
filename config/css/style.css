@@ -1,0 +1,457 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
+
+* { 
+	font-family: 'Open Sans', Helvetica, sans-serif,Arial;
+	font-weight: 500;
+	font-size:12px;
+}
+html { height:100%; }
+#wait {
+	background:url(../../images/wait.gif) center center no-repeat;
+	position:fixed;
+	width:100%;
+	height:100%;
+	z-index:255;
+	cursor:progress;
+}
+#wait span {
+	display: block;
+	width: 200px;
+	color:#FF9900;
+	font-size:16px;
+	font-weight:bold;
+	text-align: center;
+	margin: 30% auto 0;
+}
+
+#wrapper {
+	position:relative;
+	min-height:100% !important;
+	/* padding:0 10px; */
+	margin-bottom:-66px;
+}
+body {
+	height:100%;
+	position:relative;
+	/* background:#eceff1 !important; */
+	margin:0;	
+	line-height: 1.6;
+	font-weight: 400;
+	color: #131304;
+	background:url(../../images/bg.png);
+}
+#header {
+	position:relative;
+	min-height:50px;
+	background-image:url(../../images/ancol.png);
+	background-position:10px center;
+	background-size:55px 37px;
+	background-repeat:no-repeat;
+	color: #FDFDFF;
+	font-size: 14px;
+	background-color: #222;
+	padding:8px 16px 8px 85px;
+	width: 100%;
+}
+#header .market {
+	color:#FFFFF2;
+	font-size:24px;
+	font-weight:bold;
+}
+#header .market .big {
+	color:#FDFDFF;
+	font-size:48px;
+	line-height:50px;
+}
+#header .unit {
+	color:#FDFDFF;
+	font-size:16px;
+	font-weight:bold;
+	font-style:italic;
+	margin-left:50px;
+}
+
+#menu {
+	position:relative;
+	z-index:100;
+	background:#FFFFFF;
+	padding:10px 20px;
+	margin:30px 0 30px 0;
+	border-radius:3px;
+	border-left: 1px solid #EFEFEF;
+	border-right: 1px solid #EFEFEF;
+	border-bottom: 1px solid #E2E2E2;
+	box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.04);
+	transition: padding 500ms ease 0s;
+}
+
+.fixed {  /* To fix main menu container */
+	background: rgba(255, 255, 255, 0.9) !important;
+    z-index: 9999 !important;
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100%;
+	margin: 0px 0px !important;
+	border-bottom: 4px solid #b2ebf2 !important;
+	transition: padding 500ms ease 0s !important;
+}
+
+#profil {
+	float:right;
+	margin-top:5px;
+	font-weight:bold;
+	text-decoration:none;
+	padding-right: 40px;
+}
+
+#profil a:link {
+	color:inherit;
+}
+
+#content {
+	position:relative;
+	padding-bottom:76px;
+}
+
+#footer {
+	position:relative;
+	padding:8px 16px;
+	border-radius:3px 3px 0 0;
+	width: 100%;
+	color: #D4D4D4;
+	font-size: 12px;
+	background-color: #222;
+}
+
+#form-login {
+	background: #F3F3F3 none repeat scroll 0% 0%;
+	width:350px;
+	padding:10px 20px 15px 15px;
+	margin:150px auto 0 auto;
+	border:1px solid #CCCCCC;
+	border-radius:3px;
+	box-shadow:10px 10px 10px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow:10px 10px 10px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow:10px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+hr {
+	background:#AAAAAA;
+	border:none;
+	height:1px;
+}
+
+.title-page {
+	color:#FF9900;
+	text-align:center;
+	font-size:20px;
+	font-weight:bold;
+	word-spacing:4px;
+	letter-spacing:3px;
+	margin:10px auto 20px;
+	padding:5px 10px;
+	background: #FFF none repeat scroll 0% 0%;
+	border-radius: 3px;	
+	border-bottom: 1px solid #E2E2E2;
+	box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.04);
+	transition: padding 500ms ease 0s;
+	width: 300px;
+	border-left: 8px solid #ddd;
+	border-right: 8px solid #ddd;
+	border-color: #D5D5D5;
+	}
+
+a.link-download {
+	font-weight:bold;
+	font-size:14px;
+	color:#333333;
+}
+
+.bold { font-weight:bold !important; }
+.hidden { display:none !important; }
+.clear { clear:both !important; }
+.f-left { float:left !important; }
+.f-right { float:right !important; }
+
+/* Width */
+.wauto{width:auto;}
+.w1{width:1%;}.w2{width:2%;}.w3{width:3%;}.w4{width:4%;}.w5{width:5%;}.w6{width:6%;}.w7{width:7%;}.w8{width:8%;}.w9{width:9%;}.w10{width:10%;}.w11{width:11%;}.w12{width:12%;}.w13{width:13%;}.w14{width:14%;}.w15{width:15%;}.w16{width:16%;}.w17{width:17%;}.w18{width:18%;}.w19{width:19%;}.w20{width:20%;}.w21{width:21%;}.w22{width:22%;}.w23{width:23%;}.w24{width:24%;}.w25{width:25%;}.w26{width:26%;}.w27{width:27%;}.w28{width:28%;}.w29{width:29%;}.w30{width:30%;}.w31{width:31%;}.w32{width:32%;}.w33{width:33%;}.w34{width:34%;}.w35{width:35%;}.w36{width:36%;}.w37{width:37%;}.w38{width:38%;}.w39{width:39%;}.w40{width:40%; margin:0 auto;}.w41{width:41%;}.w42{width:42%;}.w43{width:43%;}.w44{width:44%;}.w45{width:45%;}.w46{width:46%;}.w47{width:47%;}.w48{width:48%;}.w49{width:49%;}.w50{width:50%; margin:0 auto;}.w51{width:51%;}.w52{width:52%;}.w53{width:53%;}.w54{width:54%;}.w55{width:55%;}.w56{width:56%;}.w57{width:57%;}.w58{width:58%;}.w59{width:59%;}.w60{width:60%; margin:0 auto;}.w61{width:61%;}.w62{width:62%;}.w63{width:63%;}.w64{width:64%;}.w65{width:65%;}.w66{width:66%;}.w67{width:67%;}.w68{width:68%;}.w69{width:69%;}.w70{width:70%; margin:0 auto }.w71{width:71%;}.w72{width:72%;}.w73{width:73%;}.w74{width:74%;}.w75{width:75%;}.w76{width:76%;}.w77{width:77%;}.w78{width:78%;}.w79{width:79%;}.w80{width:80%;}.w81{width:81%;}.w82{width:82%;}.w83{width:83%;}.w84{width:84%;}.w85{width:85%;}.w86{width:86%;}.w87{width:87%;}.w88{width:88%;}.w89{width:89%;}.w90{width:90%; margin:0 auto;}.w91{width:91%;}.w92{width:92%;}.w93{width:93%;}.w94{width:94%;}.w95{width:95%;}.w96{width:96%;}.w97{width:97%;}.w98{width:98%;}.w99{width:99%;}.w100{width:100%;}
+.wm100{min-width:100%;}
+.wauto-center { width:auto !important; margin:0 auto !important;}
+
+.text-left { text-align:left !important; }
+.text-right { text-align:right !important; }
+.text-center { text-align:center !important; }
+.va-top {vertical-align:top !important; }
+.va-bottom {vertical-align:bottom !important; }
+.nowrap { white-space:nowrap !important; }
+
+/* STATUS */
+i.t, i.f {
+	font-size:14px;
+	font-style:normal;
+	color:#333333;
+	padding:0 3px;
+}
+i.t:before {
+	content:" ✓ ";
+	color:green;
+}
+i.f:before {
+	content:" X ";
+	color:red;
+}
+
+
+/* POPUP WINDOW */
+#primary_top {
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+.mac_os_x_title {
+	font-family:Arial, Helvetica, sans-serif !important;
+}
+.mac_os_x_buttons {
+	text-align:center !important;
+	padding:10px !important;
+}
+.overlay_mac_os_x {
+	background-color:transparent !important;
+}
+
+/* INPUT */
+label {
+	cursor:pointer;
+}
+input,
+textarea,  
+button, 
+select {
+	font-family:Arial, Helvetica, sans-serif;
+	border-radius:3px;
+}
+
+select, textarea {
+	padding:2px 5px;
+	border:1px solid #999999;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+	padding:2px 5px; 
+	border:1px solid #999999;
+}
+
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+button {
+	background-color: #D9EDF7;
+	border-color: #BCE8F1;
+	color: #31708F;
+	border: 1px solid #BCE8F1;
+	border-radius: 3px;
+	color: #333;
+	outline:0;
+	cursor:pointer !important;
+	border-radius: 0px;
+	margin-bottom: 5px !important;
+	margin-left: 3px;
+	font-size: 12px;
+	padding: 5px 8px;
+	
+}
+input[type="submit"]:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover,
+button:hover {
+	background: #19B698  ;
+	border: 1px solid #19B698;
+	color: #FDFDFF;
+	transition: all 0.25s ease 0s;
+}
+
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+button:not(.Zebra_DatePicker_Icon) {
+	/* box-shadow:1px 1px 1px 0px #333333; */
+}
+
+input[type="submit"]:active,
+input[type="button"]:active,
+input[type="reset"]:active,
+button:active {
+	box-shadow:none !important;
+}
+
+input[type="radio"],
+input[type=chcekbox] {
+	
+}
+
+textarea[readonly],
+select[readonly],
+input[readonly],
+input[readonly="readonly"],
+input[readonly=readonly],
+button[readonly="readonly"],
+button[readonly=readonly] {
+	background:#CCCCCC;
+	border:1px solid #AAAAAA;
+	 cursor: not-allowed;
+}
+
+input[disabled="disabled"],
+input[disabled],
+button[disabled="disabled"],
+button[disabled] {
+	cursor:not-allowed !important;
+	box-shadow:none !important;
+}
+
+/* GLOBAL TABLE */
+
+
+.f-left {
+	float:left !important;
+}
+.f-right {
+	float:right !important;
+}
+
+table{
+	/* border: 1px solid #bdbdbd;  */
+	border:none;
+	background-color: #F1F1F1 ;
+}
+/* Zebra striping */
+
+tr:nth-of-type(odd) { 
+	background: #f5f5f5; 
+	
+}
+th { 
+	background: #333; 
+	color: white; 
+	font-weight: bold; 
+}
+td, th { 
+	padding: 5px; 
+	text-align: left; 
+}
+
+tr.hover:hover {
+	background-color:#FFFF73;
+	transition: all 0.1s ease 0s;
+}
+/* ============ T-CONTROL ============ */
+.t-control {
+	color:#444;
+	margin:10px auto;
+	background: #f5f5f5; 
+	
+}
+.t-control2 {
+	color:#FF9900;
+	margin:10px 0;
+}
+.t-control label {
+	
+}
+
+/* ============ T-POPUP ============ */
+.t-popup {
+	background:#FFFFFF;
+}
+.t-popup th {
+	background:#EEEEEE;
+	color:#666666;
+	font-size:11px;
+	font-weight:bold;
+	letter-spacing:1px;
+	text-transform:uppercase;
+	padding:0 3px;
+	border:1px solid #CCCCCC;
+}
+.t-popup td {
+	color:#000000;
+	font-size:12px;
+}
+.td-action {
+	padding:15px 0;
+}
+.pad td {
+	padding:5px 10px;
+}
+.pad2 td {
+	padding: 3px 0 3px 0;
+}
+
+/* ============ T-NOWRAP ============ */
+.t-nowrap th,
+.t-nowrap td {
+	white-space:nowrap !important;
+}
+
+/* ============ T-SCROLL ============ */
+.t-scroll {
+	display:block;
+	overflow-x:scroll;
+	overflow-y:scroll;
+	min-width:100%;
+}
+
+/* ============ T-DATA ============ */
+.t-data{margin:0 auto;}
+.t-data tr {background: #FFFFF2 url(../../images/content-bg.png) repeat scroll 0% 0%; }
+.t-data tr:nth-of-type(odd) { 
+	background: #BFCFFF ; 
+}
+.t-data tr:hover { color:#003040; background-color:#FFFF73;
+	transition: all 0.1s ease 0s; }
+.t-data tr:hover td { color:#003040; background-color:#FFFF73;
+	transition: all 0.1s ease 0s;cursor:pointer; }
+
+.t-data th {
+	background: #007D9F;
+	color: #FFFFF2; 
+	font-weight: bold; 
+	letter-spacing:1px;
+	text-transform:uppercase;
+	text-align:center;
+
+	/* padding:6px 3px;
+	border:1px solid #CCCCCC; */
+}
+
+/* .t-data td {
+	color:#333333;
+	padding:3px 4px;
+	border:1px solid #CCCCCC;
+} */
+
+.t-data tfoot td {
+	background:#AAAAAA;
+	color:#333333;
+	font-weight:bold;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	padding:3px 5px;
+	border:1px solid #CCCCCC;
+	text-align:right;
+}
+
+/* ============ POPUP =============== */
+body.popup {
+	padding:10px 20px 10px;
+}
+body.popup2 {
+	padding:10px 20px 10px;
+}
+body.popup table th,
+body.popup table td {
+	padding:5px 10px;
+}
