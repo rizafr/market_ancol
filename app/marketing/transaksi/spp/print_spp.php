@@ -30,7 +30,7 @@
 			if($sess_db == 'JAYA'){
 				$document = $PHPWord->loadTemplate('../../../../config/Template/surat/spp/SPP_Bintaro.docx');
 			}else
-			if($sess_db == 'SERPONG_BETA'){
+			if($sess_db == 'ANCOL'){
 				if($lokasi == 1){
 					$document = $PHPWord->loadTemplate('../../../../config/Template/surat/spp/SPP_SJ_De_Garden.docx');
 				}else

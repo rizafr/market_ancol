@@ -32,7 +32,8 @@ jQuery(function($) {
 	
 	$('#tutup').on('click', function(e) {
 		e.preventDefault();
-		parent.showPopup2('Detail', '<?php echo $id; ?>');
+		parent.loadData2('Detail', '<?php echo $id; ?>');
+		//parent.showPopup2('Detail', '<?php echo $id; ?>');
 		return false;
 	});
 	

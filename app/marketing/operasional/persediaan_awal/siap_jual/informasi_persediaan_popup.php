@@ -41,7 +41,7 @@ jQuery(function($) {
 	});
 	$('#tutup').on('click', function(e) {
 		e.preventDefault();
-		parent.loadData1();	
+		parent.loadData2();	
 	});
 
 	$('#simpan').on('click', function(e) {

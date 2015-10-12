@@ -33,7 +33,6 @@ $luas_bangunan	= (isset($_REQUEST['luas_bangunan'])) ? to_decimal($_REQUEST['lua
 $disc_bangunan	= (isset($_REQUEST['disc_bangunan'])) ? to_decimal($_REQUEST['disc_bangunan'], 16) : '0';
 $ppn_bangunan	= (isset($_REQUEST['ppn_bangunan'])) ? to_decimal($_REQUEST['ppn_bangunan']) : '0';
 
-$nama_desa			= '';
 $lokasi				= '';
 $jenis_unit			= '';
 $harga_tanah_sk		= '';
@@ -92,39 +91,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$query = "
 			INSERT INTO STOK 
 			(
-				KODE_BLOK, KODE_UNIT, KODE_DESA, KODE_LOKASI, KODE_SK_TANAH, 
-				KODE_FAKTOR, KODE_TIPE, KODE_SK_BANGUNAN, KODE_PENJUALAN, 
-				
-				LUAS_TANAH, LUAS_BANGUNAN, 
-				PPN_TANAH, PPN_BANGUNAN, 
-				DISC_TANAH, DISC_BANGUNAN, 
-				
-				PROGRESS, 
-				
-				CLASS, STATUS_STOK, TERJUAL, PROGRAM,
-				
-				STATUS_GAMBAR_SITEPLAN, 
-				STATUS_GAMBAR_LAPANGAN, 
-				STATUS_GAMBAR_GS,
-				NO_VA
+				KODE_BLOK, KODE_UNIT,KODE_LOKASI, KODE_TIPE, KODE_SK_BANGUNAN, KODE_PENJUALAN, LUAS_BANGUNAN, NO_VA
 			)
 			VALUES
 			(
-				'$kode_blok', $kode_unit, $kode_desa, $kode_lokasi, $kode_sk_tanah, 
-				$kode_faktor, $kode_tipe, $kode_sk_bangunan, $kode_penjualan, 
-				
-				$luas_tanah, $luas_bangunan, 
-				$ppn_tanah, $ppn_bangunan, 
-				$disc_tanah, $disc_bangunan, 
-				
-				0, 
-				
-				'$class', '0', '0', '$program', 
-				
-				'$status_gambar_siteplan', 
-				'$status_gambar_lapangan', 
-				'$status_gambar_gs',
-				'$no_va'
+				'$kode_blok', $kode_unit, $kode_lokasi, $kode_tipe, $kode_sk_bangunan, $kode_penjualan, $luas_bangunan, '$no_va'
 			)
 		
 			";

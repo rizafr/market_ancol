@@ -156,7 +156,7 @@ function loadData4() {
 
 function showPopup(act, id) {
 	var url = base_marketing_operasional + 'persediaan_awal/siap_jual/reserve.php?act=' + act + '&id=' + id;
-	setPopup('Reserve', url, 850, 500);
+	setPopup('Reserve', url,650, 500);
 	return false;
 }
 
@@ -175,7 +175,7 @@ function showPopup1(act, id) {
 //Button popup & Tutup reserve
 function showPopup2(act, id) {
 	var url = this_base + 'siap_jual/informasi_persediaan_popup.php?act=' + act + '&id=' + id;
-	setPopup('Informasi Persediaan', url, 850, 670);
+	setPopup('Informasi Persediaan', url, 600, 500);
 	return false;
 }
 
@@ -183,7 +183,7 @@ function showPopup2(act, id) {
 function showPopup7(act, id, nm, alamat, no_va, telepon, no_ktp, npwp, agen, koordinator)
 {
 	var url = this_base + 'reserve/spp_popup.php' + '?act=' + act + '&id=' + id + '&nm=' + nm + '&alamat=' + alamat + '&no_va=' + no_va + '&telepon=' + telepon+ '&no_ktp=' + no_ktp+ '&no_npwp=' + npwp+ '&agen=' + agen+ '&koordinator=' + koordinator;
-	setPopup(act + ' SPP', url, 987, 679);	
+	setPopup(act + ' SPP', url, 800, 500);	
 	return false;
 }
 
