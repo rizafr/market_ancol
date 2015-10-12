@@ -59,6 +59,7 @@ require_once('../../../../../config/config.php');
 					parent.loadData1();		
 					location.reload();
 				} else if(result.act == 'Ubah') {
+					parent.loadData1();	
 					location.reload();
 				}
 			}
@@ -135,63 +136,6 @@ function conv(x){
 	}
 	return parseFloat(x.replace(',','').replace(',','').replace(',',''));
 }
-function hitung_tanah(){
-	var harga_tanah = conv(jQuery('#harga_tanah_sk').val()),
-	luas_tanah = conv(jQuery('#luas_tanah').val()),
-	nilai_tambah = conv(jQuery('#nilai_tambah').val()),
-	nilai_kurang = conv(jQuery('#nilai_kurang').val()),
-	disc = conv(jQuery('#disc_tanah').val()),
-	ppn = conv(jQuery('#ppn_tanah').val()),
-	harga_bangunan = conv(jQuery('#harga_bangunan_total').val());
-	var total = harga_tanah * luas_tanah;
-	var total_fs = (total * nilai_tambah/100) - (total*nilai_kurang/100);
-	var total_p_fs = total + (total * nilai_tambah/100) - (total*nilai_kurang/100);
-	var total_disc = total_p_fs * disc / 100;
-	var total_all_disc = total_p_fs - total_disc;
-	var total_ppn = total_all_disc * ppn / 100 ;
-	var total_all = total_all_disc + total_ppn;
-	var harga_total = harga_bangunan + total_all;
-	jQuery('#harga_fs_tanah').val(total_fs);
-	jQuery('#harga_disc_tanah').val(total_disc);
-	jQuery('#harga_ppn_tanah').val(total_ppn)
-	jQuery('#harga_tanah_tmp').val(total);
-	jQuery('#harga_tanah_total').val(total_all);
-	jQuery('#total_harga').val(harga_total);
-}
-
-function hitung_bangunan(){
-	var harga_bangunan = conv(jQuery('#harga_bangunan_sk').val()),
-	luas_bangunan = conv(jQuery('#luas_bangunan').val()),
-	nilai_tambah = conv(jQuery('#nilai_tambah').val()),
-	nilai_kurang = conv(jQuery('#nilai_kurang').val()),
-	disc = conv(jQuery('#disc_bangunan').val()),
-	ppn = conv(jQuery('#ppn_bangunan').val())
-	harga_tanah = conv(jQuery('#harga_tanah_total').val());
-	var total = harga_bangunan * luas_bangunan;
-	var total_p_fs = total;
-	var total_disc = total_p_fs * disc / 100;
-	var total_all_disc = total_p_fs - total_disc;
-	var total_ppn = total_all_disc * ppn / 100 ;
-	var total_all = total_all_disc + total_ppn;
-	var harga_total = harga_tanah + total_all;
-	jQuery('#harga_disc_bangunan').val(total_disc);
-	jQuery('#harga_ppn_bangunan').val(total_ppn)
-	jQuery('#harga_bangunan_tmp').val(total);
-	jQuery('#harga_bangunan_total').val(total_all);
-	jQuery('#total_harga').val(harga_total);
-}
-function hitung_persen(){
-	var harga_disc_bangunan = conv(jQuery('#harga_disc_bangunan').val()),
-	harga_disc_tanah	= conv(jQuery('#harga_disc_tanah').val()),
-	total_tanah 		= conv(jQuery('#harga_tanah_tmp').val()),
-	total_bangunan 		= conv(jQuery('#harga_bangunan_tmp').val()),
-	fs_tanah 			= conv(jQuery('#harga_fs_tanah').val());
-	total_tanah += fs_tanah;
-	disc_bangunan 	= harga_disc_bangunan / total_bangunan * 100;
-	disc_tanah 		 = harga_disc_tanah / total_tanah * 100;
-	jQuery('#disc_tanah').val(disc_tanah);
-	jQuery('#disc_bangunan').val(disc_bangunan);
-}
 
 </script>
 </head>
@@ -208,15 +152,7 @@ function hitung_persen(){
 				<td><input type="text" name="no_va" id="no_va" size="25" value="<?php if(isset($no_va)){echo $no_va;}else{echo '-';} ?>"></td>
 			</tr>
 			<tr>
-				<td>Desa</td><td>:</td>
-				<td>
-					<input type="text" name="kode_desa" id="kode_desa" size="1" value="<?php if(isset($kode_desa)){echo $kode_desa;}else{echo '-';} ?>">
-					<button onclick="return get_kode_desa()"> > </button>
-					<input type="text" id="nama_desa" size="25" value="<?php if(isset($nama_desa)){echo $nama_desa;}else{echo '-';} ?>">
-				</td>
-			</tr>
-			<tr>
-			<td>Tower</td><td>:</td>
+				<td>Tower</td><td>:</td>
 				<td>
 					<input type="text" name="kode_lokasi" id="kode_lokasi" size="1" value="<?php if(isset($kode_lokasi)){echo $kode_lokasi;}else{echo '-';} ?>">
 					<button onclick="return get_kode_lokasi()"> > </button>
@@ -231,22 +167,7 @@ function hitung_persen(){
 					<input type="text" id="jenis_unit" size="25" value="<?php if(isset($jenis_unit)){echo $jenis_unit;}else{echo '-';} ?>">
 				</td>
 			</tr>
-			<tr>
-				<td>SK. Tanah</td><td>:</td>
-				<td>
-					<input type="text" name="kode_sk_tanah" id="kode_sk_tanah" size="1" value="<?php if(isset($kode_sk_tanah)){echo $kode_sk_tanah;}else{echo '-';} ?>">
-					<button onclick="return get_kode_sk_tanah()"> > </button>
-					<input type="text" id="harga_tanah_sk" class="text-right" size="15" value="<?php if(isset($harga_tanah_sk)){echo $harga_tanah_sk;}else{echo '0';} ?>"> / M&sup2;
-				</td>
-			</tr>
-			<tr>
-				<td>Faktor Strategis</td><td>:</td>
-				<td>
-					<input type="text" name="kode_faktor" id="kode_faktor" size="1" value="<?php if(isset($kode_faktor)){echo $kode_faktor;}else{echo '-';} ?>">
-					<button onclick="return get_kode_faktor()"> > </button>
-					<input type="text" id="faktor_strategis" size="25" value="<?php if(isset($faktor_strategis)){echo $faktor_strategis;}else{echo '-';} ?>">
-				</td>
-			</tr>
+
 			<tr>
 				<td>Tipe</td><td>:</td>
 				<td>
@@ -255,8 +176,14 @@ function hitung_persen(){
 					<input type="text" id="tipe_bangunan" size="25" value="<?php if(isset($tipe_bangunan)){echo $tipe_bangunan;}else{echo '-';} ?>">
 				</td>
 			</tr>
+
 			<tr>
-				<td>SK. Bangunan</td><td>:</td>
+				<td><b>Luas Semi Gross</b></td><td>:</td>
+				<td><input type="text" name="luas_bangunan" id="luas_bangunan" size="5" value="<?php echo to_decimal($luas_bangunan); ?>"> M&sup2;</td>
+			</tr>
+
+			<tr>
+				<td>SK. Harga</td><td>:</td>
 				<td>
 					<input type="text" name="kode_sk_bangunan" id="kode_sk_bangunan" size="1" value="<?php if(isset($kode_sk_bangunan)){echo $kode_sk_bangunan;}else{echo '-';} ?>">
 					<button onclick="return get_kode_sk_bangunan()"> > </button>
@@ -271,106 +198,9 @@ function hitung_persen(){
 					<input type="text" id="jenis_penjualan" size="25" value="<?php if(isset($jenis_penjualan)){echo $jenis_penjualan;}else{echo '-';} ?>">
 				</td>
 			</tr>
+
 		</table>
 
-		<table class="t-popup wauto f-right">
-			<tr>
-				<td colspan = 3><hr></td>
-			</tr>
-			<tr>
-				<td><b>TOTAL HARGA</b></td><td>:</b></td>
-				<td><b>Rp. </b><input readonly="readonly" type="text" name="total_harga" id="total_harga" class="bold text-right" value="<?php echo to_money($harga_tanah + $harga_bangunan); ?>"></td>
-			</tr>
-			<tr>
-				<td colspan = 3><hr><br><br></td>
-			</tr>
-			<tr>
-				<td width="120">Tanggal Dibangun</td><td>:</td>
-				<td><?php echo $tgl_bangunan; ?></td>
-			</tr>
-			<tr>
-				<td>Tanggal Selesai</td><td>:</td>
-				<td><?php echo $tgl_selesai; ?></td>
-			</tr>
-			<tr>
-				<td>Progres</td><td>:</td>
-				<td><?php echo to_decimal($progress); ?> %</td>
-			</tr>
-			<tr>
-				<td>Class</td><td>:</td>
-				<td>
-					<label for="class_l"><u>L</u></label><input type="radio" name="class" id="class_l" value="1" <?php echo is_checked('1', $class); ?>>&nbsp;&nbsp;
-					<label for="class_m"><u>M</u></label><input type="radio" name="class" id="class_m" value="2" <?php echo is_checked('2', $class); ?>>&nbsp;&nbsp;
-					<label for="class_mu"><u>MU</u></label><input type="radio" name="class" id="class_mu" checked="true" value="3" <?php echo is_checked('3', $class); ?>>&nbsp;&nbsp;
-					<label for="class_h"><u>H</u></label><input type="radio" name="class" id="class_h" value="4" <?php echo is_checked('4', $class); ?>>&nbsp;&nbsp;
-					<label for="class_lain"><u>Lain</u></label><input type="radio" name="class" id="class_lain" value="5" <?php echo is_checked('5', $class); ?>>
-				</td>
-			</tr>
-			<tr>
-				<td>Gambar Ukur</td><td>:</td>
-				<td>
-					<input type="checkbox" name="status_gambar_siteplan" id="status_gambar_siteplan" value="1" <?php echo is_checked('1', $status_gambar_siteplan); ?> onclick="return false"><label for="status_gambar_siteplan">Siteplan</label>&nbsp;&nbsp;
-					<input type="checkbox" name="status_gambar_lapangan" id="status_gambar_lapangan" value="1" <?php echo is_checked('1', $status_gambar_lapangan); ?> onclick="return false"><label for="status_gambar_lapangan">Lapangan</label>&nbsp;&nbsp;
-					<input type="checkbox" name="status_gambar_gs" id="status_gambar_gs" value="1" <?php echo is_checked('1', $status_gambar_gs); ?>><label for="status_gambar_gs">GS</label>&nbsp;
-				</td>
-			</tr>
-			<tr>
-				<td>Program Khusus</td><td>:</td>
-				<td>
-					<select name="program" id="program">
-						<option> -- Program Khusus -- </option>
-						<option value="1" <?php echo is_selected('1', $program); ?>> JRP/Normal </option>
-						<option value="2" <?php echo is_selected('2', $program); ?>> Prog. BTN01 </option>
-					</select>
-				</td>
-			</tr>
-		</table>
-
-		<div class="clear"><br></div>
-		<div class="clear"><br></div>
-
-		<table class="t-popup w100 f-left" border="3">
-			<tr>
-				<td width="85" rowspan="2"></td>
-				<td width="85" class="text-center" rowspan="2"><b>Luas</b></td>
-				<td colspan="2" class="text-center"><b>Faktor Strategis</b></td>
-				<td class="text-center" rowspan="2" width="127"><b>Discount</b></td>
-				<td class="text-center" rowspan="2" width="127"><b>PPN</b></td>
-				<td class="text-center" rowspan="2"><b>Harga</b></td>
-			</tr>
-			<tr>
-				<td width="80" class="text-center"><b>(+)</b></td>
-				<td width="80" class="text-center"><b>(-)</b></td>
-			</tr>
-			<tr>
-				<td><b>Tanah</b></td>
-				<td><input type="text" name="luas_tanah" id="luas_tanah" size="5" value="<?php echo to_decimal($luas_tanah); ?>"> M&sup2;</td>
-				<td class="text-center"><input type="text" readonly="readonly" id="nilai_tambah" name="nilai_tambah"  size="5" class="text-right" value="<?php echo to_decimal($nilai_tambah); ?>"> %</td>
-				<td class="text-center"><input type="text" readonly="readonly" id="nilai_kurang" name="nilai_kurang" size="5" class="text-right" value="<?php echo to_decimal($nilai_kurang); ?>"> %</td>
-				<td><input type="text" name="disc_tanah" id="disc_tanah" size="12" value="<?php echo to_decimal($disc_tanah); ?>"> %</td>
-				<td><input type="text" name="ppn_tanah" id="ppn_tanah" size="12" value="<?php echo to_decimal($ppn_tanah); ?>"> %</td>
-				<td rowspan="2">Rp. <input readonly="readonly" type="text" class="bold text-right" name = "harga_tanah_total" id = "harga_tanah_total" value="<?php echo to_money($harga_tanah); ?>"></td>
-			</tr>
-			<tr>
-				<td colspan="2" class="text-right">Rp. <input readonly="readonly" type="text" size="15" name = "harga_tanah_tmp" id = "harga_tanah_tmp" class="text-right" value="<?php echo to_money($base_harga_tanah); ?>"></td>
-				<td colspan="2" class="text-center">Rp. <input readonly="readonly" type="text" size="15" name="harga_fs_tanah" id="harga_fs_tanah" class="text-right" value="<?php echo to_money($fs_harga_tanah); ?>"></td>
-				<td>Rp. <input  type="text" name="harga_disc_tanah" id="harga_disc_tanah" size="12" class="text-right" value="<?php echo to_money($disc_harga_tanah); ?>"></td>
-				<td>Rp. <input readonly="readonly" type="text" size="12" class="text-right" name="harga_ppn_tanah" id="harga_ppn_tanah" value="<?php echo to_money($ppn_harga_tanah); ?>"></td>
-			</tr>
-			<tr>
-				<td><b>Bangunan</b></td>
-				<td><input type="text" name="luas_bangunan" id="luas_bangunan" size="5" value="<?php echo to_decimal($luas_bangunan); ?>"> M&sup2;</td>
-				<td colspan="2" rowspan="2"></td>
-				<td><input type="text" name="disc_bangunan" id="disc_bangunan" size="12" value="<?php echo to_decimal($disc_bangunan); ?>"> %</td>
-				<td><input type="text" name="ppn_bangunan" id="ppn_bangunan" size="12" value="<?php echo to_decimal($ppn_bangunan); ?>"> %</td>
-				<td rowspan="2">Rp. <input readonly="readonly" type="text" class="bold text-right" name = "harga_bangunan_total" id = "harga_bangunan_total"value="<?php echo to_money($harga_bangunan); ?>"></td>
-			</tr>
-			<tr>
-				<td colspan="2" class="text-right">Rp. <input readonly="readonly" name = "harga_bangunan_tmp" id = "harga_bangunan_tmp" type="text" size="15" class="text-right" value="<?php echo to_money($base_harga_bangunan); ?>"></td>
-				<td>Rp. <input  name  = "harga_disc_bangunan" id ="harga_disc_bangunan" type="text" size="12" class="text-right" value="<?php echo to_money($disc_harga_bangunan); ?>"></td>
-				<td>Rp. <input readonly="readonly" name  = "harga_ppn_bangunan" id ="harga_ppn_bangunan" type="text" size="12" class="text-right" value="<?php echo to_money($ppn_harga_bangunan); ?>"></td>
-			</tr>
-		</table>
 
 		<div class="clear"><br></div>
 		<div class="clear"><br></div>

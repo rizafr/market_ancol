@@ -73,51 +73,7 @@
 				// return false;
 				// }
 			
-			function get_kode_desa() {
-				var url = get_base + 'kode_desa.php'; 
-				setPopup('Daftar Desa', url, 300, winHeight-100); 
-				return false; 
-			}
-			function get_kode_lokasi() {
-				var url = get_base + 'kode_lokasi.php'; 
-				setPopup('Daftar Lokasi', url, 300, winHeight-100); 
-				return false; 
-			}
-			function get_kode_unit() {
-				var url = get_base + 'kode_unit.php'; 
-				setPopup('Daftar Jenis Unit', url, 300, winHeight-100); 
-				return false; 
-			}
-			function get_kode_sk_tanah() {
-				var url = get_base + 'kode_sk_tanah.php'; 
-				setPopup('Daftar SK Tanah', url, 500, winHeight-100); 
-				return false; 
-			}
-			function get_kode_faktor() {
-				var url = get_base + 'kode_faktor.php'; 
-				setPopup('Daftar Faktor Strategis', url, 300, winHeight-100); 
-				return false; 
-			}
-			function get_kode_tipe() {
-				var url = get_base + 'kode_tipe.php'; 
-				setPopup('Daftar Tipe', url, 300, winHeight-100); 
-				return false; 
-			}
-			function get_kode_sk_bangunan() {
-				var url = get_base + 'kode_sk_bangunan.php'; 
-				setPopup('Daftar SK Bangunan', url, 600, winHeight-100); 
-				return false; 
-			}
-			function get_kode_penjualan() {
-				var url = get_base + 'kode_penjualan.php'; 
-				setPopup('Daftar Jenis Penjualan', url, 300, winHeight-100); 
-				return false; 
-			}
-			function get_kode_bayar() {
-				var url = get_base + 'kode_bayar.php'; 
-				setPopup('Daftar Jenis Pembayaran', url, 300, winHeight-100); 
-				return false; 
-			}
+		
 		</script>
 	</head>
 	

@@ -82,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			ex_empty($kode_tipe, 'Tipe harus diisi.');
 			ex_empty($kode_sk_bangunan, 'SK bangunan harus diisi.');
 			ex_empty($kode_penjualan, 'Jenis penjualan harus diisi.');
-			ex_empty($class, 'Pilih class.');
 			
 			$query = "SELECT COUNT(KODE_BLOK) AS TOTAL FROM STOK WHERE KODE_BLOK = '$kode_blok'";
 			ex_found($conn->Execute($query)->fields['TOTAL'], "Kode blok \"$kode_blok\" telah terdaftar.");
@@ -141,15 +140,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			
 			ex_empty($no_va, 'Nomor VA harus diisi.');
 			ex_empty($kode_blok, 'Kode Blok harus diisi.');
-			ex_empty($kode_desa, 'Desa harus diisi.');
-			ex_empty($kode_lokasi, 'Lokasi harus diisi.');
+			ex_empty($kode_lokasi, 'Tower harus diisi.');
 			ex_empty($kode_unit, 'Jenis unit harus diisi.');
-			ex_empty($kode_sk_tanah, 'SK tanah harus diisi.');
-			ex_empty($kode_faktor, 'Faktor strategis harus diisi.');
 			ex_empty($kode_tipe, 'Tipe harus diisi.');
 			ex_empty($kode_sk_bangunan, 'SK bangunan harus diisi.');
 			ex_empty($kode_penjualan, 'Jenis penjualan harus diisi.');
-			ex_empty($class, 'Pilih class.');
 			
 			if ($kode_blok != $id)
 			{
@@ -172,27 +167,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			SET NO_VA = '$no_va',
 				KODE_BLOK = '$kode_blok', 
 				KODE_UNIT = '$kode_unit', 
-				KODE_DESA = '$kode_desa', 
 				KODE_LOKASI = '$kode_lokasi', 
-				KODE_SK_TANAH = '$kode_sk_tanah', 
-				KODE_FAKTOR = '$kode_faktor', 
 				KODE_TIPE = '$kode_tipe', 
 				KODE_SK_BANGUNAN = '$kode_sk_bangunan', 
-				KODE_PENJUALAN = '$kode_penjualan', 
+				KODE_PENJUALAN = '$kode_penjualan', 				
+				LUAS_BANGUNAN = '$luas_bangunan'
 				
-				LUAS_TANAH = '$luas_tanah', 
-				LUAS_BANGUNAN = '$luas_bangunan', 
-				PPN_TANAH = '$ppn_tanah', 
-				PPN_BANGUNAN = '$ppn_bangunan', 
-				DISC_TANAH = '$disc_tanah', 
-				DISC_BANGUNAN = '$disc_bangunan', 
 				
-				CLASS = '$class',
-				PROGRAM = '$program',
-				
-				STATUS_GAMBAR_SITEPLAN = '$status_gambar_siteplan', 
-				STATUS_GAMBAR_LAPANGAN = '$status_gambar_lapangan', 
-				STATUS_GAMBAR_GS = '$status_gambar_gs'
 			WHERE
 				
 				KODE_BLOK = '$id'
