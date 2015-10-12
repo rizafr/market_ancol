@@ -185,9 +185,38 @@ function conv(x){
 			<tr>
 				<td>SK. Harga</td><td>:</td>
 				<td>
-					<input type="text" name="kode_sk_bangunan" id="kode_sk_bangunan" size="1" value="<?php if(isset($kode_sk_bangunan)){echo $kode_sk_bangunan;}else{echo '-';} ?>">
+					<input type="text" name="kode_sk" id="kode_sk" size="10" value="<?php if(isset($kode_sk_bangunan)){echo $kode_sk_bangunan;}else{echo '-';} ?>">
 					<button onclick="return get_kode_sk_bangunan()"> > </button>
-					<input type="text" id="harga_bangunan_sk" class="text-right" size="15" value="<?php if(isset($harga_bangunan_sk)){echo $harga_bangunan_sk;}else{echo '0';} ?>"> / M&sup2;
+				</td>
+			</tr>
+			<tr>
+				<td>Cash Keras</td><td>:</td>
+				<td>
+					<input type="text" id="harga_cash_keras" class="text-right" size="15" value="<?php if(isset($harga_cash_keras)){echo $harga_cash_keras;}else{echo '0';} ?>">
+				</td>
+			</tr>
+			<tr>
+				<td>CB36X</td><td>:</td>
+				<td>
+					<input type="text" id="harga_CB36X" class="text-right" size="15" value="<?php if(isset($CB36X)){echo $CB36X;}else{echo '0';} ?>">
+				</td>
+			</tr>
+			<tr>
+				<td>CB48X</td><td>:</td>
+				<td>
+					<input type="text" id="harga_CB48X" class="text-right" size="15" value="<?php if(isset($CB48X)){echo $CB48X;}else{echo '0';} ?>">
+				</td>
+			</tr>
+			<tr>
+				<td>KPA24X</td><td>:</td>
+				<td>
+					<input type="text" id="harga_KPA24X" class="text-right" size="15" value="<?php if(isset($KPA24X)){echo $KPA24X;}else{echo '0';} ?>">
+				</td>
+			</tr>
+			<tr>
+				<td>KPA36X</td><td>:</td>
+				<td>
+					<input type="text" id="harga_KPA36X" class="text-right" size="15" value="<?php if(isset($KPA36X)){echo $KPA36X;}else{echo '0';} ?>">
 				</td>
 			</tr>
 			<tr>

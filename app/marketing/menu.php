@@ -11,9 +11,9 @@
 				<li><a href="<?php echo base64_encode('A01_jenis_unit'); ?>">Jenis Unit</a></li>
 				<li><a href="<?php echo base64_encode('A01_jenis_penjualan'); ?>">Jenis Penjualan</a></li>
 				<li><a href="<?php echo base64_encode('A01_lembaga_keuangan'); ?>">Lembaga Keuangan</a></li>
-		<!--<li><a href="<?php echo base64_encode('A01_harga_tanah'); ?>">Harga Tanah</a></li>
-		<li><a href="<?php echo base64_encode('A01_harga_bangunan'); ?>">Harga Bangunan</a></li>
-		<li><a href="<?php echo base64_encode('A01_jenis_pembayaran'); ?>">Jenis Pembayaran</a></li>
+		<!--<li><a href="<?php echo base64_encode('A01_harga_tanah'); ?>">Harga Tanah</a></li>-->
+		<li><a href="<?php echo base64_encode('A01_harga_bangunan'); ?>">Harga SK</a></li>
+		<!--<li><a href="<?php echo base64_encode('A01_jenis_pembayaran'); ?>">Jenis Pembayaran</a></li>
 		<li><a href="<?php echo base64_encode('A01_pola_pembayaran'); ?>">Pola Pembayaran</a></li>
 		<li><a href="<?php echo base64_encode('A01_detail_pola_pembayaran'); ?>">Detail Pola Pembayaran</a></li>-->
 		<li><a href="<?php echo base64_encode('A01_agen'); ?>">Agen</a></li>
