@@ -57,7 +57,7 @@ $page_start = (($page_num-1) * $per_page);
 <tr>
 	<th class="w5"><input type="checkbox" id="cb_all"></th>
 	<th class="w5">KODE</th>
-	<th class="w35">LOKASI</th>
+	<th class="w35">TOWER</th>
 </tr>
 
 <?php

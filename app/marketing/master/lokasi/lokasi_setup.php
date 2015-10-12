@@ -72,7 +72,7 @@ function loadData() {
 
 function showPopup(act, id) {
 	var url = this_base + 'lokasi_popup.php?act=' + act + '&id=' + id;
-	setPopup(act + ' Lokasi', url, 350, 150);
+	setPopup(act + ' Tower', url, 370, 135);
 	return false;
 }
 
@@ -90,7 +90,7 @@ function hapusData()
 }
 </script>
 
-<div class="title-page">DAFTAR LOKASI</div>
+<div class="title-page">DAFTAR TOWER</div>
 
 <form name="form" id="form" method="post">
 <table class="t-control wauto">
@@ -99,7 +99,7 @@ function hapusData()
 	<td>
 		<select name="s_opf1" id="s_opf1" class="wauto">
 			<option value="KODE_LOKASI"> KODE </option>
-			<option value="LOKASI"> LOKASI </option>
+			<option value="LOKASI"> TOWER </option>
 		</select>
 		<input type="text" name="s_opv1" id="s_opv1" class="apply" value="">
 	</td>
