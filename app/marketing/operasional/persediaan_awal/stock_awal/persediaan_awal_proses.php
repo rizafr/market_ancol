@@ -15,7 +15,7 @@ $kode_unit		= (isset($_REQUEST['kode_unit'])) ? clean($_REQUEST['kode_unit']) : 
 $kode_sk_tanah	= (isset($_REQUEST['kode_sk_tanah'])) ? clean($_REQUEST['kode_sk_tanah']) : '';
 $kode_faktor	= (isset($_REQUEST['kode_faktor'])) ? clean($_REQUEST['kode_faktor']) : '';
 $kode_tipe		= (isset($_REQUEST['kode_tipe'])) ? clean($_REQUEST['kode_tipe']) : '';
-$kode_sk_bangunan = (isset($_REQUEST['kode_sk_bangunan'])) ? clean($_REQUEST['kode_sk_bangunan']) : '';
+$kode_sk = (isset($_REQUEST['kode_sk'])) ? clean($_REQUEST['kode_sk']) : '';
 $kode_penjualan	= (isset($_REQUEST['kode_penjualan'])) ? clean($_REQUEST['kode_penjualan']) : '';
 
 $class					= (isset($_REQUEST['class'])) ? clean($_REQUEST['class']) : '';
@@ -79,7 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			ex_empty($kode_lokasi, 'Tower harus diisi.');
 			ex_empty($kode_unit, 'Jenis unit harus diisi.');
 			ex_empty($kode_tipe, 'Tipe harus diisi.');
-			ex_empty($kode_sk_bangunan, 'SK bangunan harus diisi.');
 			ex_empty($kode_penjualan, 'Jenis penjualan harus diisi.');
 			
 			$query = "SELECT COUNT(KODE_BLOK) AS TOTAL FROM STOK WHERE KODE_BLOK = '$kode_blok'";
@@ -91,11 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$query = "
 			INSERT INTO STOK 
 			(
-				KODE_BLOK, KODE_UNIT,KODE_LOKASI, KODE_TIPE, KODE_SK_BANGUNAN, KODE_PENJUALAN, LUAS_BANGUNAN, NO_VA
+				KODE_BLOK, KODE_UNIT,KODE_LOKASI, KODE_TIPE, KODE_SK, STATUS_STOK, TERJUAL, KODE_PENJUALAN, LUAS_BANGUNAN, NO_VA
 			)
 			VALUES
 			(
-				'$kode_blok', $kode_unit, $kode_lokasi, $kode_tipe, $kode_sk_bangunan, $kode_penjualan, $luas_bangunan, '$no_va'
+				'$kode_blok', $kode_unit, $kode_lokasi, $kode_tipe, '$kode_sk','0', '0', $kode_penjualan, $luas_bangunan, '$no_va'
 			)
 		
 			";
@@ -114,7 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			ex_empty($kode_lokasi, 'Tower harus diisi.');
 			ex_empty($kode_unit, 'Jenis unit harus diisi.');
 			ex_empty($kode_tipe, 'Tipe harus diisi.');
-			ex_empty($kode_sk_bangunan, 'SK bangunan harus diisi.');
 			ex_empty($kode_penjualan, 'Jenis penjualan harus diisi.');
 			
 			if ($kode_blok != $id)
@@ -125,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			
 			$query ="SELECT * FROM STOK WHERE KODE_BLOK = '$kode_blok' AND KODE_UNIT = '$kode_unit' AND KODE_DESA = '$kode_desa' AND KODE_LOKASI = '$kode_lokasi' AND 
 					KODE_SK_TANAH = '$kode_sk_tanah' AND KODE_FAKTOR = '$kode_faktor' AND KODE_TIPE = '$kode_tipe' AND 
-					KODE_SK_BANGUNAN = '$kode_sk_bangunan' AND KODE_PENJUALAN = '$kode_penjualan' AND LUAS_TANAH = '$luas_tanah' AND 
+					KODE_SK = '$kode_sk' AND KODE_PENJUALAN = '$kode_penjualan' AND LUAS_TANAH = '$luas_tanah' AND 
 					LUAS_BANGUNAN = '$luas_bangunan' AND PPN_TANAH = '$ppn_tanah' AND PPN_BANGUNAN = '$ppn_bangunan' AND 
 					DISC_TANAH = '$disc_tanah' AND DISC_BANGUNAN = '$disc_bangunan' AND CLASS = '$class' AND PROGRAM = '$program' AND 
 					STATUS_GAMBAR_SITEPLAN = '$status_gambar_siteplan' AND STATUS_GAMBAR_LAPANGAN = '$status_gambar_lapangan' AND 
@@ -140,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				KODE_UNIT = '$kode_unit', 
 				KODE_LOKASI = '$kode_lokasi', 
 				KODE_TIPE = '$kode_tipe', 
-				KODE_SK_BANGUNAN = '$kode_sk_bangunan', 
+				KODE_SK = '$kode_sk', 
 				KODE_PENJUALAN = '$kode_penjualan', 				
 				LUAS_BANGUNAN = '$luas_bangunan'
 				
@@ -238,122 +236,54 @@ if ($act == 'Ubah')
 {
 	
 	$obj = $conn->Execute("
-	SELECT  
-		s.*,
-		f.NILAI_TAMBAH, 
-		f.NILAI_KURANG, 
-		
-		(s.LUAS_TANAH * ht.HARGA_TANAH) AS BASE_HARGA_TANAH, 
-		(
-			((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-			((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-		) AS FS_HARGA_TANAH, 
-		
-		(
-			(
-				(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-			)
-			* s.DISC_TANAH / 100
-		) AS DISC_HARGA_TANAH, 
-		
-		(
-			(
-				((s.LUAS_TANAH * ht.HARGA_TANAH) + 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100))
-				-
-				(
-					((s.LUAS_TANAH * ht.HARGA_TANAH) + 
-					((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-					((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100))
-					* s.DISC_TANAH / 100
-				)
-			) * s.PPN_TANAH / 100
-		) AS PPN_HARGA_TANAH, 
-		
-		
-		(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) AS BASE_HARGA_BANGUNAN, 
-		((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100) AS DISC_HARGA_BANGUNAN, 
-		(
-			(
-				(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) -
-				((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100)
-			) * s.PPN_BANGUNAN / 100
-		) AS PPN_HARGA_BANGUNAN, 
-		
-		d.NAMA_DESA,
-		l.LOKASI,
-		ju.JENIS_UNIT,
-		ht.HARGA_TANAH AS HARGA_TANAH_SK,
-		f.FAKTOR_STRATEGIS,
+		SELECT  
+		s.NO_VA,
+		s.KODE_BLOK,
+		s.LUAS_BANGUNAN,
+		s.STATUS_STOK,
+		s.TERJUAL,
+		s.KODE_PENJUALAN,
 		t.TIPE_BANGUNAN,
-		hb.HARGA_BANGUNAN AS HARGA_BANGUNAN_SK,
-		p.JENIS_PENJUALAN
-	FROM 
+		hs.KODE_SK,
+		hs.HARGA_CASH_KERAS,
+		hs.CB36X,
+		hs.CB48X,
+		hs.KPA24X,
+		hs.KPA36X,
+		h.*,
+		ju.*,
+		t.*,
+		p.*
+		FROM 
 		STOK s
-		
-		LEFT JOIN HARGA_BANGUNAN hb ON s.KODE_SK_BANGUNAN = hb.KODE_SK
-		LEFT JOIN HARGA_TANAH ht ON s.KODE_SK_TANAH = ht.KODE_SK
-		
-		LEFT JOIN DESA d ON s.KODE_DESA = d.KODE_DESA
-		LEFT JOIN LOKASI l ON s.KODE_LOKASI = l.KODE_LOKASI
-		LEFT JOIN JENIS_UNIT ju ON s.KODE_UNIT = ju.KODE_UNIT
-		LEFT JOIN FAKTOR f ON s.KODE_FAKTOR = f.KODE_FAKTOR
 		LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
+		LEFT JOIN HARGA_SK hs ON s.KODE_SK = hs.KODE_SK
+		LEFT JOIN LOKASI h ON s.KODE_LOKASI = h.KODE_LOKASI
+		LEFT JOIN JENIS_UNIT ju ON s.KODE_UNIT = ju.KODE_UNIT
 		LEFT JOIN JENIS_PENJUALAN p ON s.KODE_PENJUALAN = p.KODE_JENIS
-	WHERE
-		
-		KODE_BLOK = '$id'");
+		WHERE		
+		s.KODE_BLOK = '$id'");
 	
+	$no_va			    = $obj->fields['NO_VA'];
 	$kode_blok			= $obj->fields['KODE_BLOK'];
-	$no_va			= $obj->fields['NO_VA'];
-	$kode_desa			= $obj->fields['KODE_DESA'];
 	$kode_lokasi		= $obj->fields['KODE_LOKASI'];
 	$kode_unit			= $obj->fields['KODE_UNIT'];
-	$kode_sk_tanah		= $obj->fields['KODE_SK_TANAH'];
-	$kode_faktor		= $obj->fields['KODE_FAKTOR'];
 	$kode_tipe			= $obj->fields['KODE_TIPE'];
-	$kode_sk_bangunan	= $obj->fields['KODE_SK_BANGUNAN'];
 	$kode_penjualan		= $obj->fields['KODE_PENJUALAN'];
+	$kode_sk			= $obj->fields['KODE_SK'];
 	
-	$nama_desa			= $obj->fields['NAMA_DESA'];
 	$lokasi				= $obj->fields['LOKASI'];
 	$jenis_unit			= $obj->fields['JENIS_UNIT'];
-	$harga_tanah_sk		= $obj->fields['HARGA_TANAH_SK'];
-	$faktor_strategis	= $obj->fields['FAKTOR_STRATEGIS'];
 	$tipe_bangunan		= $obj->fields['TIPE_BANGUNAN'];
-	$harga_bangunan_sk	= $obj->fields['HARGA_BANGUNAN_SK'];
 	$jenis_penjualan	= $obj->fields['JENIS_PENJUALAN'];
 	
-	$tgl_bangunan		= tgltgl(f_tgl($obj->fields['TGL_BANGUNAN']));
-	$tgl_selesai		= tgltgl(f_tgl($obj->fields['TGL_SELESAI']));
-	$progress			= $obj->fields['PROGRESS'];
-	$class				= $obj->fields['CLASS'];
-	$status_gambar_siteplan	= $obj->fields['STATUS_GAMBAR_SITEPLAN'];
-	$status_gambar_lapangan	= $obj->fields['STATUS_GAMBAR_LAPANGAN'];
-	$status_gambar_gs		= $obj->fields['STATUS_GAMBAR_GS'];
-	$program				= $obj->fields['PROGRAM'];
+	$luas_bangunan		= $obj->fields['LUAS_BANGUNAN'];
+
+	$harga_cash_keras	= $obj->fields['HARGA_CASH_KERAS'];
+	$CB36X	= $obj->fields['CB36X'];
+	$CB48X	= $obj->fields['CB48X'];
+	$KPA24X	= $obj->fields['KPA24X'];
+	$KPA36X	= $obj->fields['KPA36X'];
 	
-	$luas_tanah			= $obj->fields['LUAS_TANAH'];
-	$base_harga_tanah	= $obj->fields['BASE_HARGA_TANAH'];
-	$nilai_tambah		= $obj->fields['NILAI_TAMBAH'];
-	$nilai_kurang		= $obj->fields['NILAI_KURANG'];
-	$fs_harga_tanah		= $obj->fields['FS_HARGA_TANAH'];
-	$disc_tanah			= $obj->fields['DISC_TANAH'];
-	$disc_harga_tanah	= $obj->fields['DISC_HARGA_TANAH'];
-	$ppn_tanah			= $obj->fields['PPN_TANAH'];
-	$ppn_harga_tanah	= $obj->fields['PPN_HARGA_TANAH'];
-	$harga_tanah		= $base_harga_tanah + $fs_harga_tanah - $disc_harga_tanah + $ppn_harga_tanah;
-	
-	$luas_bangunan			= $obj->fields['LUAS_BANGUNAN'];
-	$base_harga_bangunan	= $obj->fields['BASE_HARGA_BANGUNAN'];
-	$fs_harga_bangunan		= 0;
-	$disc_bangunan			= $obj->fields['DISC_BANGUNAN'];
-	$disc_harga_bangunan	= $obj->fields['DISC_HARGA_BANGUNAN'];
-	$ppn_bangunan			= $obj->fields['PPN_BANGUNAN'];
-	$ppn_harga_bangunan		= $obj->fields['PPN_HARGA_BANGUNAN'];
-	$harga_bangunan			= $base_harga_bangunan + $fs_harga_bangunan - $disc_harga_bangunan + $ppn_harga_bangunan;
 }
 ?>

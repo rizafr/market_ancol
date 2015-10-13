@@ -70,68 +70,21 @@ if ($total_data > 0)
 {
 	$query = "
 	SELECT  
-		s.KODE_BLOK,
-		s.LUAS_TANAH,
-		s.LUAS_BANGUNAN,
-		t.TIPE_BANGUNAN,
-		hb.JENIS_BANGUNAN,
-		
-		(
-			(
-				(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-			)
-			-
-			(
-				(
-					(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-					((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-					((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-				)
-				* s.DISC_TANAH / 100
-			)
-			+
-			(
-				(
-					(
-						(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-						((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-						((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-					)
-					-
-					(
-						(
-							(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-							((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-							((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-						)
-						* s.DISC_TANAH / 100
-					)
-				) * s.PPN_TANAH / 100
-			)
-		) AS HARGA_TANAH,
-		
-		(
-			(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN)
-			-
-			((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100) 
-			+
-			(
-				(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) -
-				((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100) 
-			) 
-			* s.PPN_BANGUNAN / 100
-		) AS HARGA_BANGUNAN,
-		
-		PROGRESS, NAMA_DESA, LOKASI, JENIS_UNIT
-	FROM 
+			s.NO_VA,
+			s.KODE_BLOK,
+			s.LUAS_BANGUNAN,
+			s.STATUS_STOK,
+			s.TERJUAL,
+			t.TIPE_BANGUNAN,
+			hs.HARGA_CASH_KERAS,
+			hs.CB36X,
+			hs.CB48X,
+			hs.KPA24X,
+			hs.KPA36X, LOKASI, JENIS_UNIT
+		FROM 
 		STOK s
 		LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
-		LEFT JOIN HARGA_BANGUNAN hb ON s.KODE_SK_BANGUNAN = hb.KODE_SK
-		LEFT JOIN HARGA_TANAH ht ON s.KODE_SK_TANAH = ht.KODE_SK
-		LEFT JOIN FAKTOR f ON s.KODE_FAKTOR = f.KODE_FAKTOR
-		LEFT JOIN DESA g ON s.KODE_DESA = g.KODE_DESA
+		LEFT JOIN HARGA_SK hs ON s.KODE_SK = hs.KODE_SK
 		LEFT JOIN LOKASI h ON s.KODE_LOKASI = h.KODE_LOKASI
 		LEFT JOIN JENIS_UNIT i ON s.KODE_UNIT = i.KODE_UNIT
 		WHERE STATUS_STOK = '1' AND TERJUAL <> '2'
@@ -146,15 +99,19 @@ if ($total_data > 0)
 		$id = $obj->fields['KODE_BLOK'];
 		?>
 		<tr class="onclick" id="<?php echo $id; ?>"> 
-			<td><?php echo $id; ?></td>
-			<td class="text-right"><?php echo to_decimal($obj->fields['LUAS_TANAH']); ?></td>
-			<td class="text-right"><?php echo to_decimal($obj->fields['LUAS_BANGUNAN']); ?></td>
-			<td><?php echo $obj->fields['NAMA_DESA']; ?></td>
-			<td><?php echo $obj->fields['LOKASI']; ?></td>
-			<td><?php echo $obj->fields['JENIS_UNIT']; ?></td>
-			<td><?php echo $obj->fields['TIPE_BANGUNAN']; ?></td>
-			<td class="text-right"><?php echo to_money($obj->fields['HARGA_TANAH'] + $obj->fields['HARGA_BANGUNAN']); ?></td>
-			<td class="text-right"><?php echo to_money($obj->fields['PROGRESS']); ?></td>
+			<td class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
+				<td><?php echo $obj->fields['NO_VA']; ?></td>
+				<td class="text-center"><?php echo $id; ?></td>
+				<td class="text-center"><?php echo to_decimal($obj->fields['LUAS_BANGUNAN']); ?></td>
+				<td><?php echo $obj->fields['LOKASI']; ?></td>
+				<td><?php echo $obj->fields['JENIS_UNIT']; ?></td>
+				<td><?php echo $obj->fields['TIPE_BANGUNAN']; ?></td>
+				<td class="text-right"><?php echo to_money($obj->fields['HARGA_CASH_KERAS']); ?></td>
+				<td class="text-right"><?php echo to_money($obj->fields['CB36X']); ?></td>
+				<td class="text-right"><?php echo to_money($obj->fields['CB48X']); ?></td>
+				<td class="text-right"><?php echo to_money($obj->fields['KPA24X']); ?></td>
+				<td class="text-right"><?php echo to_money($obj->fields['KPA36X']); ?></td>
+				<td class="text-left"><?php echo $status ?></td>
 		</tr>
 		<?php
 		$obj->movenext();

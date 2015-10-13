@@ -185,7 +185,7 @@ function conv(x){
 			<tr>
 				<td>SK. Harga</td><td>:</td>
 				<td>
-					<input type="text" name="kode_sk" id="kode_sk" size="10" value="<?php if(isset($kode_sk_bangunan)){echo $kode_sk_bangunan;}else{echo '-';} ?>">
+					<input type="text" name="kode_sk" id="kode_sk" size="10" value="<?php if(isset($kode_sk)){echo $kode_sk;}else{echo '-';} ?>">
 					<button onclick="return get_kode_sk_bangunan()"> > </button>
 				</td>
 			</tr>
