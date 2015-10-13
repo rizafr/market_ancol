@@ -168,7 +168,7 @@ function showPopupUpload(act, id) {
 
 function showPopup1(act, id) {
 	var url = this_base + 'stock_awal/persediaan_awal_popup.php?act=' + act + '&id=' + id;
-	setPopup(act + ' Persediaan Awal', url, 850, 550);
+	setPopup(act + ' Persediaan Awal', url, 600, 600);
 	return false;
 }
 
@@ -236,7 +236,7 @@ function unotorisasiData()
 			<td width="100">Pencarian</td><td width="10">:</td>
 			<td>
 				<select name="s_opf1" id="s_opf1" class="auto">
-					<option value="KODE_BLOK"> KODE BLOK </option>
+					<option value="s.KODE_BLOK"> KODE BLOK </option>
 				</select>
 				<input type="text" name="s_opv1" id="s_opv1" class="apply" value="">
 			</td>

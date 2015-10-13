@@ -44,7 +44,7 @@ $jenis_penjualan	= '';
 $tgl_bangunan		= '';
 $tgl_selesai		= '';
 $progress			= '';
-	
+
 $base_harga_tanah		= 0;
 $nilai_tambah			= 0;
 $nilai_kurang			= 0;
@@ -58,7 +58,7 @@ $fs_harga_bangunan		= 0;
 $disc_harga_bangunan	= 0;
 $ppn_harga_bangunan		= 0;
 $harga_bangunan			= 0;
-	
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 	try
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		ex_conn($conn);
 
 		$conn->begintrans(); 
-			
+		
 		if ($act == 'Tambah') # Proses Tambah
 		{
 			ex_ha('M28', 'I');
@@ -91,19 +91,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			INSERT INTO STOK 
 			(
 				KODE_BLOK, KODE_UNIT,KODE_LOKASI, KODE_TIPE, KODE_SK, STATUS_STOK, TERJUAL, KODE_PENJUALAN, LUAS_BANGUNAN, NO_VA
-			)
-			VALUES
-			(
-				'$kode_blok', $kode_unit, $kode_lokasi, $kode_tipe, '$kode_sk','0', '0', $kode_penjualan, $luas_bangunan, '$no_va'
-			)
-		
-			";
-			
-			ex_false($conn->Execute($query), $query);
-					
-			$msg = 'Data persediaan awal berhasil ditambah.';
-			
-		}
+				)
+VALUES
+(
+	'$kode_blok', $kode_unit, $kode_lokasi, $kode_tipe, '$kode_sk','0', '0', $kode_penjualan, $luas_bangunan, '$no_va'
+	)
+
+";
+
+ex_false($conn->Execute($query), $query);
+
+$msg = 'Data persediaan awal berhasil ditambah.';
+
+}
 		elseif ($act == 'Ubah') # Proses Ubah
 		{
 			ex_ha('M28', 'U');
@@ -122,30 +122,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			}
 			
 			$query ="SELECT * FROM STOK WHERE KODE_BLOK = '$kode_blok' AND KODE_UNIT = '$kode_unit' AND KODE_DESA = '$kode_desa' AND KODE_LOKASI = '$kode_lokasi' AND 
-					KODE_SK_TANAH = '$kode_sk_tanah' AND KODE_FAKTOR = '$kode_faktor' AND KODE_TIPE = '$kode_tipe' AND 
-					KODE_SK = '$kode_sk' AND KODE_PENJUALAN = '$kode_penjualan' AND LUAS_TANAH = '$luas_tanah' AND 
-					LUAS_BANGUNAN = '$luas_bangunan' AND PPN_TANAH = '$ppn_tanah' AND PPN_BANGUNAN = '$ppn_bangunan' AND 
-					DISC_TANAH = '$disc_tanah' AND DISC_BANGUNAN = '$disc_bangunan' AND CLASS = '$class' AND PROGRAM = '$program' AND 
-					STATUS_GAMBAR_SITEPLAN = '$status_gambar_siteplan' AND STATUS_GAMBAR_LAPANGAN = '$status_gambar_lapangan' AND 
-					STATUS_GAMBAR_GS = '$status_gambar_gs'AND NO_VA = '$no_va'";
+			KODE_SK_TANAH = '$kode_sk_tanah' AND KODE_FAKTOR = '$kode_faktor' AND KODE_TIPE = '$kode_tipe' AND 
+			KODE_SK = '$kode_sk' AND KODE_PENJUALAN = '$kode_penjualan' AND LUAS_TANAH = '$luas_tanah' AND 
+			LUAS_BANGUNAN = '$luas_bangunan' AND PPN_TANAH = '$ppn_tanah' AND PPN_BANGUNAN = '$ppn_bangunan' AND 
+			DISC_TANAH = '$disc_tanah' AND DISC_BANGUNAN = '$disc_bangunan' AND CLASS = '$class' AND PROGRAM = '$program' AND 
+			STATUS_GAMBAR_SITEPLAN = '$status_gambar_siteplan' AND STATUS_GAMBAR_LAPANGAN = '$status_gambar_lapangan' AND 
+			STATUS_GAMBAR_GS = '$status_gambar_gs'AND NO_VA = '$no_va'";
 			ex_found($conn->Execute($query)->recordcount(), "Tidak ada data yang berubah.");
-					
+			
 			
 			$query = "
 			UPDATE STOK 
 			SET NO_VA = '$no_va',
-				KODE_BLOK = '$kode_blok', 
-				KODE_UNIT = '$kode_unit', 
-				KODE_LOKASI = '$kode_lokasi', 
-				KODE_TIPE = '$kode_tipe', 
-				KODE_SK = '$kode_sk', 
-				KODE_PENJUALAN = '$kode_penjualan', 				
-				LUAS_BANGUNAN = '$luas_bangunan'
-				
-				
+			KODE_BLOK = '$kode_blok', 
+			KODE_UNIT = '$kode_unit', 
+			KODE_LOKASI = '$kode_lokasi', 
+			KODE_TIPE = '$kode_tipe', 
+			KODE_SK = '$kode_sk', 
+			KODE_PENJUALAN = '$kode_penjualan', 				
+			LUAS_BANGUNAN = '$luas_bangunan'
+			
+			
 			WHERE
-				
-				KODE_BLOK = '$id'
+			
+			KODE_BLOK = '$id'
 			";
 			ex_false($conn->Execute($query), $query);
 			

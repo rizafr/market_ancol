@@ -48,7 +48,8 @@ $page_start = (($page_num-1) * $per_page);
 
 <table id="pagging-1" class="t-control w70">
 <tr>
-	<td>
+	<td>		
+		<input type="button" id="upload" value=" Upload Harga SK">
 		<input type="button" id="tambah" value=" Tambah ">
 		<input type="button" id="hapus" value=" Hapus ">
 	</td>

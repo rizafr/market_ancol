@@ -1,27 +1,28 @@
 <?php
-require_once('../../../../../config/config.php');
 
+	require_once('../../../../config/config.php');
+	
 	// menggunakan class phpExcelReader
-require('../../../../../config/PHPExcel.php');
-require('../../../../../config/PHPExcel/IOFactory.php');
+	require('../../../../config/PHPExcel.php');
+	require('../../../../config/PHPExcel/IOFactory.php');
+	
+	
+	$msg = '';
+	$error = FALSE;
+	$act = (isset($_REQUEST['act'])) ? clean($_REQUEST['act']) : '';
+	$id = (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
+	$path = (isset($_FILES['file']['name'])) ? clean($_FILES['file']['name']) : '';
 
-
-$msg = '';
-$error = FALSE;
-$act = (isset($_REQUEST['act'])) ? clean($_REQUEST['act']) : '';
-$id = (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
-$path = (isset($_FILES['file']['name'])) ? clean($_FILES['file']['name']) : '';
-
-$lokasi				= '';
-$jenis_unit			= '';
-$tipe_bangunan		= '';
-$jenis_penjualan	= '';
-
-
-$eror       = false;
-$folder     = 'upload/';
+	$harga_cash_keras		= 0;
+	$CB36x					= 0;
+	$CB48x					= 0;
+	$KPA24x					= 0;
+	$KPA36x					= 0;
+	
+	$eror       = false;
+	$folder     = 'upload/';
 	//type file yang bisa diupload
-$file_type  = array('xls','xlsx');
+	$file_type  = array('xls','xlsx');
 	//tukuran maximum file yang dapat diupload
 	$max_size   = 100000000; // 100MB
 	
@@ -30,8 +31,8 @@ $file_type  = array('xls','xlsx');
 		try
 		{
 			ex_login();
-			//ex_app('A01');
-			//ex_mod('PO01');
+			ex_app('M');
+			ex_mod('M27');
 			$conn = conn($sess_db);
 			ex_conn($conn);
 			
@@ -53,20 +54,23 @@ $file_type  = array('xls','xlsx');
 				$eror   = true;
 				$msg .= '- Ukuran file melebihi batas maximum<br />';
 			}
-			
+
 			// Path file upload
 			move_uploaded_file($_FILES['data_upload']['tmp_name'], './' . $_FILES['data_upload']['name']);
-			
-			
 			// Load PHPExcel
+
+			if(file_exists($file_name)){
+				echo 'tidak ada';
+			}
 			$objPHPExcel = PHPExcel_IOFactory::load($file_name);
+
 			foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
 				$worksheetTitle = $worksheet->getTitle();
 				$highestRow = $worksheet->getHighestRow();
 				$highestColumn = $worksheet->getHighestColumn();
 				$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
 				$nrColumns = ord($highestColumn) - 64;
-				// echo "<br>Worksheet " . $worksheetTitle . " memiliki ";
+				//echo "<br>Worksheet " . $worksheetTitle . " memiliki ";
 				// echo $nrColumns . ' kolom (A-' . $highestColumn . ') ';
 				// echo ' dan ' . $highestRow . ' baris.';
 				// echo '<br>Data: <table border="1"><tr>';
@@ -86,9 +90,6 @@ $file_type  = array('xls','xlsx');
 			//penambahan status jumlah
 			$jumlah_berhasil = 0;
 			$jumlah_gagal = 0;
-			$kode_blok_gagal = array();
-			
-			
 			// Proses perulangan baris file excel yang diupload
 			for ($row = 2; $row <= $highestRow; ++$row) {
 				$val = array();
@@ -96,72 +97,61 @@ $file_type  = array('xls','xlsx');
 					$cell = $worksheet->getCellByColumnAndRow($col, $row);
 					$val[] = $cell->getValue();
 				}
-				
-				
-				
+								
 				// Skip data jika kode_blok dan va sudah ada
-				$kode_blok		= $val[2];
-				$kode_blok		= (!empty($kode_blok)) ? clean($kode_blok) : '';
-				$virtual_account= $val[1];
-				$virtual_account = (!empty($virtual_account)) ? clean($virtual_account) : '';
+				// $kode_blok		= $val[0];
+				// $kode_blok		= (!empty($kode_blok)) ? clean($kode_blok) : '';
+				// $virtual_account		= $val[1];
+				// $virtual_account = (!empty($virtual_account)) ? clean($virtual_account) : '';
 				
+				$kode_sk		 	= $val[0];		
+				$kode_blok  		= $val[1];	
 				$query = "
-				SELECT COUNT(KODE_BLOK) AS TOTAL FROM STOK WHERE KODE_BLOK = '$kode_blok' OR NO_VA = '$virtual_account'
+				SELECT COUNT(KODE_BLOK) AS TOTAL FROM HARGA_SK WHERE KODE_SK = '$kode_sk' AND KODE_BLOK= '$kode_blok'
 				";
 				$total_data = $conn->Execute($query)->fields['TOTAL'];
 				
-				
 				$jumBaris = $row -1;
 				$jumData = $highestRow -1;
-				
-				
-				if ($total_data == 0) {
-					
-					$kode_sk 				= $val[0];
-					$kode_unit 				= $val[3];
-					$kode_lokasi 			= $val[4];
-					$kode_tipe 				= $val[5];
-					$kode_penjualan 		= $val[6];
-					$luas_bangunan 			= $val[7];
-					
-					$kode_lokasi	= (!empty($kode_lokasi)) ? clean($kode_lokasi) : '';
-					$kode_unit		= (!empty($kode_unit)) ? clean($kode_unit) : '';
-					$kode_tipe		= (!empty($kode_tipe)) ? clean($kode_tipe) : '';
-					$kode_penjualan	= (!empty($kode_penjualan)) ? clean($kode_penjualan) : '';
-					$luas_bangunan	= (!empty($luas_bangunan)) ? to_decimal($luas_bangunan) : '0';
-
-					$query = "
-					INSERT INTO STOK 
-					(
-						KODE_BLOK, KODE_UNIT,KODE_LOKASI, KODE_TIPE, KODE_SK, STATUS_STOK, TERJUAL, KODE_PENJUALAN, LUAS_BANGUNAN, NO_VA
-						)
-VALUES
-(
-	'$kode_blok', $kode_unit, $kode_lokasi, $kode_tipe, '$kode_sk','0', '0', $kode_penjualan, $luas_bangunan, '$virtual_account'
-	)		
-";							
-
-ex_false($conn->Execute($query), $query);		
-
-				} else{ //cek data yang gagal
-					
-					
-					$kode_blok_gagal[]= $kode_blok;
+			
+				//bila data telah ada maka hapus dahulu data sebelumnya
+				if ($total_data > 0) {
+					$conn->Execute("DELETE FROM HARGA_SK WHERE KODE_SK = '$kode_sk' AND KODE_BLOK= '$kode_blok'
+					");
 				}
+			
+      			
+      			$tanggal = date("d-m-Y H:i:s");
+				$harga_cash_keras		=  $val[2];
+				$CB36x					=  $val[3];
+				$CB48x					=  $val[4];
+				$KPA24x					=  $val[5];
+				$KPA36x					=  $val[6];
+				$status					=	'1';
+
+				
+				
+				$query = "
+				INSERT INTO HARGA_SK (KODE_SK, KODE_BLOK, TANGGAL, STATUS, HARGA_CASH_KERAS, CB36X, CB48X, KPA24X, KPA36X)
+					VALUES (
+						'$kode_sk',
+					 	'$kode_blok', 
+						CONVERT(DATETIME,'$tanggal',105), 
+						$status, $harga_cash_keras, $CB36x, $CB48x, $KPA24x, $KPA36x)		
+				";					
+				ex_false($conn->Execute($query), $query);
+
 				
 				$conn->committrans(); 
 				//hitung jumlah gagal
-				$jumlah_gagal+=$total_data;
+				$jumlah_gagal += $total_data;
 				//hitung jumlah berhasil
 				$jumlah_berhasil = $jumData - $jumlah_gagal;	
 			}
 			
 			// Hapus file excel ketika data sudah masuk ke tabel
-			@unlink($file_name);
-			$msg = " Data berhasil diupload \n ". $jumlah_berhasil." data sukses \n ". $jumlah_gagal." data Gagal \n \n Kode Blok yang Gagal:\n "
-			;
-			
-			
+			//@unlink($file_name);
+			$msg = " Data berhasil diupload \n ". $jumlah_berhasil." data baru \n ". $jumlah_gagal." data replace " ;
 			
 			
 		}
@@ -176,20 +166,9 @@ ex_false($conn->Execute($query), $query);
 		$json = array('act' => $act, 'error'=> $error, 'msg' => $msg);
 		// echo json_encode($val);	
 		echo $msg;
-		
-		//kode blok yang gagal
-		$jum = count($kode_blok_gagal);
-		if($jum>0){
-			foreach($kode_blok_gagal as $kode_blok_gagal){
-				$kode_blok_gagal = $kode_blok_gagal;
-				echo $kode_blok_gagal ."\n";
-			};
-			echo "\nKet: Duplikasi Kode Blok atau Virtual Account"	;
-		}
-		
 		exit;
 	}
 	
 	die_login();
 	
-	?>							
+?>							

@@ -103,114 +103,64 @@ $page_start = (($page_num-1) * $per_page);
 		SELECT  
 		s.NO_VA,
 		s.KODE_BLOK,
-		s.LUAS_TANAH,
 		s.LUAS_BANGUNAN,
 		s.STATUS_STOK,
 		s.TERJUAL,
 		t.TIPE_BANGUNAN,
-		hb.JENIS_BANGUNAN,
-		
-		(
-			(
-				(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-				)
--
-(
-	(
-		(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-		((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-		((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-		)
-* s.DISC_TANAH / 100
-)
-+
-(
-	(
-		(
-			(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-			((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-			((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-			)
--
-(
-	(
-		(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-		((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-		((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-		)
-* s.DISC_TANAH / 100
-)
-) * s.PPN_TANAH / 100
-)
-) AS HARGA_TANAH,
+		hs.HARGA_CASH_KERAS,
+		hs.CB36X,
+		hs.CB48X,
+		hs.KPA24X,
+		hs.KPA36X, LOKASI, JENIS_UNIT
+		FROM 
+		STOK s
+		LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
+		LEFT JOIN HARGA_SK hs ON s.KODE_SK = hs.KODE_SK AND s.KODE_BLOK = hs.KODE_BLOK
+		LEFT JOIN LOKASI h ON s.KODE_LOKASI = h.KODE_LOKASI
+		LEFT JOIN JENIS_UNIT i ON s.KODE_UNIT = i.KODE_UNIT
+		WHERE STATUS_STOK = '1' AND TERJUAL = '0'
+		$query_search
+		ORDER BY s.KODE_BLOK ASC
+		";
 
-(
-	(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN)
-	-
-	((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100) 
-	+
-	(
-		(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) -
-		((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100) 
-		) 
-* s.PPN_BANGUNAN / 100
-) AS HARGA_BANGUNAN,
+		$obj = $conn->SelectLimit($query, $per_page, $page_start);
 
-PROGRESS, NAMA_DESA, LOKASI, JENIS_UNIT
-FROM 
-STOK s
-LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
-LEFT JOIN HARGA_BANGUNAN hb ON s.KODE_SK_BANGUNAN = hb.KODE_SK
-LEFT JOIN HARGA_TANAH ht ON s.KODE_SK_TANAH = ht.KODE_SK
-LEFT JOIN FAKTOR f ON s.KODE_FAKTOR = f.KODE_FAKTOR
-LEFT JOIN DESA g ON s.KODE_DESA = g.KODE_DESA
-LEFT JOIN LOKASI h ON s.KODE_LOKASI = h.KODE_LOKASI
-LEFT JOIN JENIS_UNIT i ON s.KODE_UNIT = i.KODE_UNIT
-WHERE STATUS_STOK = '1' AND TERJUAL = '0'
-$query_search
-ORDER BY s.KODE_BLOK ASC
-";
-
-$obj = $conn->SelectLimit($query, $per_page, $page_start);
-
-while( ! $obj->EOF)
-{
-	$id = $obj->fields['KODE_BLOK'];
-	if ($obj->fields['STATUS_STOK'] == '0' AND $obj->fields['TERJUAL'] == '0'){
-		$status = 'STOK BELUM SIAP JUAL';
-	}else
-	if ($obj->fields['STATUS_STOK'] == '1' AND $obj->fields['TERJUAL'] == '0'){
-		$status = 'STOK SUDAH SIAP JUAL';
-	}else 
-	if ($obj->fields['STATUS_STOK'] == '1' AND $obj->fields['TERJUAL'] == '1'){
-		$status = 'STOK SUDAH DI RESERVE';
-	}else 
-	if ($obj->fields['STATUS_STOK'] == '1' AND $obj->fields['TERJUAL'] == '2'){
-		$status = 'STOK SUDAH TERJUAL';
+		while( ! $obj->EOF)
+		{
+			$id = $obj->fields['KODE_BLOK'];
+			if ($obj->fields['STATUS_STOK'] == '0' AND $obj->fields['TERJUAL'] == '0'){
+				$status = 'STOK BELUM SIAP JUAL';
+			}else
+			if ($obj->fields['STATUS_STOK'] == '1' AND $obj->fields['TERJUAL'] == '0'){
+				$status = 'STOK SUDAH SIAP JUAL';
+			}else 
+			if ($obj->fields['STATUS_STOK'] == '1' AND $obj->fields['TERJUAL'] == '1'){
+				$status = 'STOK SUDAH DI RESERVE';
+			}else 
+			if ($obj->fields['STATUS_STOK'] == '1' AND $obj->fields['TERJUAL'] == '2'){
+				$status = 'STOK SUDAH TERJUAL';
+			}
+			?>
+			<tr class="onclick" id="<?php echo $id; ?>">
+				<td class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
+				<td><?php echo $obj->fields['NO_VA']; ?></td>
+				<td class="text-center"><?php echo $id; ?></td>
+				<td class="text-center"><?php echo to_decimal($obj->fields['LUAS_BANGUNAN']); ?></td>
+				<td><?php echo $obj->fields['LOKASI']; ?></td>
+				<td><?php echo $obj->fields['JENIS_UNIT']; ?></td>
+				<td><?php echo $obj->fields['TIPE_BANGUNAN']; ?></td>
+				<td class="text-right"><?php echo to_money($obj->fields['HARGA_CASH_KERAS']); ?></td>
+				<td class="text-right"><?php echo to_money($obj->fields['CB36X']); ?></td>
+				<td class="text-right"><?php echo to_money($obj->fields['CB48X']); ?></td>
+				<td class="text-right"><?php echo to_money($obj->fields['KPA24X']); ?></td>
+				<td class="text-right"><?php echo to_money($obj->fields['KPA36X']); ?></td>
+				<td class="text-left"><?php echo $status ?></td>
+			</tr>
+			<?php
+			$obj->movenext();
+		}
 	}
 	?>
-	<tr class="onclick" id="<?php echo $id; ?>">
-		<td class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
-		<td><?php echo $obj->fields['NO_VA']; ?></td>
-		<td class="text-center"><?php echo $id; ?></td>
-		<td class="text-center"><?php echo to_decimal($obj->fields['LUAS_BANGUNAN']); ?></td>
-		<td><?php echo $obj->fields['LOKASI']; ?></td>
-		<td><?php echo $obj->fields['JENIS_UNIT']; ?></td>
-		<td><?php echo $obj->fields['TIPE_BANGUNAN']; ?></td>
-		<td class="text-right"><?php echo to_money($obj->fields['HARGA_TANAH'] + $obj->fields['HARGA_BANGUNAN']); ?></td>
-		<td class="text-right"><?php echo to_money($obj->fields['HARGA_TANAH'] + $obj->fields['HARGA_BANGUNAN']); ?></td>
-		<td class="text-right"><?php echo to_money($obj->fields['HARGA_TANAH'] + $obj->fields['HARGA_BANGUNAN']); ?></td>
-		<td class="text-right"><?php echo to_money($obj->fields['HARGA_TANAH'] + $obj->fields['HARGA_BANGUNAN']); ?></td>
-		<td class="text-right"><?php echo to_money($obj->fields['HARGA_TANAH'] + $obj->fields['HARGA_BANGUNAN']); ?></td>
-		<td class="text-left"><?php echo $status ?></td>
-	</tr>
-	<?php
-	$obj->movenext();
-}
-}
-?>
 </table>
 
 <table id="pagging-2" class="t-control w90"></table>

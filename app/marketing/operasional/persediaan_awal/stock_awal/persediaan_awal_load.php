@@ -114,11 +114,13 @@ $page_start = (($page_num-1) * $per_page);
 			hs.CB36X,
 			hs.CB48X,
 			hs.KPA24X,
-			hs.KPA36X, LOKASI, JENIS_UNIT
+			hs.KPA36X, 
+			LOKASI, 
+			JENIS_UNIT
 		FROM 
 		STOK s
 		LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
-		LEFT JOIN HARGA_SK hs ON s.KODE_SK = hs.KODE_SK
+		LEFT JOIN HARGA_SK hs ON s.KODE_SK = hs.KODE_SK AND s.KODE_BLOK = hs.KODE_BLOK
 		LEFT JOIN LOKASI h ON s.KODE_LOKASI = h.KODE_LOKASI
 		LEFT JOIN JENIS_UNIT i ON s.KODE_UNIT = i.KODE_UNIT
 		$query_search

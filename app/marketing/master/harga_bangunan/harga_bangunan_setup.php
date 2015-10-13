@@ -34,7 +34,13 @@ jQuery(function($) {
 		if (page_num > 0) { $('.page_num').val(page_num); $('#apply').trigger('click'); }
 		return false;
 	});
+
 	
+	$(document).on('click', '#upload', function(e) {
+		e.preventDefault();
+		showPopupUpload('Upload', '');
+		return false;
+	});
 	
 	$(document).on('click', '#tambah', function(e) {
 		e.preventDefault();
@@ -81,6 +87,11 @@ function showPopup(act, id) {
 	setPopup(act + ' Harga Bangunan', url, 600, 350);
 	return false;
 }
+function showPopupUpload(act, id) {
+	var url = this_base + 'harga_bangunan_upload_popup.php?act=' + act + '&id=' + id;
+	setPopup(act + ' Data Harga SK', url, 835, 450);
+	return false;
+}
 function hapusData()
 {	
 	var url		= base_marketing + 'master/harga_bangunan/harga_bangunan_proses.php?act=Hapus',
@@ -96,7 +107,7 @@ function hapusData()
 }
 </script>
 
-<div class="title-page">ISIAN HARGA BANGUNAN BERDASARKAN SK</div>
+<div class="title-page">ISIAN HARGA BERDASARKAN SK</div>
 
 <form name="form" id="form" method="post">
 <table class="t-control wauto">
