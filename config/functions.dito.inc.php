@@ -55,6 +55,24 @@ function to_number($v, $r = 0) # Old Regex'/\D/'
 	return ($v == 0) ? $r : $v;
 }
 
+function clean_comma($value) # Old Regex'/\D/'
+{
+	$value=str_replace(array('.', ','), '' , $string);
+	return $value;
+}
+
+function bigintval($value) {
+  $value = trim($value);
+  if (ctype_digit($value)) {
+    return $value;
+  }
+  $value = preg_replace("/[^0-9\.]/", '', $value);
+  if (ctype_digit($value)) {
+    return $value;
+  }
+  return 0;
+}
+
 function to_decimal($v, $l = 20, $r = 0)
 {
 	$v = round(floatval(preg_replace('/[^0-9\.]/', '', trim($v))), $l);

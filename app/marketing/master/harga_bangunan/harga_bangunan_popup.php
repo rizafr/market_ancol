@@ -97,27 +97,27 @@ jQuery(function($) {
 
 <tr>
 	<td>Harga Cash Keras</td><td>:</td>
-	<td><input type="text" class="text-right" name="cash_keras" id="cash_keras" value="<?php if(!isset($cash_keras)){$cash_keras = 0;}echo to_money(intval($cash_keras)); ?>" size="20"></td>
+	<td><input type="text" class="text-right" name="cash_keras" id="cash_keras" value="<?php if(!isset($cash_keras)){$cash_keras = 0;}echo (($cash_keras)); ?>" size="20"></td>
 </tr>
 
 <tr>
 	<td>Harga CB36x</td><td>:</td>
-	<td><input type="text" name="cb36x" id="cb36x" value="<?php if(!isset($cb36x)){$cb36x = 0;}echo to_money(intval($cb36x)); ?>" size="20"></td>
+	<td><input type="text" name="cb36x" id="cb36x" value="<?php if(!isset($cb36x)){$cb36x = 0;}echo (($cb36x)); ?>" size="20"></td>
 </tr>
 
 <tr>
 	<td>Harga CB48x</td><td>:</td>
-	<td><input type="text" name="cb48x" id="cb48x" value="<?php if(!isset($cb48x)){$cb48x = 0;}echo to_money(intval($cb48x)); ?>" size="20"></td>
+	<td><input type="text" name="cb48x" id="cb48x" value="<?php if(!isset($cb48x)){$cb48x = 0;}echo (($cb48x)); ?>" size="20"></td>
 </tr>
 
 <tr>
 	<td>Harga KPA24x</td><td>:</td>
-	<td><input type="text" name="kpa24x" id="kpa24x" value="<?php if(!isset($kpa24x)){$kpa24x = 0;}echo to_money(intval($kpa24x)); ?>" size="20"></td>
+	<td><input type="text" name="kpa24x" id="kpa24x" value="<?php if(!isset($kpa24x)){$kpa24x = 0;}echo (($kpa24x)); ?>" size="20"></td>
 </tr>
 
 <tr>
 	<td>Harga KPA36x</td><td>:</td>
-	<td><input type="text" name="kpa36x" id="kpa36x" value="<?php if(!isset($kpa36x)){$kpa36x = 0;}echo to_money(intval($kpa36x)); ?>" size="20"></td>
+	<td><input type="text" name="kpa36x" id="kpa36x" value="<?php if(!isset($kpa36x)){$kpa36x = 0;}echo (($kpa36x)); ?>" size="20"></td>
 </tr>
 
 <tr>
@@ -145,4 +145,7 @@ jQuery(function($) {
 
 </body>
 </html>
-<?php close($conn); ?>
+<?php 
+
+close($conn); 
+?>

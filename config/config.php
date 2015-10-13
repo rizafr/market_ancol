@@ -7,6 +7,7 @@ setlocale(LC_TIME, 'Indonesian');
 ini_set('date.timezone', 'Asia/Jakarta');
 set_time_limit(0);
 
+
 $conn = FALSE;
 $readonly = 'readonly="readonly"';
 $sess_user_id = (isset($_SESSION['USER_ID'])) ? $_SESSION['USER_ID'] : '';
