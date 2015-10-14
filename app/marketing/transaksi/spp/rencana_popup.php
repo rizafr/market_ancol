@@ -117,76 +117,16 @@
 				<tr>	
 					<td>Jenis Transaksi</td><td>:</td>
 					<td>
-						<table>
-						<?php
-						$obj1 = $conn->execute("		
-							SELECT * FROM POLA_BAYAR P JOIN DETAIL_POLA_BAYAR D ON P.KODE_POLA_BAYAR = D.KODE_POLA_BAYAR
-							WHERE P.KODE_JENIS = '2' AND P.AKTIF = '1' AND D.KODE_BLOK = '$id'
-							ORDER BY P.KODE_POLA_BAYAR
-						");
-
-						$obj2 = $conn->execute("		
-							SELECT * FROM POLA_BAYAR P JOIN DETAIL_POLA_BAYAR D ON P.KODE_POLA_BAYAR = D.KODE_POLA_BAYAR
-							WHERE P.KODE_JENIS = '1' AND P.AKTIF = '1' AND D.KODE_BLOK = '$id'
-							ORDER BY P.KODE_POLA_BAYAR
-						");
-
-						$data1 = true;
-						$data2 = true;
-
-						while($data1||$data2)
-						{
-							echo '<tr><td>';
-							if(! $obj1->EOF){
-								$tp = $obj1->fields['KODE_JENIS'];
-								$ov = $obj1->fields['KODE_POLA_BAYAR'];
-								$oj = $obj1->fields['NAMA_POLA_BAYAR'];
-								echo "<input type = 'radio' value = '$ov' name='pola_bayar' id='pola_bayar' class = 'cash pola_bayar' tipe = 'cash' ket = '$oj'> $oj";
-								$obj1->movenext();
-							}
-							else{
-								$data1 = false;
-							}
-							echo "<td>";
-							if(!$obj2->EOF){
-								$tp = $obj2->fields['KODE_JENIS'];
-								$ov = $obj2->fields['KODE_POLA_BAYAR'];
-								$oj = $obj2->fields['NAMA_POLA_BAYAR'];
-								echo "<input type = 'radio' value = '$ov' name='pola_bayar' id='pola_bayar' class= 'kpr pola_bayar' tipe = 'kpr' ket = '$oj'> $oj";
-								$obj2->movenext();	
-							}
-							else{
-								$data2 = false;
-							}
-							echo "</tr>";
-						}
-						?>
-						</table>
+						<select name="field1" id="field1" class="wauto">
+							<option value="HARGA_CASH_KERAS"> CASH_KERAS </option>
+							<option value="CB36X"> CB36X </option>
+							<option value="CB48X"> CB48X </option> 
+							<option value="KPA24X"> KPA24X </option> 
+							<option value="KPA36X"> KPA36X </option> 
+						</select>
 					<td>
 				</tr>
-				<!--	
-				<tr>	
-					<td>Bank </td>
-					<td>:</td>					
-					<td><select name="kbank" id="kbank">
-							<option value="0"> -- Bank -- </option>
-							<?php
-								$obj = $conn->execute("
-								SELECT *
-								FROM 
-								BANK
-								");
-								while( ! $obj->EOF)
-								{
-									$ov = $obj->fields['KODE_BANK'];
-									$oj = $obj->fields['NAMA_BANK'];
-									echo "<option value='$ov'".is_selected($ov, $kbank)."> $oj </option>";
-									$obj->movenext();
-								}
-							?>
-						</select>
-					</td>
-				</tr>-->
+				
 				<tr>
 					<td>Tanggal Bayar Awal</td>
 					<td>:</td>

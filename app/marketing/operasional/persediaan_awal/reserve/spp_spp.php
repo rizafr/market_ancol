@@ -178,7 +178,7 @@ jQuery(function($) {
 	</td>
 	
 	</td>
-	<td colspan="2">Tanda Jadi<span class="error">*</span> : <input type="text" name="tanda_jadi" id="tanda_jadi" size="20" value="<?php echo $tanda_jadi; ?>"></td>
+	<td colspan="2">Tanda Jadi<span class="error">*</span> : <input type="text" name="tanda_jadi" id="tanda_jadi" size="20" value="<?php echo 20000000; ?>"></td>
 </tr>
 <tr>
 	<td>Redistribusi SPP <td>:  
