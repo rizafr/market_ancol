@@ -118,6 +118,10 @@ switch (trim(base64_decode($cmd)))
 	case 'A01_penerimaan_lain'				: die_mod('C34'); include('marketing/collection_tunai/laporan/penerimaan_lain/penerimaan_lain_setup.php');break;
 	case 'A01_rencana_realisasi_blok'		: die_mod('C35'); include('marketing/collection_tunai/laporan/rencana_realisasi_blok/rencana_realisasi_blok_setup.php');break;
 	case 'A01_daftar_spp'					: die_mod('C36'); include('marketing/collection_tunai/laporan/daftar_spp/daftar_spp_setup.php');break;
+	//Start Edited by Kurniawan
+	//Bandung 14 Oktober 2015
+	case 'A01_orlansoft'					: die_mod('C39'); include('marketing/collection_tunai/laporan/orlansoft/orlansoft_setup.php');break;
+	//End Edited
 	
 	# Lain-lain
 	case 'A01_parameter_program_coll'		: die_mod('C37'); include('marketing/collection_tunai/lain/parameter/parameter_setup.php');break;
