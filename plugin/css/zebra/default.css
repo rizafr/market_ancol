@@ -41,7 +41,7 @@
 
 /* = HEADER
 ----------------------------------------------------------------------------------------------------------------------*/
-.Zebra_DatePicker .dp_header td             { color: #FFF }
+.Zebra_DatePicker .dp_header td             { color: #000 }
 
 .Zebra_DatePicker .dp_header .dp_previous,
 .Zebra_DatePicker .dp_header .dp_next       { width: 30px }
@@ -75,11 +75,11 @@
 
 /* = SELECT CURRENT DAY
 ----------------------------------------------------------------------------------------------------------------------*/
-.Zebra_DatePicker .dp_today { color: #FFF; padding: 3px }
+.Zebra_DatePicker .dp_today { color: #000; padding: 3px }
 
 /* = CLEAR DATE
 ----------------------------------------------------------------------------------------------------------------------*/
-.Zebra_DatePicker .dp_clear { color: #FFF; padding: 3px }
+.Zebra_DatePicker .dp_clear { color: #000; padding: 3px }
 
 /* = SOME MORE GLOBALS (MUST BE LAST IN ORDER TO OVERWRITE PREVIOUS PROPERTIES)
 ----------------------------------------------------------------------------------------------------------------------*/

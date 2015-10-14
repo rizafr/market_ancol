@@ -89,7 +89,6 @@ if ($total_data > 0)
 			s.LUAS_BANGUNAN,
 			s.STATUS_STOK,
 			s.TERJUAL,
-			s.HARGA_SK,
 			t.TIPE_BANGUNAN,
 			hs.HARGA_CASH_KERAS,
 			hs.CB36X,

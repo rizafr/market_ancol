@@ -67,8 +67,8 @@ $page_start = (($page_num-1) * $per_page);
 <table class="t-data w70">
 <tr>
 	<th class="w5"><input type="checkbox" id="cb_all"></th>
-	<th class="w5">KODE_SK</th>
-	<th class="w10">KODE_BLOK</th>
+	<th class="w5">KODE SK</th>
+	<th class="w10">KODE BLOK</th>
 	<th class="w10">CASH KERAS</th>
 	<th class="w10">CB 36X</th>
 	<th class="w10">CB 48X</th>
@@ -103,8 +103,9 @@ if ($total_data > 0)
 	while( ! $obj->EOF)
 	{
 		$id = $obj->fields['KODE_SK'];
+		$kode_blok = $obj->fields['KODE_BLOK'];
 		?>
-		<tr class="onclick" id="<?php echo $id; ?>">
+		<tr class="onclick" id="<?php echo $id; ?>" blok="<?php echo $kode_blok; ?>">
 			<td width="30" class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
 			<td class="text-center"><?php echo $id; ?></td>
 			<td><?php echo $obj->fields['KODE_BLOK']; ?></td>
