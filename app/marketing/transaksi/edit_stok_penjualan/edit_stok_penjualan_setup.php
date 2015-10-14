@@ -1,7 +1,6 @@
 <div class="title-page">STOK SIAP JUAL</div>
 <?php
-	$kode_sk_tanah	= (isset($_REQUEST['kode_sk_tanah'])) ? clean($_REQUEST['kode_sk_tanah']) : '';
-	$kode_sk_bangunan = (isset($_REQUEST['kode_sk_bangunan'])) ? clean($_REQUEST['kode_sk_bangunan']) : '';
+	$kode_sk = (isset($_REQUEST['kode_sk'])) ? clean($_REQUEST['kode_sk']) : '';
 
 ?>
 
@@ -12,23 +11,15 @@
 	<td>
 		<select name="s_opf1" id="s_opf1" class="auto">
 			<option value="s.KODE_BLOK"> KODE BLOK </option>
-			<option value="s.KODE_SK_TANAH"> SK TANAH </option>
-			<option value="s.KODE_SK_BANGUNAN"> SK BANGUNAN </option>
+			<option value="s.KODE_SK"> HARGA SK </option>
 		</select>
 		<input type="text" name="s_opv1" id="s_opv1" class="apply" value="">
 	</td>
 </tr>
 <tr>
-	<td width="100" name="label_tanah" id="label_tanah">SK Tanah</td><td name="t1" id="t1" width="10">:</td>
+	<td width="100" name="label_bangunan" id="label_bangunan">SK Harga</td><td name="b1" id="b1" width="10">:</td>
 	<td>
-		<input type="text" name="kode_sk_tanah" id="kode_sk_tanah" size="10" value="<?php echo $kode_sk_tanah; ?>">
-		<button onclick="return get_kode_sk_tanah()" name="btn_sk_tanah" id="btn_sk_tanah"> > </button>
-	</td>
-</tr>
-<tr>
-	<td width="100" name="label_bangunan" id="label_bangunan">SK Bangunan</td><td name="b1" id="b1" width="10">:</td>
-	<td>
-		<input type="text" name="kode_sk_bangunan" id="kode_sk_bangunan" size="10" value="<?php echo $kode_sk_bangunan; ?>">
+		<input type="text" name="kode_sk" id="kode_sk" size="10" value="<?php echo $kode_sk; ?>">
 		<button onclick="return get_kode_sk_bangunan()"  name="btn_sk_bangunan" id="btn_sk_bangunan"> > </button>
 	</td>
 </tr>
@@ -51,6 +42,8 @@
 <tr></tr>
 <tr>
 	<td>
+	</td>
+	<td>
 		<input type="button" name="update_all" id="update_all" value=" Update SK Untuk Data Tersortir ">
 	</td>
 </tr>
@@ -67,7 +60,7 @@ jQuery(function($) {
 
 
 	$('#label_bangunan').hide();
-	$('#kode_sk_bangunan').hide();
+	$('#kode_sk').hide();
 	$('#btn_sk_bangunan').hide();
 	$('#b1').hide();
 	$('#label_tanah').hide();
@@ -87,19 +80,13 @@ jQuery(function($) {
 		if($('#s_opf1').val() == 's.KODE_BLOK'){
 			loadData();
 		}
-		else if($('#s_opf1').val() == 's.KODE_SK_TANAH'){
-			if($('#kode_sk_tanah').val() == ''){
-				alert('Pilih SK Tanah Yang Akan Ditampilkan');
+		
+		else if($('#s_opf1').val() == 's.KODE_SK'){
+			if($('#kode_sk').val() == ''){
+				alert('Pilih SK Harga Yang Akan Ditampilkan');
 			}
 			else{
-			loadData();
-			}
-		}
-		else if($('#s_opf1').val() == 's.KODE_SK_BANGUNAN'){
-			if($('#kode_sk_bangunan').val() == ''){
-				alert('Pilih SK Bangunan Yang Akan Ditampilkan');
-			}
-			else{
+				//alert($('#s_opf1').val());
 			loadData();
 			}
 		}
@@ -117,7 +104,7 @@ jQuery(function($) {
 		e.preventDefault();
 		if($(this).val() == 's.KODE_BLOK'){
 			$('#label_bangunan').hide();
-			$('#kode_sk_bangunan').hide();
+			$('#kode_sk').hide();
 			$('#btn_sk_bangunan').hide();
 			$('#b1').hide();
 			$('#label_tanah').hide();
@@ -126,20 +113,9 @@ jQuery(function($) {
 			$('#t1').hide();
 			$('#update_all').hide();
 			$('#s_opv1').show();
-		} else if($(this).val() == 's.KODE_SK_TANAH') {
-			$('#label_bangunan').hide();
-			$('#kode_sk_bangunan').hide();
-			$('#btn_sk_bangunan').hide();
-			$('#b1').hide();
-			$('#label_tanah').show();
-			$('#kode_sk_tanah').show();
-			$('#btn_sk_tanah').show();
-			$('#t1').show();
-			$('#update_all').show();
-			$('#s_opv1').hide();
-		} else if($(this).val() == 's.KODE_SK_BANGUNAN') {
+		} else if($(this).val() == 's.KODE_SK') {
 			$('#label_bangunan').show();
-			$('#kode_sk_bangunan').show();
+			$('#kode_sk').show();
 			$('#btn_sk_bangunan').show();
 			$('#b1').show();
 			$('#label_tanah').hide();
@@ -168,9 +144,9 @@ jQuery(function($) {
 	
 	$(document).on('click', '#update_all', function(e) {
 		e.preventDefault();
-		if($('#s_opf1').val() == 's.KODE_SK_TANAH'){
-			if($('#kode_sk_tanah').val() == ''){
-				alert('Pilih SK Tanah Terlebih Dahulu');
+		if($('#s_opf1').val() == 's.KODE_SK'){
+			if($('#kode_sk').val() == ''){
+				alert('Pilih SK Harga Terlebih Dahulu');
 			}
 			else{
 				var id;
@@ -180,30 +156,8 @@ jQuery(function($) {
 					jenis = 'Tanah';
 				}
 				else{
-					id = $('#kode_sk_bangunan').val();
-					jenis = 'Bangunan';
-				}
-				
-				var act = 'Ubah_SK';
-				var url = this_base + 'edit_sk_popup.php?act=' + act + '&id=' + id + '&jenis=' + jenis;
-				setPopup('Edit SK Stok Belum Terjual', url, 600, 400);
-				
-			}
-		}
-		else if($('#s_opf1').val() == 's.KODE_SK_BANGUNAN'){
-			if($('#kode_sk_bangunan').val() == ''){
-				alert('Pilih SK Bangunan Terlebih Dahulu');
-			}
-			else{
-				var id;
-				var jenis;
-				if($('#s_opf1').val() == 's.KODE_SK_TANAH') {
-					id = $('#kode_sk_tanah').val();
-					jenis = 'Tanah';
-				}
-				else{
-					id = $('#kode_sk_bangunan').val();
-					jenis = 'Bangunan';
+					id = $('#kode_sk').val();
+					jenis = 'Harga SK';
 				}
 				
 				var act = 'Ubah_SK';
@@ -241,7 +195,7 @@ function get_kode_sk_tanah() {
 
 function get_kode_sk_bangunan() {
 	var url = get_base + 'kode_sk_bangunan.php'; 
-	setPopup('Daftar SK Bangunan', url, 600, winHeight-100); 
+	setPopup('Daftar SK Harga', url, 650, winHeight-100); 
 	return false; 
 }
 
