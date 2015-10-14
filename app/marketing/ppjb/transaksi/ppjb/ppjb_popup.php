@@ -255,21 +255,14 @@ jQuery(function($) {
 	<td>Tipe Bangunan</td></td><td>:</td>
 	<td><?php echo $tipe_bangunan; ?></td>
 </tr>
+
 <tr>
-	<td>Luas Tanah</td></td><td>:</td>
-	<td><?php echo $luas_tanah.' m&sup2;'; ?></td>
-</tr>
-<tr>
-	<td>Luas Bangunan</td></td><td>:</td>
+	<td>Luas Semi Gross</td></td><td>:</td>
 	<td><?php echo $luas_bangunan.' m&sup2;'; ?></td>
 </tr>
 <tr>
 	<td>Total Harga</td></td><td>:</td>
 	<td><?php echo 'Rp. '.$total_harga; ?></td>
-</tr>
-<tr>
-	<td>Total PPN</td></td><td>:</td>
-	<td><?php echo 'Rp. '.$total_ppn; ?></td>
 </tr>
 <tr>
 	<td>Nilai Tanda Jadi</td></td><td>:</td>
@@ -473,7 +466,7 @@ jQuery(function($) {
 	<td><input type="text" name="tgl2" id="tgl2" size="15" class="apply dd-mm-yyyy" value="<?php echo $tgl2; ?>"></td>
 </tr>
 <tr>
-	<td>Tgl. tanda tangan oleh JRP</td></td><td>:</td>
+	<td>Tgl. tanda tangan oleh ANCOL</td></td><td>:</td>
 	<td><input type="text" name="tgl3" id="tgl3" size="15" class="apply dd-mm-yyyy" value="<?php echo $tgl3; ?>"></td>
 </tr>
 <tr>

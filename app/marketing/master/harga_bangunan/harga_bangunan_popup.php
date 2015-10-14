@@ -25,7 +25,6 @@ require_once('harga_bangunan_proses.php');
 var this_base = base_marketing + 'master/harga_bangunan/';
 
 jQuery(function($) {
-	
 	$('#kode_sk').inputmask('varchar', { repeat: '15' });
 	$('#kode_blok').inputmask('varchar', { repeat: '15' });
 	$('#cash_keras').inputmask('numeric', { repeat: '12' });
