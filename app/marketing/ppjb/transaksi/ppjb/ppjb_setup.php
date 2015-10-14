@@ -15,9 +15,9 @@
 		<tr>
 			<td>Status PPJB</td><td>:</td>
 			<td>
-				<input type="radio" name="status_ppjb" id="all" class="status" value="2" checked="true"> <label for="sbs">All</label>
-				<input type="radio" name="status_ppjb" id="sudah" class="status" value="0" > <label for="sbb">Sudah</label>&nbsp;&nbsp;
-				<input type="radio" name="status_ppjb" id="belum" class="status" value="1"> <label for="sbs">Belum</label>
+				<input type="radio" name="status_ppjb" id="all" class="status" value="0" checked="true"> <label for="sbs">All</label>
+				<input type="radio" name="status_ppjb" id="sudah" class="status" value="1" > <label for="sbb">Sudah</label>&nbsp;&nbsp;
+				<input type="radio" name="status_ppjb" id="belum" class="status" value="2"> <label for="sbs">Belum</label>
 			</td>
 		</tr>
 		<tr>
@@ -67,14 +67,14 @@
 			$('input:radio[name="status_ppjb"]').change(function(e){
 				e.preventDefault();
 				
-				if($(this).val() == '0'){		
+				if($(this).val() == '0'){	//all	
+					$('.sudah').show();
+					$('.belum').show();
+				} else if($(this).val() == '1'){ //sudah
 					$('.sudah').show();
 					$('.belum').hide();
-				} else if($(this).val() == '1'){
+				} else if($(this).val() == '2'){ //belum
 					$('.sudah').hide();
-					$('.belum').show();
-				} else if($(this).val() == '2'){
-					$('.sudah').show();
 					$('.belum').show();
 				}
 				return false;

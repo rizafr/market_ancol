@@ -234,31 +234,31 @@ function hitung_bangunan(){
 			<tr>
 				<td>Cash Keras</td><td>:</td>
 				<td>
-					<input type="text" id="harga_cash_keras" class="text-right" size="15" value="<?php if(isset($harga_cash_keras)){echo $harga_cash_keras;}else{echo '0';} ?>">
+					<input type="text" id="harga_cash_keras" class="text-right" size="15" value="<?php if(isset($harga_cash_keras)){echo to_money($harga_cash_keras);}else{echo '0';} ?>">
 				</td>
 			</tr>
 			<tr>
 				<td>CB36X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_CB36X" class="text-right" size="15" value="<?php if(isset($CB36X)){echo $CB36X;}else{echo '0';} ?>">
+					<input type="text" id="harga_CB36X" class="text-right" size="15" value="<?php if(isset($CB36X)){echo to_money($CB36X);}else{echo '0';} ?>">
 				</td>
 			</tr>
 			<tr>
 				<td>CB48X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_CB48X" class="text-right" size="15" value="<?php if(isset($CB48X)){echo $CB48X;}else{echo '0';} ?>">
+					<input type="text" id="harga_CB48X" class="text-right" size="15" value="<?php if(isset($CB48X)){echo to_money($CB48X);}else{echo '0';} ?>">
 				</td>
 			</tr>
 			<tr>
 				<td>KPA24X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_KPA24X" class="text-right" size="15" value="<?php if(isset($KPA24X)){echo $KPA24X;}else{echo '0';} ?>">
+					<input type="text" id="harga_KPA24X" class="text-right" size="15" value="<?php if(isset($KPA24X)){echo to_money($KPA24X);}else{echo '0';} ?>">
 				</td>
 			</tr>
 			<tr>
 				<td>KPA36X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_KPA36X" class="text-right" size="15" value="<?php if(isset($KPA36X)){echo $KPA36X;}else{echo '0';} ?>">
+					<input type="text" id="harga_KPA36X" class="text-right" size="15" value="<?php if(isset($KPA36X)){echo to_money($KPA36X);}else{echo '0';} ?>">
 				</td>
 			</tr>
 			<tr>

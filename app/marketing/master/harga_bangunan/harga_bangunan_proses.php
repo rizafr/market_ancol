@@ -6,6 +6,7 @@ $error = FALSE;
 
 $act = (isset($_REQUEST['act'])) ? clean($_REQUEST['act']) : '';
 $id = (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
+$blok = (isset($_REQUEST['blok'])) ? clean($_REQUEST['blok']) : '';
 
 $kode_sk = (isset($_REQUEST['kode_sk'])) ? clean($_REQUEST['kode_sk']) : '';
 $kode_blok = (isset($_REQUEST['kode_blok'])) ? clean($_REQUEST['kode_blok']) : '';
@@ -57,41 +58,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				)";
 ex_false($conn->Execute($query), $query);
 
-$msg = "Data harga bangunan berhasil ditambahkan.";
+$msg = "Data harga sk berhasil ditambahkan.";
 }
 		elseif ($act == 'Ubah') # Proses Ubah
 		{
 			ex_ha('M10', 'U');
 			
 			ex_empty($kode_sk, 'Kode sk harus diisi.');
-			ex_empty($kode_lokasi, 'Kode lokasi harus diisi.');
-			ex_empty($jenis_bangunan, 'Pilih jenis bangunan.');
-			ex_empty($harga_bangunan, 1, 'Harga bangunan > 0');
+			ex_empty($kode_blok, 'Kode blok harus diisi.');
+			ex_empty($cash_keras, 1, 'Harga Cash Keras > 0');
 			ex_empty($tanggal, 'Pilih tanggal.');
 			
 			if ($kode_sk != $id)
 			{
-				$query = "SELECT COUNT(KODE_SK) AS TOTAL FROM HARGA_BANGUNAN WHERE KODE_SK = '$kode_sk'";
+				$query = "SELECT COUNT(KODE_SK) AS TOTAL FROM HARGA_SK WHERE KODE_SK = '$kode_sk' AND KODE_BLOK='$kode_blok'";
 				ex_found($conn->Execute($query)->fields['TOTAL'], "Kode sk \"$kode_sk\" telah terdaftar.");
 			}
 			
-			$query = "SELECT * FROM HARGA_BANGUNAN WHERE KODE_SK = '$kode_sk' AND KODE_LOKASI = '$kode_lokasi' AND JENIS_BANGUNAN = '$jenis_bangunan' AND HARGA_BANGUNAN = '$harga_bangunan' AND TANGGAL = CONVERT(DATETIME,'$tanggal',105) AND STATUS = '$status'";
+			$query = "SELECT * FROM HARGA_SK WHERE KODE_SK = '$kode_sk' AND kode_blok = '$kode_blok' AND HARGA_CASH_KERAS = '$cash_keras' AND CB48X = '$cb48x' AND CB36X = '$cb36x' AND KPA36X = '$kpa36x' AND KPA24X = '$kpa24x' AND TANGGAL = CONVERT(DATETIME,'$tanggal',105) AND STATUS = '$status'";
 			ex_found($conn->Execute($query)->recordcount(), "Tidak ada data yang berubah.");
 			
 			$query = "
-			UPDATE HARGA_BANGUNAN 
-			SET KODE_SK = '$kode_sk',
-			KODE_LOKASI = '$kode_lokasi',
-			JENIS_BANGUNAN = '$jenis_bangunan',
-			HARGA_BANGUNAN = '$harga_bangunan',
-			TANGGAL = CONVERT(DATETIME,'$tanggal',105),
-			STATUS = '$status'
+			UPDATE HARGA_SK 
+			SET 
+				HARGA_CASH_KERAS = '$cash_keras',
+				CB36X = '$cb36x',
+				CB48X = '$cb48x',
+				KPA24X = '$kpa24x',
+				KPA36X = '$kpa36x',
+				TANGGAL = CONVERT(DATETIME,'$tanggal',105),
+				STATUS = '$status'
 			WHERE
-			KODE_SK = '$id'
+				KODE_SK = '$id' 
+				AND KODE_BLOK = '$kode_blok'
 			";
 			ex_false($conn->Execute($query), $query);
 			
-			$msg = 'Data harga bangunan berhasil diubah.';
+			$msg = 'Data harga sk berhasil diubah.';
 		}
 		elseif ($act == 'Hapus') # Proses Hapus
 		{
@@ -107,7 +110,7 @@ $msg = "Data harga bangunan berhasil ditambahkan.";
 
 				echo "querySrc";
 
-				$query = "DELETE FROM HARGA_SK WHERE KODE_SK = '$id_del'";
+				$query = "DELETE FROM HARGA_SK WHERE KODE_SK = '$id_del' AND KODE_BLOK='$kode_blok'";
 				if ($conn->Execute($query)) {
 					$act[] = $id_del;
 				} else {
@@ -149,15 +152,27 @@ die_conn($conn);
 if ($act == 'Ubah')
 {
 	$obj = $conn->Execute("
-		SELECT *
-		
-		FROM HARGA_BANGUNAN
-		WHERE KODE_SK = '$id'
+	SELECT
+		hb.KODE_SK,
+		hb.KODE_BLOK,
+		hb.TANGGAL,
+		hb.HARGA_CASH_KERAS,
+		hb.CB36X,
+		hb.CB48X,
+		hb.KPA24X,
+		hb.KPA36X,
+		hb.STATUS		
+	FROM 
+		HARGA_SK hb
+	WHERE hb.KODE_SK = '$id' AND hb.KODE_BLOK='$blok'
 		");
-	$kode_sk = $obj->fields['KODE_SK'];
-	$kode_lokasi = $obj->fields['KODE_LOKASI'];
-	$jenis_bangunan = $obj->fields['JENIS_BANGUNAN'];
-	$harga_bangunan = $obj->fields['HARGA_BANGUNAN'];
+	$kode_sk = $id;
+	$kode_blok = $obj->fields['KODE_BLOK'];
+	$cash_keras = $obj->fields['HARGA_CASH_KERAS'];
+	$cb36x = $obj->fields['CB36X'];
+	$cb48x = $obj->fields['CB48X'];
+	$kpa24x = $obj->fields['KPA24X'];
+	$kpa36x = $obj->fields['KPA36X'];
 	$tanggal = tgltgl(date("d-m-Y",strtotime($obj->fields['TANGGAL'])));
 	$status = $obj->fields['STATUS'];
 }

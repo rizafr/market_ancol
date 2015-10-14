@@ -51,7 +51,8 @@ jQuery(function($) {
 	$(document).on('click', 'tr.onclick td:not(.notclick)', function(e) {
 		e.preventDefault();
 		var id = $(this).parent().attr('id');
-		showPopup('Ubah', id);
+		var blok = $(this).parent().attr('blok');
+		showPopup('Ubah', id,blok);
 		return false;
 	});
 	
@@ -82,9 +83,9 @@ function loadData() {
 	return false;
 }
 
-function showPopup(act, id) {
-	var url = this_base + 'harga_bangunan_popup.php?act=' + act + '&id=' + id;
-	setPopup(act + ' Harga Bangunan', url, 600, 350);
+function showPopup(act, id,blok) {
+	var url = this_base + 'harga_bangunan_popup.php?act=' + act + '&id=' + id + '&blok=' + blok;
+	setPopup(act + ' Harga SK', url, 600, 350);
 	return false;
 }
 function showPopupUpload(act, id) {
