@@ -424,7 +424,7 @@
 		
 			<input type="text" name="tgl_proses" id="tgl_proses" size="10" class="apply dd-mm-yyyy" value="<?php echo $tgl_proses; ?>">
 		</td>
-		<td align="left"> Tanda Jadi : <input type="text" name="tanda_jadi" id="tanda_jadi" size="20" value="<?php echo to_money($tanda_jadi); ?>"></td>
+		<td align="left"> Tanda Jadi : <input type="text" name="tanda_jadi" id="tanda_jadi" size="20" value="<?php if(!isset($tanda_jadi)){$tanda_jadi = 20000000;}echo ((to_money($tanda_jadi))); ?>"></td>
 	</tr>
 
 
