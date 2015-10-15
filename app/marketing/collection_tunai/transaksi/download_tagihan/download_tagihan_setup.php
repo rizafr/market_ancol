@@ -1,9 +1,6 @@
+<div class="title-page">CREATE TAGIHAN VIRTUAL ACCOUNT</div>
+
 <form name="form" id="form" method="post">
-<table class="t-control2">
-    <tr>
-      <td style="font-size:20px;text-align:center;font-weight:bold" >CREATE TAGIHAN VIRTUAL ACCOUNT</td>
-    </tr>
-</table>	
 <table class="t-control">
 	<tr>	
 		<td width="100">Bulan Tagihan</td><td width="10">:</td>
