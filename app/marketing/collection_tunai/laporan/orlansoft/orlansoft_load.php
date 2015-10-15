@@ -66,31 +66,6 @@ $page_start = (($page_num-1) * $per_page);
 </tr>
 </table>
 
-<!-- <div style='overflow-x:auto;'> -->
-<table class="t-nowrap t-data wm100">
-<tr>
-	<th>NO.</th>
-	<th>NAMA KONSUMEN</th>
-	<th>BLOK</th>
-	<th>ALAMAT</th>
-	<th>NO.TELP</th>
-	<th>TANGGAL SPP</th>
-	<th>TIPE</th>
-	<th>SEMI GROSS</th>
-	<th>NO. KTP</th>
-	<th>NO. NPWP</th>
-	<th>LANTAI</th>
-	<th>NO. UNIT</th>
-	<th>NO. VIRTUAL ACCOUNT</th>
-	<th>POLA PEMBAYARAN</th>
-	<th>HARGA INCLUDE PPN</th>
-	<th>HARGA NET</th>
-	<th>PPN 10%</th>
-	<th>UANG PESANAN</th>
-	<th>TANGGAL</th>
-	<th>NILAI</th>
-</tr>
-
 <?php
 
 if ($total_data > 0)
@@ -119,7 +94,44 @@ if ($total_data > 0)
 				LEFT JOIN RENCANA g ON g.KODE_BLOK = a.KODE_BLOK
 		WHERE 	STATUS_KOMPENSASI IS NOT NULL
 		$query_search
-	";
+	"; ?>
+
+	<!-- <div style='overflow-x:auto;'> -->
+	<table class="t-nowrap t-data wm100">
+	<tr>
+		<th>NO.</th>
+		<th>NAMA KONSUMEN</th>
+		<th>BLOK</th>
+		<th>ALAMAT</th>
+		<th>NO.TELP</th>
+		<th>TANGGAL SPP</th>
+		<th>TIPE</th>
+		<th>SEMI GROSS</th>
+		<th>NO. KTP</th>
+		<th>NO. NPWP</th>
+		<th>LANTAI</th>
+		<th>NO. UNIT</th>
+		<th>NO. VIRTUAL ACCOUNT</th>
+		<th>POLA PEMBAYARAN</th>
+		<th>HARGA INCLUDE PPN</th>
+		<th>HARGA NET</th>
+		<th>PPN 10%</th>
+		<th>UANG PESANAN</th>
+		<?php 
+
+			$k = 1; 
+			while ( $k <= 48) {
+				# code...
+				?>
+				<th>TANGGAL <?php echo $k; ?></th>
+				<?php
+				$k++;
+			}
+
+		?>	
+	</tr>
+
+	<?php
 	//End Edited
 
 	$obj = $conn->selectlimit($query, $per_page, $page_start);
@@ -189,13 +201,37 @@ if ($total_data > 0)
 			<td class="text-center"><?php echo number_format($total_harga)?></td>
 			<td class="text-center"><?php echo number_format($total_ppn); ?></td>
 			<td class="text-center"><?php echo number_format($uang_pesanan); ?></td>
-			<td class="text-center"><?php echo kontgl(tgltgl(date("d M Y", strtotime($tgl_rencana)))); ?></td>
+			<!-- <td class="text-center"><?php echo kontgl(tgltgl(date("d M Y", strtotime($tgl_rencana)))); ?></td> -->	
 			<td class="text-center"><?php echo number_format($nilai)?></td>
 		</tr>
 		<?php
 		$i++;
 		$obj->movenext();
 	}
+} else { ?>
+	<table class="t-nowrap t-data wm100">
+	<tr>
+		<th>NO.</th>
+		<th>NAMA KONSUMEN</th>
+		<th>BLOK</th>
+		<th>ALAMAT</th>
+		<th>NO.TELP</th>
+		<th>TANGGAL SPP</th>
+		<th>TIPE</th>
+		<th>SEMI GROSS</th>
+		<th>NO. KTP</th>
+		<th>NO. NPWP</th>
+		<th>LANTAI</th>
+		<th>NO. UNIT</th>
+		<th>NO. VIRTUAL ACCOUNT</th>
+		<th>POLA PEMBAYARAN</th>
+		<th>HARGA INCLUDE PPN</th>
+		<th>HARGA NET</th>
+		<th>PPN 10%</th>
+		<th>UANG PESANAN</th>
+		<th>TANGGAL</th>
+	</tr>
+<?php
 }
 
 ?>

@@ -175,6 +175,7 @@
 			<!-- Bandung 14 Oktober 2015 -->
 			<li class="separator"></li>
 			<li><a href="<?php echo base64_encode('A01_orlansoft'); ?>">Orlansoft</a></li>
+			<li><a href="<?php echo base64_encode('A01_cash_in'); ?>">Cash In</a></li>
 			<!-- End Edited -->
 			</ul>		
 		</ul>

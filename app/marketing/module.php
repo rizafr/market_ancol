@@ -121,6 +121,7 @@ switch (trim(base64_decode($cmd)))
 	//Start Edited by Kurniawan
 	//Bandung 14 Oktober 2015
 	case 'A01_orlansoft'					: die_mod('C39'); include('marketing/collection_tunai/laporan/orlansoft/orlansoft_setup.php');break;
+	case 'A01_cash_in'						: die_mod('C40'); include('marketing/collection_tunai/laporan/cash_in/cash_in_setup.php');break;
 	//End Edited
 	
 	# Lain-lain
