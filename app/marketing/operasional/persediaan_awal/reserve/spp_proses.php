@@ -236,7 +236,8 @@ if ($act == 'Ubah')
 if ($act == 'Ubah')
 {
 	$obj = $conn->Execute("
-	SELECT  
+
+SELECT  
 		s.KODE_BLOK,
 		l.LOKASI,
 		s.LUAS_BANGUNAN,

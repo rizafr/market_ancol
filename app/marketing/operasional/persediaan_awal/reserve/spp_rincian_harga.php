@@ -33,7 +33,7 @@ die_conn($conn);
 
 	<tr>
 		<td>Luas Semigross</td><td>:</td>
-		<td><?php echo to_decimal($r_luas_bangunan); ?></td>
+		<td><?php echo to_decimal($r_luas_bangunan); ?> M&sup2;</td>
 	</tr>
 	<tr>
 		<td>Cash Keras</td><td>:</td>
@@ -55,6 +55,7 @@ die_conn($conn);
 		<td>KPA 36X 40%</td><td>:</td>
 		<td>Rp. <?php echo to_money($kpa36x); ?></td>
 	</tr>
+
 	<tr>
 		<td class="td-action" colspan="10">
 			<input type="button" id="close" value=" Tutup ">

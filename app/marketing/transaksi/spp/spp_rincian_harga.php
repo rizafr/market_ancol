@@ -7,7 +7,6 @@ die_login();
 $conn = conn($sess_db);
 die_conn($conn);
 ?>
-
 <table class="t-popup pad2 w80">
 	<tr>
 		<td width="100">Kode Blok</td><td width="10">:</td>
@@ -32,7 +31,7 @@ die_conn($conn);
 
 	<tr>
 		<td>Luas Semigross</td><td>:</td>
-		<td><?php echo to_decimal($r_luas_bangunan); ?></td>
+		<td><?php echo to_decimal($r_luas_bangunan); ?> M&sup2;</td>
 	</tr>
 	<tr>
 		<td>Cash Keras</td><td>:</td>
