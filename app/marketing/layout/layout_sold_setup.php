@@ -8,7 +8,7 @@
 <div id="scroller">
 <?php
 
-$file = '../layout_sold.pdf';
+$file = '../files/layout_sold.pdf';
 //$file = '../files/upload.xlsx';
 $filename = 'layout_sold.pdf'; /* Note: Always use .pdf at the end. */
 if(file_exists($file)) {
