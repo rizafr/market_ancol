@@ -8,8 +8,8 @@
 	$jumlah					= (isset($_REQUEST['jumlah'])) ? clean($_REQUEST['jumlah']) : '';	
 	$tanggal_input			= (isset($_REQUEST['tgl_spp'])) ? clean($_REQUEST['tgl_spp']) : '';
 	$kode_bayar				= (isset($_REQUEST['kode_bayar'])) ? clean($_REQUEST['kode_bayar']) : '';
-	$keterangan				= (isset($_REQUEST['keterangan'])) ? clean($_REQUEST['keterangan']) : '';
-	$pola_bayar				= (isset($_REQUEST['pola_bayar'])) ? clean($_REQUEST['pola_bayar']) : '';
+	// $keterangan				= (isset($_REQUEST['keterangan'])) ? clean($_REQUEST['keterangan']) : '';
+	$pola_bayar				= (isset($_REQUEST['field1'])) ? clean($_REQUEST['field1']) : '';
 	$status_kompensasi		= (isset($_REQUEST['status_kompensasi'])) ? clean($_REQUEST['status_kompensasi']) : '';
 	$uang_muka				= (isset($_REQUEST['uang_muka'])) ? clean($_REQUEST['uang_muka']) : '';
 	$total					= (isset($_REQUEST['total'])) ? clean($_REQUEST['total']) : '';
@@ -34,180 +34,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		
 		if ($act == 'Apply') # Proses Ubah
 			{
-				
 				ex_empty($pola_bayar, 'Pola Bayar harus diisi.');				
 				
 				$query = "DELETE FROM RENCANA WHERE KODE_BLOK = '$id'";
 				ex_false($conn->execute($query), $query);
 				
 				//proses pengambilan harga sk yang dipilih sesuai pola bayar
-				$query = "SELECT count(*) as TOTAL FROM DETAIL_POLA_BAYAR WHERE KODE_POLA_BAYAR = $pola_bayar AND KODE_BLOK = '$id'";
+				$query = "SELECT count(KODE_BLOK) as TOTAL FROM HARGA_SK WHERE KODE_SK=(SELECT KODE_SK FROM STOK WHERE KODE_BLOK = '$id') AND KODE_BLOK='$id'";
 				ex_not_found($conn->Execute($query)->fields['TOTAL'], "Pola Bayar Tidak Tersedia");
 
-				$query = "SELECT * FROM DETAIL_POLA_BAYAR WHERE KODE_POLA_BAYAR = $pola_bayar AND KODE_BLOK = '$id'";
+				$query = "SELECT ($pola_bayar) as HARGA FROM HARGA_SK WHERE KODE_SK = (SELECT KODE_SK FROM STOK WHERE KODE_BLOK = '$id') AND KODE_BLOK = '$id'";
 				$obj = $conn->execute($query);
-	
-				$h_tanah 	= $obj->fields['HARGA_TANAH'];
-				$h_bangun 	= $obj->fields['HARGA_BANGUNAN'];
 				
-				//mencari nomor sk tanah
-				$query = "	SELECT * FROM HARGA_TANAH WHERE HARGA_TANAH = $h_tanah";
-				$obj = $conn->execute($query);
-
-				$sk_tanah 	= $obj->fields['KODE_SK'];
-
-				//mencari nomor sk bangunan
-				$obj = $conn->execute("	SELECT * FROM HARGA_BANGUNAN WHERE HARGA_BANGUNAN = $h_bangun");
-				$sk_bangun	= $obj->fields['KODE_SK'];
-
-				//update sk yang dipalkai pada tabel stok
-				$query = "UPDATE STOK SET 
-							KODE_SK_TANAH		= $sk_tanah,
-							KODE_SK_BANGUNAN	= $sk_bangun
+				$harga_total = $obj->fields['HARGA'];
+				
+				//update harga total yang dipalkai pada tabel spp
+				$query = "UPDATE SPP SET 
+							HARGA_TOTAL	= $harga_total,
+							POLA_BAYAR	= '$pola_bayar'
 						  WHERE KODE_BLOK		= '$id'
 						  ";
 				ex_false($conn->execute($query), 'Update Pola bayar terlebih dahulu');
 				
-				
-				//proses penhitungan total harga yang baru
-				$obj = $conn->Execute("
-				SELECT  
-					s.*,
-					f.NILAI_TAMBAH, 
-					f.NILAI_KURANG, 
-					
-					(s.LUAS_TANAH * ht.HARGA_TANAH) AS BASE_HARGA_TANAH, 
-					(
-						((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-						((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-					) AS FS_HARGA_TANAH, 
-					
-					(
-						(
-							(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-							((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-							((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-						)
-						* s.DISC_TANAH / 100
-					) AS DISC_HARGA_TANAH, 
-					
-					(
-						(
-							((s.LUAS_TANAH * ht.HARGA_TANAH) + 
-							((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-							((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100))
-							-
-							(
-								((s.LUAS_TANAH * ht.HARGA_TANAH) + 
-								((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-								((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100))
-								* s.DISC_TANAH / 100
-							)
-						) * s.PPN_TANAH / 100
-					) AS PPN_HARGA_TANAH, 
-					
-					
-					(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) AS BASE_HARGA_BANGUNAN, 
-					((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100) AS DISC_HARGA_BANGUNAN, 
-					(
-						(
-							(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) -
-							((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100)
-						) * s.PPN_BANGUNAN / 100
-					) AS PPN_HARGA_BANGUNAN, 
-					
-					d.NAMA_DESA,
-					l.LOKASI,
-					ju.JENIS_UNIT,
-					ht.HARGA_TANAH AS HARGA_TANAH_SK,
-					f.FAKTOR_STRATEGIS,
-					t.TIPE_BANGUNAN,
-					hb.HARGA_BANGUNAN AS HARGA_BANGUNAN_SK,
-					p.JENIS_PENJUALAN
-				FROM 
-					STOK s
-					
-					LEFT JOIN HARGA_BANGUNAN hb ON s.KODE_SK_BANGUNAN = hb.KODE_SK
-					LEFT JOIN HARGA_TANAH ht ON s.KODE_SK_TANAH = ht.KODE_SK
-					
-					LEFT JOIN DESA d ON s.KODE_DESA = d.KODE_DESA
-					LEFT JOIN LOKASI l ON s.KODE_LOKASI = l.KODE_LOKASI
-					LEFT JOIN JENIS_UNIT ju ON s.KODE_UNIT = ju.KODE_UNIT
-					LEFT JOIN FAKTOR f ON s.KODE_FAKTOR = f.KODE_FAKTOR
-					LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
-					LEFT JOIN JENIS_PENJUALAN p ON s.KODE_PENJUALAN = p.KODE_JENIS
-				WHERE
-					KODE_BLOK = '$id'");
-				$r_kode_desa			= $obj->fields['KODE_DESA'];
-				$r_kode_lokasi			= $obj->fields['KODE_LOKASI'];
-				$r_kode_unit			= $obj->fields['KODE_UNIT'];
-				$r_kode_sk_tanah		= $obj->fields['KODE_SK_TANAH'];
-				$r_kode_faktor			= $obj->fields['KODE_FAKTOR'];
-				$r_kode_tipe			= $obj->fields['KODE_TIPE'];
-				$r_kode_sk_bangunan		= $obj->fields['KODE_SK_BANGUNAN'];
-				$r_kode_penjualan		= $obj->fields['KODE_PENJUALAN'];
-				
-				$r_nama_desa			= $obj->fields['NAMA_DESA'];
-				$r_lokasi				= $obj->fields['LOKASI'];
-				$r_jenis_unit			= $obj->fields['JENIS_UNIT'];
-				$r_harga_tanah_sk		= $obj->fields['HARGA_TANAH_SK'];
-				$r_faktor_strategis		= $obj->fields['FAKTOR_STRATEGIS'];
-				$r_tipe_bangunan		= $obj->fields['TIPE_BANGUNAN'];
-				$r_harga_bangunan_sk	= $obj->fields['HARGA_BANGUNAN_SK'];
-				$r_jenis_penjualan		= $obj->fields['JENIS_PENJUALAN'];
-				
-				$r_tgl_bangunan			= tgltgl(f_tgl($obj->fields['TGL_BANGUNAN']));
-				$r_tgl_selesai			= tgltgl(f_tgl($obj->fields['TGL_SELESAI']));
-				$r_progress				= $obj->fields['PROGRESS'];
-				$r_class				= $obj->fields['CLASS'];
-				$r_status_gambar_siteplan	= $obj->fields['STATUS_GAMBAR_SITEPLAN'];
-				$r_status_gambar_lapangan	= $obj->fields['STATUS_GAMBAR_LAPANGAN'];
-				$r_status_gambar_gs		= $obj->fields['STATUS_GAMBAR_GS'];
-				$r_program				= $obj->fields['PROGRAM'];
-				
-				$r_luas_tanah			= $obj->fields['LUAS_TANAH'];
-				$r_base_harga_tanah		= $obj->fields['BASE_HARGA_TANAH'];
-				$r_nilai_tambah			= $obj->fields['NILAI_TAMBAH'];
-				$r_nilai_kurang			= $obj->fields['NILAI_KURANG'];
-				$r_fs_harga_tanah		= $obj->fields['FS_HARGA_TANAH'];
-				$r_disc_tanah			= $obj->fields['DISC_TANAH'];
-				$r_disc_harga_tanah		= $obj->fields['DISC_HARGA_TANAH'];
-				$r_ppn_tanah			= $obj->fields['PPN_TANAH'];
-				$r_ppn_harga_tanah		= $obj->fields['PPN_HARGA_TANAH'];
-				$r_harga_tanah			= $r_base_harga_tanah + $r_fs_harga_tanah - $r_disc_harga_tanah + $r_ppn_harga_tanah;
-				
-				$r_luas_bangunan		= $obj->fields['LUAS_BANGUNAN'];
-				$r_base_harga_bangunan	= $obj->fields['BASE_HARGA_BANGUNAN'];
-				$r_fs_harga_bangunan	= 0;
-				$r_disc_bangunan		= $obj->fields['DISC_BANGUNAN'];
-				$r_disc_harga_bangunan	= $obj->fields['DISC_HARGA_BANGUNAN'];
-				$r_ppn_bangunan			= $obj->fields['PPN_BANGUNAN'];
-				$r_ppn_harga_bangunan	= $obj->fields['PPN_HARGA_BANGUNAN'];
-				$r_harga_bangunan		= $r_base_harga_bangunan + $r_fs_harga_bangunan - $r_disc_harga_bangunan + $r_ppn_harga_bangunan;
-				
-				
-				$total = $r_harga_tanah + $r_harga_bangunan;						
-				
 				//proses penghitungan rencana (angsuran)
-					
-				$obj = $conn->execute("		
-										SELECT * FROM POLA_BAYAR
-										WHERE KODE_POLA_BAYAR = $pola_bayar
- 									 ");
-				
-				$kode_jenis = $obj->fields['KODE_JENIS'];
-				$nilai1	 	= $obj->fields['NILAI1'];
-				$kali1	 	= $obj->fields['KALI1'];
-				$nilai2		= $obj->fields['NILAI2'];
-				$kali2 		= $obj->fields['KALI2'];
-				$nilai3 	= $obj->fields['NILAI3'];
-				$kali3 		= $obj->fields['KALI3'];
-				$nilai4		= $obj->fields['NILAI4'];
-				$kali4 		= $obj->fields['KALI4'];
-				$nilai5 	= $obj->fields['NILAI5'];
-				$kali5 		= $obj->fields['KALI5'];
-				$nilai_jenis = $obj->fields['NILAI_JENIS'];
-			
 				
 				$b = $tanggal_input;
 				
@@ -234,42 +83,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					
 				}
 				
-				$tanggal_input = '25-'.($next_bln).'-'.$next_thn;
+				$tanggal_input = '20-'.($next_bln).'-'.$next_thn;
 								
-				$nilai	= $total;
-				$total_harga_awal = $total;
+				// $nilai	= $total;
+				// $total_harga_awal = $total;
 				
-				$nilai_bagi = array();
-				for($i=0;$i<$kali1;$i++){
-					$nilai_bagi[] = ($nilai * $nilai1)/100;
+				$hasil_bagi = array();
+				if ($pola_bayar == 'HARGA_CASH_KERAS'){
+					$kode_jenis = 2;
+					$bagi = 1;
+					for($i=0;$i<$bagi;$i++){
+						$hasil_bagi[] = $harga_total/$bagi;
+					}
 				}
-				for($i=0;$i<$kali2;$i++){
-					$nilai_bagi[] = ($nilai * $nilai2)/100;
+				if($pola_bayar == 'CB36X'){
+					$kode_jenis = 2;
+					$bagi = 36;
+					for($i=0;$i<$bagi;$i++){
+						$hasil_bagi[] = $harga_total/$bagi;
+					}
 				}
-				for($i=0;$i<$kali3;$i++){
-					$nilai_bagi[] = ($nilai * $nilai3)/100;
+				if($pola_bayar == 'CB46X'){
+					$kode_jenis = 2;
+					$bagi = 46;
+					for($i=0;$i<$bagi;$i++){
+						$hasil_bagi[] = $harga_total/$bagi;
+					}
 				}
-				for($i=0;$i<$kali4;$i++){
-					$nilai_bagi[] = ($nilai * $nilai4)/100;
-				}
-				for($i=0;$i<$kali5;$i++){
-					$nilai_bagi[] = ($nilai * $nilai5)/100;
+				if($pola_bayar == 'KPA24X'){
+					$kode_jenis = 1;
+					$bagi = 24;
+					$kpa = ($harga_total*40)/100;
+					for($i=0;$i<$bagi;$i++){
+						$hasil_bagi[] = $kpa/$bagi;
+					}
 				}
 				
+				if($pola_bayar == 'KPA36X'){
+					$kode_jenis = 1;
+					$bagi = 36;
+					$kpa = ($harga_total*40)/100;
+					for($i=0;$i<$bagi;$i++){
+						$hasil_bagi[] = $kpa/$bagi;
+					}
+				}
 				
-				$kali = $kali1+$kali2+$kali3+$kali4+$kali5;
 				$nilai_fix=0;
-				for($i=0;$i<$kali;$i++){				
+				for($i=0;$i<$bagi;$i++){				
 					
 					if($i==0){
 							$tanggal = date("Y-m-d",strtotime($tanggal_input));
-							$nilai_fix = $nilai_bagi[$i] - $tanda_jadi;
+							$nilai_fix = $hasil_bagi[$i] - $tanda_jadi;
 							if($nilai_fix < 0)
 							{	$sisa = $nilai_fix * -1;
 								$nilai_fix = 0;
 							}
 					}else 
-					if ($i == $kali-1){
+					if ($i == $bagi-1){
 						$obj = $conn->execute("		
 										SELECT SUM(NILAI) AS JUMLAH FROM RENCANA
 										WHERE KODE_BLOK = '$id'
@@ -283,15 +153,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 						$obj 		= $conn->execute($query);						
 						$tanggal	= $obj->fields['TANGGAL'];
 						if ($kode_jenis == 2){
-							$nilai_fix = $total_harga_awal - ($jumlah + $tanda_jadi);
+							$nilai_fix = $harga_total - ($jumlah + $tanda_jadi);
 						}
 						else if ($kode_jenis == 1){
-							$nilai_fix = $nilai_bagi[$i];
+							$nilai_fix = $hasil_bagi[$i];
 						}
 						
 					}
 					else{
-						$nilai_fix = $nilai_bagi[$i];
+						$nilai_fix = $hasil_bagi[$i];
 						
 						$query 		= "SELECT TOP 1 DATEADD(month,1,TANGGAL) AS TANGGAL
 										FROM RENCANA
@@ -306,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 									'$tanggal',
 									'$kode_bayar',
 									'$nilai_fix',
-									'$keterangan'
+									'$pola_bayar'
 								)";			
 					
 					ex_false($conn->execute($query), $query);					
@@ -318,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 										WHERE KODE_BLOK = '$id'
  									 ");
 				$jumlah	 	= $obj->fields['JUMLAH'];
-				$jumlah_kpr = $total_harga_awal - ($jumlah + $tanda_jadi);
+				$jumlah_kpr = $harga_total - ($jumlah + $tanda_jadi);
 				$hasil = '';
 				if($cek_auto_akad = 'yes'){
 					$query 		= "SELECT TOP 1 DATEADD(month,1,TANGGAL) AS TANGGAL
@@ -350,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 							STATUS_KOMPENSASI	= '$kode_jenis',
 							JUMLAH_KPR			= '$jumlah_kpr',
 							TANGGAL_AKAD		= '$hasil',
-							KETERANGAN = '$keterangan'
+							KETERANGAN 			= '$pola_bayar'
 						  WHERE KODE_BLOK		= '$id'
 						  ";
 				
