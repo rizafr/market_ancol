@@ -10,7 +10,6 @@ $per_page	= (isset($_REQUEST['per_page'])) ? max(1, $_REQUEST['per_page']) : 20;
 $page_num	= (isset($_REQUEST['page_num'])) ? max(1, $_REQUEST['page_num']) : 1;
 
 $field1				= (isset($_REQUEST['field1'])) ? clean($_REQUEST['field1']) : '';
-$search1			= (isset($_REQUEST['search1'])) ? clean($_REQUEST['search1']) : '';
 
 //Edited by Kurniawan 15 Oktober 2015
 $bulan_awal			= (isset($_REQUEST['bulan_awal'])) ? clean($_REQUEST['bulan_awal']) : '' ;
@@ -21,7 +20,7 @@ $pecah_tanggal1		= explode('-', $tanggal1);
 $bln1				= $pecah_tanggal1[0];
 $thn1				= $pecah_tanggal1[1];
 
-$tanggal2 			= $bulan_awa2;
+$tanggal2 			= $bulan_akhir;
 $pecah_tanggal2		= explode('-', $tanggal2);
 $bln2				= $pecah_tanggal2[0];
 $thn2				= $pecah_tanggal2[1];
@@ -29,15 +28,17 @@ $thn2				= $pecah_tanggal2[1];
 $array_bulan 		= array(1=>'Januari','Februari','Maret', 'April', 'Mei', 'Juni','Juli','Agustus','September','Oktober', 'November','Desember'); 
 $array_bulan[0]		= 'Desember';
 
+$selisih = $bulan_akhir-$bulan_awal;
+
 $a	= 0;
-while($a < 6)
+while($a < 12)
 {
-	$next_bulan 	= $bln + 1 + $a;
-	$next_tahun		= $thn;
-	if($next_bulan > 12)
+	$next_bulan 	= $bln2 + 1 + $a;
+	$next_tahun		= $thn2;
+	if($next_bulan > $selisih)
 	{
-		$next_bulan 	= $next_bulan % 12;
-		$next_tahun 	= $thn + 1; 
+		$next_bulan 	= $next_bulan % $selisih;
+		$next_tahun 	= $thn2 + 1; 
 	}
 	
 	$proyeksi_bulan[$a] = $array_bulan[$next_bulan].' '.$next_tahun;
@@ -54,21 +55,33 @@ if($field1 == 'all')
 	}
 }
 
-if($field1 == 'kode_blok')
+if($field1 == 'harga_cash_keras')
 {
-	$query_search .= "WHERE a.KODE_BLOK = '$search1'";
+	$query_search .= "WHERE a.POLA_PEMBAYARAN = 'HARGA_CASH_KERAS'";
 
 }
 
-if($field1 == 'spp_distribusi')
+if($field1 == 'kpa24x')
 {
-	$query_search .= "WHERE a.TANGGAL_SPP >= CONVERT(DATETIME,'$periode_awal',105) AND a.TANGGAL_SPP <= CONVERT(DATETIME,'$periode_akhir',105) AND a.STATUS_SPP = '1'";
+	$query_search .= "WHERE a.POLA_PEMBAYARAN = 'KPA24X'";
 
 }
 
-if($field1 == 'spp_belum')
+if($field1 == 'kpa36x')
 {
-	$query_search .= "WHERE a.TANGGAL_SPP >= CONVERT(DATETIME,'$periode_awal',105) AND a.TANGGAL_SPP <= CONVERT(DATETIME,'$periode_akhir',105) AND a.STATUS_SPP = '2'";
+	$query_search .= "WHERE a.POLA_PEMBAYARAN = 'KPA36X'";
+
+}
+
+if($field1 == 'cb36x')
+{
+	$query_search .= "WHERE a.POLA_PEMBAYARAN = 'CB36X'";
+
+}
+
+if($field1 == 'cb48x')
+{
+	$query_search .= "WHERE a.POLA_PEMBAYARAN = 'CB48X'";
 
 }
 
@@ -116,31 +129,20 @@ $page_start = (($page_num-1) * $per_page);
 <table class="t-nowrap t-data wm100">
 <tr>
 	<th rowspan="2">NO.</th>
-	<th rowspan="2">NAMA PEMBELI</th>
-	<th rowspan="2">BLOK / NOMOR</th>
-	<th rowspan="2">TOTAL HARGA</th>
-	<th rowspan="2">PEMBAYARAN s/d BULAN LALU</th>
-	<th rowspan="2">PEMBAYARAN BULAN INI (s/d <?php echo $tanggal;?>)</th>
-	<th colspan="3">SISA TAGIHAN</th>
-	<th colspan="8">PROYEKSI PENAGIHAN</th>
+	<th rowspan="2">POLA PEMBAYARAN</th>
 </tr>
 <tr>
-	<th colspan="1">Sudah JT</th>
-	<th colspan="1">Belum JT</th>
-	<th colspan="1">Total</th>
 	<th colspan="1">Bulan ini</th>
-	<th colspan="1"><?php echo $proyeksi_bulan[0];?></th>
-	<th colspan="1"><?php echo $proyeksi_bulan[1];?></th>
-	<th colspan="1"><?php echo $proyeksi_bulan[2];?></th>
-	<th colspan="1"><?php echo $proyeksi_bulan[3];?></th>
-	<th colspan="1"><?php echo $proyeksi_bulan[4];?></th>
-	<th colspan="1"><?php echo $proyeksi_bulan[5];?></th>
+	<?php for($i=0; $i<12; $i++) { ?>
+	<th colspan="1"><?php echo $proyeksi_bulan[$i];?></th>
+	<?php }?>
 	<th colspan="1">Total</th>
 </tr>
 
 <?php
 if ($total_data > 0)
 {
+	$sum_nilai=0;
 	$query = "
 	SELECT *
 	FROM
@@ -202,120 +204,18 @@ if ($total_data > 0)
 		?>
 		<tr class="onclick" id="<?php echo $id; ?>"> 
 			<td class="text-center"><?php echo $i; ?></td>
-			<td><?php echo $obj->fields['NAMA_PEMBELI']; ?></td>
-			<td><?php echo $obj->fields['KODE_BLOK']; ?></td>
-			<td class="text-center"><?php echo to_money($total_harga); ?></td>
-			
-			<?php $sub_total_harga 			= $sub_total_harga + $total_harga;?>
-			
-			<?php 
-			$query2 = "
-			SELECT TOTAL = CASE WHEN sum(nilai) IS null 
-			THEN 0 ELSE sum(nilai) END
-			FROM KWITANSI WHERE KODE_BLOK = '$id' AND TANGGAL_BAYAR < CONVERT(DATETIME,'01-$bln-$thn',105)
-			";
-			$obj2 = $conn->execute($query2);
-			$pembayaran_lalu		= $obj2->fields['TOTAL'];
-			$sub_pembayaran_lalu	= $sub_pembayaran_lalu + $pembayaran_lalu;
-			?>
-	
-			<td class="text-center"><?php echo to_money($pembayaran_lalu); ?></td>
-			
-			<?php 
-			$query2 = "
-			SELECT TOTAL = CASE WHEN sum(nilai) IS null 
-			THEN 0 ELSE sum(nilai) END
-			FROM KWITANSI WHERE KODE_BLOK = '$id' AND TANGGAL_BAYAR >= CONVERT(DATETIME,'01-$bln-$thn',105) AND TANGGAL_BAYAR <= CONVERT(DATETIME,'$tanggal',105)
-			";
-			$obj2 = $conn->execute($query2);
-			$pembayaran_sekarang	= $obj2->fields['TOTAL'];
-			$sub_pembayaran_sekarang= $sub_pembayaran_sekarang + $pembayaran_sekarang;
-			?>		
-			
-			<td class="text-center"><?php echo to_money($pembayaran_sekarang); ?></td>
-			
-			<?php 
-			$query2 = "
-			select TOTAL = CASE WHEN sum(nilai) IS null 
-			THEN 0 ELSE sum(nilai) END
-			from RENCANA where kode_blok = '$id' 
-			AND TANGGAL < CONVERT(DATETIME,'$tanggal',105)";
-			$obj2 = $conn->execute($query2);
-			$sudah_jt				= $obj2->fields['TOTAL'];
-			$sub_sudah_jt			= $sub_sudah_jt + $sudah_jt;
-			?>		
-			
-			<td class="text-center"><?php echo to_money($sudah_jt); ?></td>
-			
-			<?php 
-			$query2 = "
-			select TOTAL = CASE WHEN sum(nilai) IS null 
-			THEN 0 ELSE sum(nilai) END
-			from RENCANA where kode_blok = '$id' 
-			AND TANGGAL > CONVERT(DATETIME,'$tanggal',105)";
-			$obj2 = $conn->execute($query2);
-			$belum_jt				= $obj2->fields['TOTAL'];
-			$sub_belum_jt			= $sub_belum_jt + $belum_jt;
-			
-			$total_jt				= $belum_jt+$sudah_jt;
-			$sub_total_jt			= $sub_total_jt + $total_jt;
-			?>		
-			
-			<td class="text-center"><?php echo to_money($belum_jt); ?></td>
-			
-			<td class="text-center"><?php echo to_money($total_jt); ?></td>
-			
-			<?php 
-			
-			$enam_bulan 	= $bln + 6;
-			$tahun_lanjut	= $thn;
-			if($enam_bulan > 12)
-			{
-				$enam_bulan 	= $enam_bulan % 12;
-				$tahun_lanjut 	= $thn + 1; 
-			}
-			
-			
-			$query2 = "
-			select * from RENCANA where kode_blok = '$id' 
-			AND TANGGAL > CONVERT(DATETIME,'01-$bln-$thn',105) AND TANGGAL < CONVERT(DATETIME,'01-$enam_bulan-$tahun_lanjut',105)
-			order BY TANGGAL";
-			
-			$obj2 = $conn->execute($query2);
-			$isi 			= 1;
-			$total_proyeksi = 0;
-			
-			while( ! $obj2->EOF)
-			{
-				$nilai_proyeksi		= $obj2->fields['NILAI'];
-				$sub_nilai_proyeksi[$isi-1] = $sub_nilai_proyeksi[$isi-1] + $nilai_proyeksi;
-								
-				$total_proyeksi  	= $total_proyeksi + $nilai_proyeksi;
-				$nilai_proyeksi		= (isset($nilai_proyeksi)) ? clean($nilai_proyeksi) : '0';
+			<td><?php echo $field1; ?></td>
+			<?php for($j=0; $j<=12; $j++) { 
+				$nilai = 100000000;
+				$sum_nilai += $nilai ;
 				?>
-				<td class="text-center"><?php echo to_money($nilai_proyeksi); ?></td>
-				
-				<?php
-				$obj2->movenext();
-				$isi++;
-			}
-			
-			while($isi < 8)
-			{	
-			?>
-				<td class="text-center"><?php echo to_money('0'); ?></td>
-				
-				<?php
-				$isi++;
-			}
-			?>
-			
-			<td class="text-center"><?php echo to_money($total_proyeksi); ?></td>
+			<td><?= $nilai ?></td>
+			<?php }?>
+			<td class="text-center"><?php echo to_money($sum_nilai); ?></td>
 			<?php $sub_total_proyeksi			= $sub_total_proyeksi + $total_proyeksi; ?>
 			
 		</tr>
 		<?php
-		$sub_unit++;
 		$i++;
 		$obj->movenext();
 	}	
@@ -325,23 +225,20 @@ if ($total_data > 0)
 		<td class="text-center"></td>
 		<td class="text-center"><b>SUB TOTAL</b></td>
 		<td class="text-center"><b><?php echo ($sub_unit-1). ' unit'; ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_total_harga); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_pembayaran_lalu); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_pembayaran_sekarang); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_sudah_jt); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_belum_jt); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_total_jt); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_nilai_proyeksi[0]); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_nilai_proyeksi[1]); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_nilai_proyeksi[2]); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_nilai_proyeksi[3]); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_nilai_proyeksi[4]); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_nilai_proyeksi[5]); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_nilai_proyeksi[6]); ?></b></td>
-		<td class="text-center"><b><?php echo to_money($sub_total_proyeksi); ?></b></td>
-		
-
-	
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+		<td class="text-center"><b><?php echo to_money($sum_nilai); ?></b></td>
+	</tr>
 <?php	
 }
 ?>

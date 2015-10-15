@@ -7,16 +7,16 @@
 	<td>
 		<select name="field1" id="field1" class="wauto">
 			<option value="all"> Keseluruhan </option>
+			<option value="harga_cash_keras"> Harga Cash Keras </option>
 			<option value="kpa24x"> KPA 24X </option>
 			<option value="kpa36x"> KPA 36X </option>
 			<option value="cb36x"> CB 36X </option>
 			<option value="cb48x"> CB 48X </option>
 		</select>
-		<input type="text" name="search1" id="search1" class="apply" value="">
 	</td>
 </tr>
 <tr>	
-	<td width="100">Bulan Tagihan</td><td width="10">:</td>
+	<td width="100">Bulan</td><td width="10">:</td>
 	<td><input type="text" name="bulan_awal" id="bulan_awal" class="apply mm-yyyy" size="15" value=""> s/d
 		<input type="text" name="bulan_akhir" id="bulan_akhir" class="apply mm-yyyy" size="15" value="">
 	</td>
@@ -37,8 +37,6 @@
 <script type="text/javascript">
 jQuery(function($) {
 	/* -- FILTER -- */
-	$('#search1').hide();
-	var jenis = 0;
 	
 	$(document).on('keypress', '.apply', function(e) {
 		var code = (e.keyCode ? e.keyCode : e.which);
@@ -55,29 +53,10 @@ jQuery(function($) {
 		else if (jQuery('#bulan_akhir').val() == '') {
 			alert('Masukkan bulan kriteria !');
 			jQuery('#bulan_akhir').focus();
-		}
-		else {
-			if(jenis == '0'){
-				loadData();
-			}
-			else if (jenis == '1'){
-				loadDataRekap();
-			}
-		}	
-		return false;
-	});
-	
-	$(document).on('click', '#field1', function(e) {
-		e.preventDefault();
-		if($(this).val() == 'kode_blok'){
-			$('#search1').show();
-			$('#bulan_awal').prop('disabled', true);
-			$('#bulan_akhir').prop('disabled', true);
 		} else {
-			$('#search1').hide();
-			$('#bulan_awal').prop('disabled', false);
-			$('#bulan_akhir').prop('disabled', false);
+			loadData();
 		}
+
 		return false;
 	});
 	
