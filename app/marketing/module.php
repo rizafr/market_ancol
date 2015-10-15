@@ -49,7 +49,12 @@ switch (trim(base64_decode($cmd)))
 	case 'A01_laporan_reserve'			: die_mod('M24'); include('marketing/laporan/laporan_reserve/laporan_reserve_setup.php');break;
 	case 'A01_laporan_persediaan_stok'	: die_mod('M25'); include('marketing/laporan/laporan_persediaan_stok/laporan_persediaan_stok_setup.php');break;
 	
+	# Layout Sold
+	case 'A01_layout_sold'				: die_mod('M25'); include('marketing/layout/layout_sold_setup.php');break;
 	
+
+
+
 	# Utilitas
 	
 	case 'A01_parameter_program_mark'	: die_mod('M26');include('marketing/utilitas/parameter/parameter_setup.php');break;

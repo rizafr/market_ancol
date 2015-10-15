@@ -64,6 +64,7 @@
 				<li><a href="<?php echo base64_encode('A01_laporan_persediaan_stok'); ?>">Laporan Stok</a></li>
 			</ul>
 		</li>
+		<li><a href="<?php echo base64_encode('A01_layout_sold'); ?>" target="_blank">Layout Sold </a></li>
 	</ul>
 </li>
 
