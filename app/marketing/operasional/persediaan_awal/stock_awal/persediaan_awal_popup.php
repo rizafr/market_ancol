@@ -154,26 +154,26 @@ function conv(x){
 			<tr>
 				<td>Tower</td><td>:</td>
 				<td>
-					<input type="text" name="kode_lokasi" id="kode_lokasi" size="1" value="<?php if(isset($kode_lokasi)){echo $kode_lokasi;}else{echo '-';} ?>">
+					<input type="hidden" name="kode_lokasi" id="kode_lokasi" size="1" value="<?php if(isset($kode_lokasi)){echo $kode_lokasi;}else{echo '-';} ?>">
 					<button onclick="return get_kode_lokasi()"> > </button>
-					<input type="text" id="lokasi" size="25" value="<?php if(isset($lokasi)){echo $lokasi;}else{echo '-';} ?>">
+					<input type="text" id="lokasi" size="25" value="<?php if(isset($lokasi)){echo $lokasi;}else{echo '-';} ?>" readonly >
 				</td>
 			</tr>
 			<tr>
 				<td>Jenis Unit</td><td>:</td>
 				<td>
-					<input type="text" name="kode_unit" id="kode_unit" size="1" value="<?php if(isset($kode_unit)){echo $kode_unit;}else{echo '-';} ?>">
+					<input type="hidden" name="kode_unit" id="kode_unit" size="1" value="<?php if(isset($kode_unit)){echo $kode_unit;}else{echo '-';} ?>">
 					<button onclick="return get_kode_unit()"> > </button>
-					<input type="text" id="jenis_unit" size="25" value="<?php if(isset($jenis_unit)){echo $jenis_unit;}else{echo '-';} ?>">
+					<input type="text" id="jenis_unit" size="25" value="<?php if(isset($jenis_unit)){echo $jenis_unit;}else{echo '-';} ?>" readonly >
 				</td>
 			</tr>
 
 			<tr>
 				<td>Tipe</td><td>:</td>
 				<td>
-					<input type="text" name="kode_tipe" id="kode_tipe" size="1" value="<?php if(isset($kode_tipe)){echo $kode_tipe;}else{echo '-';} ?>">
+					<input type="hidden" name="kode_tipe" id="kode_tipe" size="1" value="<?php if(isset($kode_tipe)){echo $kode_tipe;}else{echo '-';} ?>">
 					<button onclick="return get_kode_tipe()"> > </button>
-					<input type="text" id="tipe_bangunan" size="25" value="<?php if(isset($tipe_bangunan)){echo $tipe_bangunan;}else{echo '-';} ?>">
+					<input type="text" id="tipe_bangunan" size="25" value="<?php if(isset($tipe_bangunan)){echo $tipe_bangunan;}else{echo '-';} ?>"readonly>
 				</td>
 			</tr>
 
@@ -185,45 +185,45 @@ function conv(x){
 			<tr>
 				<td>SK. Harga</td><td>:</td>
 				<td>
-					<input type="text" name="kode_sk" id="kode_sk" size="10" value="<?php if(isset($kode_sk)){echo $kode_sk;}else{echo '-';} ?>">
+					<input type="text" name="kode_sk" id="kode_sk" size="10" value="<?php if(isset($kode_sk)){echo $kode_sk;}else{echo '-';} ?>" readonly>
 					<button onclick="return get_kode_sk_bangunan()"> > </button>
 				</td>
 			</tr>
 			<tr>
 				<td>Cash Keras</td><td>:</td>
 				<td>
-					<input type="text" id="harga_cash_keras" class="text-right" size="15" value="<?php if(isset($harga_cash_keras)){echo to_money($harga_cash_keras);}else{echo '0';} ?>">
+					<input type="text" id="harga_cash_keras" class="text-right" size="15" value="<?php if(isset($harga_cash_keras)){echo to_money($harga_cash_keras);}else{echo '0';} ?>" readonly >
 				</td>
 			</tr>
 			<tr>
 				<td>CB36X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_CB36X" class="text-right" size="15" value="<?php if(isset($CB36X)){echo to_money($CB36X);}else{echo '0';} ?>">
+					<input type="text" id="harga_CB36X" class="text-right" size="15" value="<?php if(isset($CB36X)){echo to_money($CB36X);}else{echo '0';} ?>" readonly >
 				</td>
 			</tr>
 			<tr>
 				<td>CB48X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_CB48X" class="text-right" size="15" value="<?php if(isset($CB48X)){echo to_money($CB48X);}else{echo '0';} ?>">
+					<input type="text" id="harga_CB48X" class="text-right" size="15" value="<?php if(isset($CB48X)){echo to_money($CB48X);}else{echo '0';} ?>" readonly>
 				</td>
 			</tr>
 			<tr>
 				<td>KPA24X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_KPA24X" class="text-right" size="15" value="<?php if(isset($KPA24X)){echo to_money($KPA24X);}else{echo '0';} ?>">
+					<input type="text" id="harga_KPA24X" class="text-right" size="15" value="<?php if(isset($KPA24X)){echo to_money($KPA24X);}else{echo '0';} ?>" readonly >
 				</td>
 			</tr>
 			<tr>
 				<td>KPA36X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_KPA36X" class="text-right" size="15" value="<?php if(isset($KPA36X)){echo to_money($KPA36X);}else{echo '0';} ?>">
+					<input type="text" id="harga_KPA36X" class="text-right" size="15" value="<?php if(isset($KPA36X)){echo to_money($KPA36X);}else{echo '0';} ?>" readonly>
 				</td>
 			</tr>
 				<td>Jenis Penjualan</td><td>:</td>
 				<td>
-					<input type="text" name="kode_penjualan" id="kode_penjualan" size="1" value="<?php if(isset($kode_penjualan)){echo $kode_penjualan;}else{echo '-';} ?>">
+					<input type="hidden" name="kode_penjualan" id="kode_penjualan" size="1" value="<?php if(isset($kode_penjualan)){echo $kode_penjualan;}else{echo '-';} ?>" readonly>
 					<button onclick="return get_kode_penjualan()"> > </button>
-					<input type="text" id="jenis_penjualan" size="25" value="<?php if(isset($jenis_penjualan)){echo $jenis_penjualan;}else{echo '-';} ?>">
+					<input type="text" id="jenis_penjualan" size="25" value="<?php if(isset($jenis_penjualan)){echo $jenis_penjualan;}else{echo '-';} ?>" readonly>
 				</td>
 			</tr>
 
