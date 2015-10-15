@@ -237,129 +237,48 @@ if ($act == 'Ubah')
 {
 	$obj = $conn->Execute("
 	SELECT  
-		s.*,
-		f.NILAI_TAMBAH, 
-		f.NILAI_KURANG, 
-		
-		(s.LUAS_TANAH * ht.HARGA_TANAH) AS BASE_HARGA_TANAH, 
-		(
-			((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-			((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-		) AS FS_HARGA_TANAH, 
-		
-		(
-			(
-				(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-			)
-			* s.DISC_TANAH / 100
-		) AS DISC_HARGA_TANAH, 
-		
-		(
-			(
-				((s.LUAS_TANAH * ht.HARGA_TANAH) + 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100))
-				-
-				(
-					((s.LUAS_TANAH * ht.HARGA_TANAH) + 
-					((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-					((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100))
-					* s.DISC_TANAH / 100
-				)
-			) * s.PPN_TANAH / 100
-		) AS PPN_HARGA_TANAH, 
-		
-		
-		(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) AS BASE_HARGA_BANGUNAN, 
-		((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100) AS DISC_HARGA_BANGUNAN, 
-		(
-			(
-				(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) -
-				((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100)
-			) * s.PPN_BANGUNAN / 100
-		) AS PPN_HARGA_BANGUNAN, 
-		
-		d.NAMA_DESA,
+		s.KODE_BLOK,
 		l.LOKASI,
+		s.LUAS_BANGUNAN,
 		ju.JENIS_UNIT,
-		ht.HARGA_TANAH AS HARGA_TANAH_SK,
-		f.FAKTOR_STRATEGIS,
 		t.TIPE_BANGUNAN,
-		hb.HARGA_BANGUNAN AS HARGA_BANGUNAN_SK,
+		hb.HARGA_CASH_KERAS,
+		hb.CB36X,
+		hb.CB48X,
+		hb.KPA24X,
+		hb.KPA36X,
 		p.JENIS_PENJUALAN
 	FROM 
-		STOK s
-		
-		LEFT JOIN HARGA_BANGUNAN hb ON s.KODE_SK_BANGUNAN = hb.KODE_SK
-		LEFT JOIN HARGA_TANAH ht ON s.KODE_SK_TANAH = ht.KODE_SK
-		
-		LEFT JOIN DESA d ON s.KODE_DESA = d.KODE_DESA
+		STOK s		
+		LEFT JOIN HARGA_SK hb ON s.KODE_SK = hb.KODE_SK	AND s.KODE_BLOK = hb.KODE_BLOK
 		LEFT JOIN LOKASI l ON s.KODE_LOKASI = l.KODE_LOKASI
 		LEFT JOIN JENIS_UNIT ju ON s.KODE_UNIT = ju.KODE_UNIT
-		LEFT JOIN FAKTOR f ON s.KODE_FAKTOR = f.KODE_FAKTOR
 		LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
 		LEFT JOIN JENIS_PENJUALAN p ON s.KODE_PENJUALAN = p.KODE_JENIS
 	WHERE
-		
-		KODE_BLOK = '$id'");
+		s.KODE_BLOK = '$id'");
 	
-	$r_kode_blok				= $obj->fields['KODE_BLOK'];
-	
-	$r_kode_desa			= $obj->fields['KODE_DESA'];
 	$r_kode_lokasi			= $obj->fields['KODE_LOKASI'];
 	$r_kode_unit			= $obj->fields['KODE_UNIT'];
-	$r_kode_sk_tanah		= $obj->fields['KODE_SK_TANAH'];
-	$r_kode_faktor			= $obj->fields['KODE_FAKTOR'];
 	$r_kode_tipe			= $obj->fields['KODE_TIPE'];
-	$r_kode_sk_bangunan		= $obj->fields['KODE_SK_BANGUNAN'];
+	$r_kode_sk				= $obj->fields['KODE_SK'];
 	$r_kode_penjualan		= $obj->fields['KODE_PENJUALAN'];
 	
-	$r_nama_desa			= $obj->fields['NAMA_DESA'];
 	$r_lokasi				= $obj->fields['LOKASI'];
 	$r_jenis_unit			= $obj->fields['JENIS_UNIT'];
-	$r_harga_tanah_sk		= $obj->fields['HARGA_TANAH_SK'];
-	$r_faktor_strategis		= $obj->fields['FAKTOR_STRATEGIS'];
 	$r_tipe_bangunan		= $obj->fields['TIPE_BANGUNAN'];
-	$r_harga_bangunan_sk	= $obj->fields['HARGA_BANGUNAN_SK'];
-	$r_jenis_penjualan		= $obj->fields['JENIS_PENJUALAN'];
-	
-	$r_tgl_bangunan			= tgltgl(f_tgl($obj->fields['TGL_BANGUNAN']));
-	$r_tgl_selesai			= tgltgl(f_tgl($obj->fields['TGL_SELESAI']));
-	$r_progress				= $obj->fields['PROGRESS'];
-	$r_class				= $obj->fields['CLASS'];
-	$r_status_gambar_siteplan	= $obj->fields['STATUS_GAMBAR_SITEPLAN'];
-	$r_status_gambar_lapangan	= $obj->fields['STATUS_GAMBAR_LAPANGAN'];
-	$r_status_gambar_gs		= $obj->fields['STATUS_GAMBAR_GS'];
-	$r_program				= $obj->fields['PROGRAM'];
-	
-	$r_luas_tanah			= $obj->fields['LUAS_TANAH'];
-	$r_base_harga_tanah		= $obj->fields['BASE_HARGA_TANAH'];
-	$r_nilai_tambah			= $obj->fields['NILAI_TAMBAH'];
-	$r_nilai_kurang			= $obj->fields['NILAI_KURANG'];
-	$r_fs_harga_tanah		= $obj->fields['FS_HARGA_TANAH'];
-	$r_disc_tanah			= $obj->fields['DISC_TANAH'];
-	$r_disc_harga_tanah		= $obj->fields['DISC_HARGA_TANAH'];
-	$r_ppn_tanah			= $obj->fields['PPN_TANAH'];
-	$r_ppn_harga_tanah		= $obj->fields['PPN_HARGA_TANAH'];
-	$r_harga_tanah			= $r_base_harga_tanah + $r_fs_harga_tanah - $r_disc_harga_tanah + $r_ppn_harga_tanah;
-	
+	$harga_cash_keras		= $obj->fields['HARGA_CASH_KERAS'];
+	$cb36x  				= $obj->fields['CB36X'];
+	$cb48x  				= $obj->fields['CB48X'];
+	$kpa24x  				= $obj->fields['KPA24X'];
+	$kpa36x   				= $obj->fields['KPA36X'];
+	$r_jenis_penjualan		= $obj->fields['JENIS_PENJUALAN'];	
 	$r_luas_bangunan		= $obj->fields['LUAS_BANGUNAN'];
-	$r_base_harga_bangunan	= $obj->fields['BASE_HARGA_BANGUNAN'];
-	$r_fs_harga_bangunan	= 0;
-	$r_disc_bangunan		= $obj->fields['DISC_BANGUNAN'];
-	$r_disc_harga_bangunan	= $obj->fields['DISC_HARGA_BANGUNAN'];
-	$r_ppn_bangunan			= $obj->fields['PPN_BANGUNAN'];
-	$r_ppn_harga_bangunan	= $obj->fields['PPN_HARGA_BANGUNAN'];
-	$r_harga_bangunan		= $r_base_harga_bangunan + $r_fs_harga_bangunan - $r_disc_harga_bangunan + $r_ppn_harga_bangunan;
-	
-	$r_progres				= $obj->fields['PROGRESS'];
+
 
 }
 if ($act == 'Simpan')
 {
-	
 	
 	$query= "SELECT COUNT(*) as TOTAL from SPP where KODE_BLOK = '$id'";
 	$obj = $conn->Execute($query);

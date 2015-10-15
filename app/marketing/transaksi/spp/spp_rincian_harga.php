@@ -32,27 +32,27 @@ die_conn($conn);
 
 	<tr>
 		<td>Luas Semigross</td><td>:</td>
-		<td><?php echo to_decimal($r_luas_tanah); ?> M&sup2;</td>
+		<td><?php echo to_decimal($r_luas_bangunan); ?></td>
 	</tr>
 	<tr>
 		<td>Cash Keras</td><td>:</td>
-		<td>Rp. <?php echo to_money($r_harga_bangunan); ?></td>
+		<td>Rp. <?php echo to_money($harga_cash_keras); ?></td>
 	</tr>
 	<tr>
 		<td>CB 36X</td><td>:</td>
-		<td>Rp. <?php echo to_money($r_harga_bangunan); ?></td>
+		<td>Rp. <?php echo to_money($cb36x); ?></td>
 	</tr>
 	<tr>
 		<td>CB 48X</td><td>:</td>
-		<td>Rp. <?php echo to_money($r_harga_bangunan); ?></td>
+		<td>Rp. <?php echo to_money($cb48x); ?></td>
 	</tr>
 	<tr>
 		<td>KPA 24X 40%</td><td>:</td>
-		<td>Rp. <?php echo to_money($r_harga_bangunan); ?></td>
+		<td>Rp. <?php echo to_money($kpa24x); ?></td>
 	</tr>
 	<tr>
 		<td>KPA 36X 40%</td><td>:</td>
-		<td>Rp. <?php echo to_money($r_harga_bangunan); ?></td>
+		<td>Rp. <?php echo to_money($kpa36x); ?></td>
 	</tr>
 
 	<tr>

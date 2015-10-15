@@ -40,7 +40,6 @@ jQuery(function($) {
 		//});
 		
 		
-		//$('#harga_tanah').attr('readonly', 'readonly');
 		//$('#tanggal').attr('readonly', 'readonly');
 		//$('#pembangunan').attr('readonly', 'readonly');
 		//$('#prosentase').attr('readonly', 'readonly');
@@ -72,7 +71,6 @@ jQuery(function($) {
 
 	$('#tipe_bangunan').inputmask('varchar', { repeat: '30' });
 	$('#daya_listrik').inputmask('numeric', { repeat: '4' });
-	$('#harga_tanah').inputmask('numeric', { repeat: '15' });
 	$('#no_arsip').inputmask('varchar', { repeat: '15' });
 
 	$('#close').on('click', function(e) {
@@ -293,10 +291,6 @@ jQuery(function($) {
 	<td><input type="text" name="tanggal" id="tanggal" size="15" class="apply dd-mm-yyyy" value="<?php echo $tanggal; ?>"></td>
 </tr>
 <tr>
-	<td>H. Tanah /  m&sup2;</td><td>:</td>
-	<td>Rp. <input type="text" name="harga_tanah" id="harga_tanah" size="20" value="<?php echo $harga_tanah; ?>"></td>
-</tr>
-<tr>
 	<td>Pembangunan</td><td>:</td>
 	<td>
 	<select name="pembangunan" id="pembangunan">
@@ -378,50 +372,6 @@ jQuery(function($) {
 	</td>
 </tr>
 <tr>
-	<td>Kelurahan</td><td>:</td>
-	<td>
-	<select name="kelurahan" id="kelurahan">
-		<option value="0"> -- Kelurahan -- </option>
-		<?php
-		$obj = $conn->execute("
-		SELECT *
-		FROM 
-			KELURAHAN
-		");
-		while( ! $obj->EOF)
-		{
-			$ov = $obj->fields['KODE_KELURAHAN'];
-			$on = $obj->fields['NAMA_KELURAHAN'];
-			echo "<option value='$ov'" . is_selected($ov, $kode_kelurahan) . "> $on </option>";
-			$obj->movenext();
-		}
-	?>
-	</select>
-	</td>
-</tr>
-<tr>
-	<td>Kecamatan</td><td>:</td>
-	<td>
-	<select name="kecamatan" id="kecamatan">
-		<option value="0"> -- Kecamatan -- </option>
-		<?php
-		$obj = $conn->execute("
-		SELECT *
-		FROM 
-			KECAMATAN
-		");
-		while( ! $obj->EOF)
-		{
-			$ov = $obj->fields['KODE_KECAMATAN'];
-			$on = $obj->fields['NAMA_KECAMATAN'];
-			echo "<option value='$ov'" . is_selected($ov, $kode_kecamatan) . "> $on </option>";
-			$obj->movenext();
-		}
-	?>
-	</select>
-	</td>
-</tr>
-<tr>
 	<td>Catatan</td><td>:</td>
 </tr>
 <tr>
@@ -491,7 +441,6 @@ jQuery(function($) {
 		<input type="button" id="addendum2" value=" Addendum ">
 		<input type="button" id="lampiran" value=" Lampiran ">
 		<input type="button" id="alamat" value=" Alamat ">
-		<input type="button" id="spp" value=" SPP ">
 	</td>
 </tr>
 <tr>
