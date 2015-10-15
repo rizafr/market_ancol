@@ -277,7 +277,7 @@ if ($total_data > 0)
 			<td class="text-center"><?php echo number_format($total_harga)?></td>
 			<td class="text-center"><?php echo number_format($total_ppn); ?></td>
 			<td class="text-center"><?php echo number_format($uang_pesanan); ?></td>
-			<td class="text-center"><?php echo kontgl(tgltgl(date("d M Y", strtotime($tanggal_rencana)))); ?></td>
+			<td class="text-center"><?php echo kontgl(tgltgl(date("d M Y", strtotime($tgl_rencana)))); ?></td>
 			<td class="text-center"><?php echo number_format($nilai)?></td>
 		</tr>
 		<?php

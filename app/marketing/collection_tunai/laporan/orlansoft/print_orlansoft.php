@@ -248,7 +248,7 @@ if ($total_data > 0)
 		$no_unit		= $blok[1];
 		$no_va 			= $obj->fields['NOMOR_CUSTOMER'];
 		$uang_pesanan	= $obj->fields['TANDA_JADI'];
-		$tanggal_rencana= $obj->fields['TANGGAL_RENCANA'];
+		$tgl_rencana= $obj->fields['TANGGAL_RENCANA'];
 		$nilai 			= $obj->fields['NILAI_BAYAR'];
 		//End Edited
 			
@@ -272,7 +272,7 @@ if ($total_data > 0)
 			<td class="text-center"><?php echo number_format($total_harga)?></td>
 			<td class="text-center"><?php echo number_format($total_ppn); ?></td>
 			<td class="text-center"><?php echo number_format($uang_pesanan); ?></td>
-			<td class="text-center"><?php echo kontgl(tgltgl(date("d M Y", strtotime($tanggal_rencana)))); ?></td>
+			<td class="text-center"><?php echo kontgl(tgltgl(date("d M Y", strtotime($tgl_rencana)))); ?></td>
 			<td class="text-center"><?php echo number_format($nilai)?></td>
 		</tr>
 		<?php

@@ -3,7 +3,7 @@
 <form name="form" id="form" method="post">
 <table class="t-control wauto">
 <tr>	
-	<td width="100">Periode</td><td width="10">:</td>
+	<td width="100">Periode SPP</td><td width="10">:</td>
 	<td><input type="text" name="periode_awal" id="periode_awal" class="apply dd-mm-yyyy" size="15" value=""> s/d
 	<input type="text" name="periode_akhir" id="periode_akhir" class="apply dd-mm-yyyy" size="15" value=""></td>
 </tr>
