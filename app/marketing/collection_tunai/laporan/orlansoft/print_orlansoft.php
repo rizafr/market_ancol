@@ -36,7 +36,7 @@ FROM
 	LEFT JOIN HARGA_TANAH d ON b.KODE_SK_TANAH = d.KODE_SK
 	LEFT JOIN HARGA_BANGUNAN e ON b.KODE_SK_BANGUNAN = e.KODE_SK
 	LEFT JOIN FAKTOR f ON b.KODE_FAKTOR = f.KODE_FAKTOR
-	LEFT JOIN CS_VIRTUAL_ACCOUNT g ON a.NOMOR_CUSTOMER = g.NOMOR_VA	
+	LEFT JOIN RENCANA g ON g.KODE_BLOK = a.KODE_BLOK
 	WHERE STATUS_KOMPENSASI IS NOT NULL
 $query_search
 ";
@@ -74,6 +74,8 @@ $set_th = '
 	<th>HARGA NET</th>
 	<th>PPN 10%</th>
 	<th>UANG PESANAN</th>
+	<th>TANGGAL</th>
+	<th>NILAI</th>
 </tr>
 ';
 
@@ -246,8 +248,8 @@ if ($total_data > 0)
 		$no_unit		= $blok[1];
 		$no_va 			= $obj->fields['NOMOR_CUSTOMER'];
 		$uang_pesanan	= $obj->fields['TANDA_JADI'];
-		$tanggal_rencana= $obj->fields['TANGGAL'];
-		$nilai 			= $obj->fields['NILAI'];
+		$tanggal_rencana= $obj->fields['TANGGAL_RENCANA'];
+		$nilai 			= $obj->fields['NILAI_BAYAR'];
 		//End Edited
 			
 		?>
