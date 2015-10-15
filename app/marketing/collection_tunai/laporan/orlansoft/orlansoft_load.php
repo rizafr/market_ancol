@@ -87,6 +87,8 @@ $page_start = (($page_num-1) * $per_page);
 	<th>HARGA NET</th>
 	<th>PPN 10%</th>
 	<th>UANG PESANAN</th>
+	<th>TANGGAL</th>
+	<th>NILAI</th>
 </tr>
 
 <?php
@@ -96,7 +98,7 @@ if ($total_data > 0)
 	//Start Edited by Kurniawan
 	//Bandung 14 Oktober 2015
 	$query = "
-		SELECT 	a.NAMA_PEMBELI, a.KODE_BLOK, a.ALAMAT_RUMAH,
+		SELECT 	a.NAMA_PEMBELI, a.KODE_BLOK, a.ALAMAT_RUMAH, a.NOMOR_CUSTOMER,
 				a.ALAMAT_SURAT, a.NOMOR_SPP, a.TELP_RUMAH,
 				a.TELP_KANTOR, a.TELP_LAIN, a.NO_IDENTITAS, a.TANGGAL_SPP,
 				a.NPWP, a.STATUS_KOMPENSASI, a.TANDA_JADI,
@@ -107,14 +109,14 @@ if ($total_data > 0)
 				d.HARGA_TANAH, 
 				e.HARGA_BANGUNAN, 
 				f.NILAI_TAMBAH, f.NILAI_KURANG,
-				g.NOMOR_VA
+				g.TANGGAL AS TANGGAL_RENCANA, g.NILAI AS NILAI_BAYAR
 		FROM	SPP a 
 				LEFT JOIN STOK b ON a.KODE_BLOK = b.KODE_BLOK
 				LEFT JOIN TIPE c ON b.KODE_TIPE = c.KODE_TIPE
 				LEFT JOIN HARGA_TANAH d ON b.KODE_SK_TANAH = d.KODE_SK
 				LEFT JOIN HARGA_BANGUNAN e ON b.KODE_SK_BANGUNAN = e.KODE_SK
 				LEFT JOIN FAKTOR f ON b.KODE_FAKTOR = f.KODE_FAKTOR
-				LEFT JOIN CS_VIRTUAL_ACCOUNT g ON a.NOMOR_CUSTOMER = g.NOMOR_VA	
+				LEFT JOIN RENCANA g ON g.KODE_BLOK = a.KODE_BLOK
 		WHERE 	STATUS_KOMPENSASI IS NOT NULL
 		$query_search
 	";
@@ -161,8 +163,10 @@ if ($total_data > 0)
 		$blok			= explode("-", $id);
 		$lantai			= $blok[0];
 		$no_unit		= $blok[1];
-		$no_va 			= $obj->fields['NO_VA'];
+		$no_va 			= $obj->fields['NOMOR_CUSTOMER'];
 		$uang_pesanan	= $obj->fields['TANDA_JADI'];
+		$tgl_rencana 	= $obj->fields['TANGGAL_RENCANA'];
+		$nilai 			= $obj->fields['NILAI_BAYAR'];
 		//end edited kurniawan
 			
 		?>
@@ -185,6 +189,8 @@ if ($total_data > 0)
 			<td class="text-center"><?php echo number_format($total_harga)?></td>
 			<td class="text-center"><?php echo number_format($total_ppn); ?></td>
 			<td class="text-center"><?php echo number_format($uang_pesanan); ?></td>
+			<td class="text-center"><?php echo kontgl(tgltgl(date("d M Y", strtotime($tgl_rencana)))); ?></td>
+			<td class="text-center"><?php echo number_format($nilai)?></td>
 		</tr>
 		<?php
 		$i++;
