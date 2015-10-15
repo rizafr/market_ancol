@@ -117,7 +117,8 @@
 				<tr>	
 					<td>Jenis Transaksi</td><td>:</td>
 					<td>
-						<select name="field1" id="field1" class="wauto">
+						<select name="pola_bayar" id="pola_bayar" class="wauto">
+							<option value=""> ---PILIH POLA BAYAR--- </option>
 							<option value="HARGA_CASH_KERAS"> CASH_KERAS </option>
 							<option value="CB36X"> CB36X </option>
 							<option value="CB48X"> CB48X </option> 
@@ -135,7 +136,7 @@
 				<tr>
 					<td></td>
 					<td></td>
-					<td><input type="radio" name = 'cek_auto_awal' id = "awal_off" class='cek_auto_awal' value = 'no'>Tentukan Tanggal : <input type="text" readonly name = "tgl_spp" id="tgl_spp" class = 'dd-mm-yyyy' value="<?php echo $tgl_spp ?>"></td>
+					<td><input type="radio" name = 'cek_auto_awal' id = "awal_off" class='cek_auto_awal' value = 'no'>Tentukan Tanggal : <input type="text" readonly name = "tgl_spp" id="tgl_spp" class = 'dd-mm-yyyy' value="<?php echo $default_tgl_bayar ?>"></td>
 				</tr>
 				<tr>
 					<td>Tanggal Akad</td>

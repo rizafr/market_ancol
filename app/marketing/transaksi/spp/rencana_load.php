@@ -6,15 +6,18 @@ die_conn($conn);
 
 $blok				= (isset($_REQUEST['kode_blok'])) ? clean($_REQUEST['kode_blok']) : '';
 //$act				= (isset($_REQUEST['act'])) ? clean($_REQUEST['act']) : '';
+
+$query = "SELECT POLA_BAYAR	FROM SPP WHERE KODE_BLOK = '$blok'";
+$obj = $conn->execute($query);
 ?>
 
+<div class="title-page">POLA PEMBAYARAN <?php echo $obj->fields['POLA_BAYAR'];  ?></div>
 <table class="t-data w100">
 <tr>
-	<th class="w5">NO.</th>
-	<th class="w15">TANGGAL</th>
-	<th class="w15">JENIS PEMBAYARAN</th>
-	<th class="w15">NILAI (RP)</th>
-	<th class ="w3">AKSI</th>
+	<th class="w10">NO.</th>
+	<th class="w30">TANGGAL</th>
+	<th class="w30">JENIS PEMBAYARAN</th>
+	<th class="w30">NILAI (RP)</th>
 </tr>
 
 <?php
@@ -38,7 +41,6 @@ $blok				= (isset($_REQUEST['kode_blok'])) ? clean($_REQUEST['kode_blok']) : '';
 			<td><?php echo tgltgl(f_tgl($obj->fields['TANGGAL'])); ?></td>
 			<td><?php echo $obj->fields['JENIS_BAYAR'];  ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['NILAI']);$total+=intval($obj->fields['NILAI']);  ?></td>
-			<td class="text-center"><input type="button" value=" X " onclick="delete_rencana('<?php echo $id;?>','<?php echo tgltgl(f_tgl($obj->fields['TANGGAL'])); ?>')" /></td>
 		</tr>
 		<?php
 		$i++;
