@@ -9,7 +9,7 @@
 	$tanggal_input			= (isset($_REQUEST['tgl_spp'])) ? clean($_REQUEST['tgl_spp']) : '';
 	$kode_bayar				= (isset($_REQUEST['kode_bayar'])) ? clean($_REQUEST['kode_bayar']) : '';
 	// $keterangan				= (isset($_REQUEST['keterangan'])) ? clean($_REQUEST['keterangan']) : '';
-	$pola_bayar				= (isset($_REQUEST['field1'])) ? clean($_REQUEST['field1']) : '';
+	$pola_bayar				= (isset($_REQUEST['pola_bayar'])) ? clean($_REQUEST['pola_bayar']) : '';
 	$status_kompensasi		= (isset($_REQUEST['status_kompensasi'])) ? clean($_REQUEST['status_kompensasi']) : '';
 	$uang_muka				= (isset($_REQUEST['uang_muka'])) ? clean($_REQUEST['uang_muka']) : '';
 	$total					= (isset($_REQUEST['total'])) ? clean($_REQUEST['total']) : '';
@@ -55,26 +55,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 						  WHERE KODE_BLOK		= '$id'
 						  ";
 				ex_false($conn->execute($query), 'Update Pola bayar terlebih dahulu');
-				
+
 				//proses penghitungan rencana (angsuran)
 				
-				$b = $tanggal_input;
+				$b = date("d-m-Y");
+				$pecah_tgl_skrg = explode("-",$b);
+				$tgl_skrg		= $pecah_tgl_skrg[0];
+				$bln_skrg		= $pecah_tgl_skrg[1];
+				$thn_skrg		= $pecah_tgl_skrg[2];
 				
 				$pecah_tgl  = explode("-",$tanggal_input);
 				$tgl		= $pecah_tgl[0];
 				$bln		= $pecah_tgl[1];
 				$thn		= $pecah_tgl[2];
 				
-				if($tgl <= 28)
-				{
+				if($bln == $bln_skrg){
 					$tempo = 1;
 				}
-				else
-				{
-					$tempo = 2;
+				else{
+					$tempo = 0;
 				}
 				
-				$next_bln	= $bln + $tempo -1;  
+				$next_bln	= $bln + $tempo;  
 				$next_thn	= $thn;
 				if($next_bln > 12)
 				{
@@ -103,9 +105,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 						$hasil_bagi[] = $harga_total/$bagi;
 					}
 				}
-				if($pola_bayar == 'CB46X'){
+				if($pola_bayar == 'CB48X'){
 					$kode_jenis = 2;
-					$bagi = 46;
+					$bagi = 48;
 					for($i=0;$i<$bagi;$i++){
 						$hasil_bagi[] = $harga_total/$bagi;
 					}
@@ -206,16 +208,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					$hasil = $tanggal_akad;
 				}
 				
-				
-
-				/*$query = "UPDATE SPP SET  
-							KODE_BANK			= '$kbank',
-							STATUS_KOMPENSASI	= '$kode_jenis',
-							JUMLAH_KPR			= '$jumlah_kpr',
-							TANGGAL_AKAD		= '$tanggal_akad'
-						  WHERE KODE_BLOK		= '$id'
-						  ";*/
-
 				$query = "UPDATE SPP SET  
 							STATUS_KOMPENSASI	= '$kode_jenis',
 							JUMLAH_KPR			= '$jumlah_kpr',
@@ -435,6 +427,19 @@ if ($act == 'Rencana')
 	$obj = $conn->execute("SELECT TANGGAL_AKAD FROM SPP WHERE KODE_BLOK = '$id'");
 	$tgl = date("d-m-Y", strtotime($obj->fields['TANGGAL_AKAD']));
 }
-	
-	
+
+	$b = date("d-m-Y");
+	$pecah_tgl_skrg = explode("-",$b);
+	$tgl_skrg		= $pecah_tgl_skrg[0];
+	$bln_skrg		= $pecah_tgl_skrg[1];
+	$thn_skrg		= $pecah_tgl_skrg[2];	
+	$next_bln		= $bln_skrg + 1;
+	$next_thn		= $thn_skrg;
+	if($next_bln > 12)
+	{
+		$next_bln = $next_bln % 12;
+		$next_thn = $next_thn + 1;
+		
+	}
+	$default_tgl_bayar	= '20-'.($next_bln).'-'.$next_thn;
 ?>
