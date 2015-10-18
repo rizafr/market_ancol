@@ -97,6 +97,6 @@ jQuery(function($) {
 		<div class="clear"></div>
 	</div>
 </div>
-<div id="footer">&copy; 2014 - PT. Jaya Real Property, Tbk<br>Built By ASYS IT Consultant</div>
+<div id="footer">&copy; 2015 - PT. PEMBANGUNAN JAYA ANCOL, Tbk<br>Built By ASYS IT Consultant</div>
 </body>
 </html>

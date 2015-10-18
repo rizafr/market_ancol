@@ -83,7 +83,7 @@ function loadData()
 function showPopup(act, id)
 {
 	var url =	base_marketing + 'kredit/transaksi/kuitansi/kuitansi_popup.php' + '?act=' + act + '&id=' + id;	
-	setPopup('Kuitansi Penjualan Unit Kaveling / Bangunan', url, 1100, 550);	
+	setPopup('Kuitansi Penjualan Unit Kaveling / Bangunan', url, 1200, 550);	
 	return false;
 }
 </script>

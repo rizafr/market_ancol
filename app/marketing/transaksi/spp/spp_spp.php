@@ -27,6 +27,19 @@
 	//disable ketika diload
 		jQuery( document ).ready(function() {
     
+    	jQuery('#cek').change(function() {
+	        if(jQuery(this).is(":checked")) {
+	            var alamat_rumah =	jQuery('#alamat_rumah').val();
+	    		jQuery('#alamat_surat').val(alamat_rumah);
+	    		jQuery('#alamat_npwp').val(alamat_rumah);
+	        }else{
+	        	jQuery('#alamat_surat').val("");
+	    		jQuery('#alamat_npwp').val("");
+	        }
+        });
+
+    	
+
 		var status_spp = "<?php echo $status_spp ?>";
 		//alert(status_spp);
 		if(status_spp== 1){
@@ -303,7 +316,7 @@
 		<td> Nama</td><td> :  <input type="text" name="nama" id="nama" size="50" value="<?php echo $nama; ?>"></td>
 	</tr>
 	<tr>
-		<td>Alamat Rumah </td><td colspan="2"> : <input type="text" name="alamat_rumah" id="alamat_rumah" size="100" value="<?php echo $alamat_rumah; ?>"></td>
+		<td>Alamat Rumah </td><td colspan="2"> : <input type="text" name="alamat_rumah" id="alamat_rumah" size="100" value="<?php echo $alamat_rumah; ?>"><input type="checkbox" name="cek" id="cek" checked></td>
 	</tr>
 	<tr>
 		<td>Alamat Surat </td><td colspan="2"> : <input type="text" name="alamat_surat" id="alamat_surat" size="100" value="<?php echo $alamat_surat; ?>"></td>

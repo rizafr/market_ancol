@@ -260,15 +260,11 @@ jQuery(function($) {
 </tr>
 <tr>
 	<td>Total Harga</td></td><td>:</td>
-	<td><?php echo 'Rp. '.$total_harga; ?></td>
+	<td><?php echo 'Rp. '.to_money($total_harga); ?></td>
 </tr>
 <tr>
 	<td>Nilai Tanda Jadi</td></td><td>:</td>
 	<td><?php echo 'Rp. '.$nilai_tanda_jadi; ?></td>
-</tr>
-<tr>
-	<td>Sisa Pembayaran</td></td><td>:</td>
-	<td><?php echo 'Rp. '.$sisa_pembayaran; ?></td>
 </tr>
 </table>
 
