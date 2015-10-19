@@ -455,3 +455,12 @@ body.popup table th,
 body.popup table td {
 	padding:5px 10px;
 }
+
+.fixed{  /* To fix main menu container */
+    z-index: 9999;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transition: all 0.1s ease 0s;
+}

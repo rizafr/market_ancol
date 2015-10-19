@@ -74,10 +74,10 @@ $set_ttd = '
 </tr>
 ';
 
-$filename = "Laporan Daftar Pembatalan SPP " .kontgl(date("d M Y", strtotime($periode_awal))). " s/d " .kontgl(date("d M Y", strtotime($periode_akhir)));
+$filename = "Laporan Daftar Pembatalan SPP " .kontgl(date("d M Y", strtotime($periode_awal))). " s/d " .kontgl(date("d M Y", strtotime($periode_akhir)).".xls");
 
 header("Content-type: application/msexcel");
-header("Content-Disposition: attachment; filename=$filename.xls");
+  header("Content-Disposition: attachment; filename=\"" . basename($filename) . "\"");
 header("Pragma: no-cache");
 header("Expires: 0");
 

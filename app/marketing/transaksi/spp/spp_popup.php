@@ -168,7 +168,6 @@ function loadData5()
         <li><a href="#tab2">Rincian Harga</a></li>
 		<li><a href="#tab3">Rencana Pembayaran</a></li>
         <li><a href="#tab4">Realisasi Pembayaran</a></li>
-		<li><a href="#tab5">Informasi KPR</a></li>
     </ul>
     <div class="clear"></div>
     <div id="konten">
@@ -176,7 +175,6 @@ function loadData5()
         <div style="display: none;" id="tab2" class="tab_konten"></div>
         <div style="display: none;" id="tab3" class="tab_konten"></div>
         <div style="display: none;" id="tab4" class="tab_konten"></div>
-        <div style="display: none;" id="tab5" class="tab_konten"></div>
     </div>
 </div>
 

@@ -1,4 +1,4 @@
-<div class="title-page"></div>
+<div class="title-page">BERANDA</div>
 
 <form name="form" id="form" method="post">
 

@@ -67,9 +67,9 @@ $page_start = (($page_num-1) * $per_page);
 	<th>BLOK / NOMOR</th>
 	<th>NO SPP</th>
 	<th>NAMA PEMBELI</th>
-	<th>TANGGAL</th>
+	<th>TANGGAL SPP</th>
 	<th>TIPE </th>
-	<th>SPECS</th>
+	<th>JENIS UNIT</th>
 </tr>
 
 <?php

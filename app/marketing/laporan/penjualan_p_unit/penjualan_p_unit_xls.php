@@ -39,14 +39,15 @@ $query_search
 ";
 $total_data = $conn->execute($query)->fields['TOTAL'];
 $i = 1;
-$filename = "LAPORAN PENJUALAN UNIT";
+$filename = "LAPORAN PENJUALAN UNIT.xls";
 
 header("Content-type: application/msexcel");
-header("Content-Disposition: attachment; filename=$filename.xls");
+header("Content-Disposition: attachment; filename=\"" . basename($filename) . "\"");
 header("Pragma: no-cache");
 header("Expires: 0");
 ?>
-
+<h1>LAPORAN PENJUALAN</h1>
+<?php echo '<h2>Periode ' .kontgl(date("d M Y", strtotime($periode_awal))). ' s/d ' .kontgl(date("d M Y", strtotime($periode_akhir))).'</h2>' ?>
 <table border="1">
 	<thead>
 		<tr>
@@ -54,9 +55,9 @@ header("Expires: 0");
 			<th>BLOK / NOMOR</th>
 			<th>NO SPP</th>
 			<th>NAMA PEMBELI</th>
-			<th>TANGGAL</th>
+			<th>TANGGAL SPP</th>
 			<th>TIPE </th>
-			<th>SPECS</th>
+			<th>JENIS UNIT</th>
 		</tr>
 	</thead>
 

@@ -157,10 +157,10 @@ $set_ttd = '
 </tr>
 ';
 
-$filename = "Daftar Surat Penagihan " .kontgl(date("d M Y", strtotime($periode_awal))). " s/d " .kontgl(date("d M Y", strtotime($periode_akhir)));
+$filename = "Daftar Surat Penagihan " .kontgl(date("d M Y", strtotime($periode_awal))). " s.d " .kontgl(date("d M Y", strtotime($periode_akhir)).'.xls');
 
 header("Content-type: application/msexcel");
-header("Content-Disposition: attachment; filename=$filename.xls");
+header("Content-Disposition: attachment; filename=\"" . basename($filename) . "\"");
 header("Pragma: no-cache");
 header("Expires: 0");
 
