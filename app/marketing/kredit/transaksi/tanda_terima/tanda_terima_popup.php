@@ -28,7 +28,15 @@ $terbilang = new Terbilang;
 jQuery(function($) {
 	if ('<?php echo $act; ?>' == 'Tambah') {
 		$('#print').hide();	
+	}else{
+		$('#daftar').hide();	
 	}	
+	
+	jumlah = jQuery('#jumlah').val();		
+		// jumlah	= jumlah.replace(/[^0-9.]/g, '');
+		// jumlah	= (jumlah == '') ? 0 : parseFloat(jumlah);
+		sejumlah = terbilang(jumlah);
+		$('#terbilang').val(sejumlah);
 	
 	$('#nomor, #penerima').inputmask('varchar', { repeat: '30' });	
 	$('#no_customer, #no_tlp').inputmask('mask', { repeat: '15', mask : '9', groupSeparator : '', placeholder : '' });
@@ -36,7 +44,7 @@ jQuery(function($) {
 	$('#nama_pembayar').inputmask('varchar', { repeat: '40' });
 	$('#alamat').inputmask('varchar', { repeat: '60' });
 	$('#keterangan').inputmask('varchar', { repeat: '480' });
-	$('#jumlah').inputmask('numeric', { repeat: '16' });	
+	// $('#jumlah').inputmask('numeric', { repeat: '16' });	
 	
 	$('#jumlah').on('keyup', function(e) {
 		e.preventDefault();
@@ -130,7 +138,7 @@ function daftar_pemesan() {
 </head>
 <body class="popup2">
 
-<button onclick="return daftar_pemesan()"> Daftar Pemesan </button>
+<button id="daftar" onclick="return daftar_pemesan()"> Daftar Pemesan </button>
 <table class="t-popup wauto f-right">
 <tr>
 	<td>No. Dok.</td>
@@ -161,22 +169,8 @@ function daftar_pemesan() {
 	<td><input type="text" name="kode_blok" id="kode_blok" size="10" value="<?php echo $kode_blok; ?>"></td>
 	<td class="text-right">Pembayaran : 
 	<select name="pembayaran" id="pembayaran">
-		<option value=""> -- Pembayaran -- </option>
-		<?php
-		$obj = $conn->execute("
-		SELECT *
-		FROM 
-			JENIS_PEMBAYARAN
-		");
-		while( ! $obj->EOF)
-		{
-			$ov = $obj->fields['KODE_BAYAR'];
-			$oj = $obj->fields['JENIS_BAYAR'];
-			$kel = $obj->fields['KELOMPOK'];
-			echo "<option value='$ov#$kel' data-jenis='$oj'".is_selected($ov, $kode_bayar)."> $oj </option>";
-			$obj->movenext();
-		}
-		?>
+		<option value="29"> TANDA JADI </option>
+		
 	</select>
 	</td>
 </tr>
@@ -226,7 +220,7 @@ function daftar_pemesan() {
 </tr>
 <tr>
 	<td>Jumlah Diterima</td><td>:</td>
-	<td>Rp. <input type="text" name="jumlah" id="jumlah" size="15" value="<?php echo to_money(intval($jumlah)); ?>"></td>
+	<td>Rp. <input type="text" name="jumlah" id="jumlah" size="15" value="<?php echo to_money (intval($jumlah)); ?>"></td>
 </tr>
 <tr>
 	<td>Terbilang</td><td>:</td>
@@ -255,8 +249,10 @@ function daftar_pemesan() {
 	</td>
 	<td>Penerima : <input type="text" readonly = "readonly" name="penerima" id="penerima" size="30" value="<?php echo $penerima; ?>"></td>
 </tr>
+</table >
+<table class="t-popup w100">
 <tr>
-	<td class="td-action" colspan="3"><br>
+	<td colspan="3"><br>
 		<input type="submit" id="save" value=" <?php echo $act; ?> ">
 		<input type="button" id="print" value=" Print ">
 		<input type="button" id="kwitansi" value=" Create Kwitansi ">
