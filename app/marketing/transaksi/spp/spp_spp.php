@@ -1,44 +1,44 @@
 <?php
-	require_once('spp_proses.php');
-	require_once('../../../../config/config.php');
-	die_login();
+require_once('spp_proses.php');
+require_once('../../../../config/config.php');
+die_login();
 	//die_app('');
 	//die_mod('');
-	$conn = conn($sess_db);
-	die_conn($conn);
-	if($status_otorisasi=='0'){
-		$tombol				= 'otorisasi';
-		$nama_tombol		= 'Otorisasi';
-	}else{
-		$tombol				= 'batal_otorisasi';
-		$nama_tombol		= 'Batal Otorisasi';
-	}
-	
+$conn = conn($sess_db);
+die_conn($conn);
+if($status_otorisasi=='0'){
+	$tombol				= 'otorisasi';
+	$nama_tombol		= 'Otorisasi';
+}else{
+	$tombol				= 'batal_otorisasi';
+	$nama_tombol		= 'Batal Otorisasi';
+}
+
 	// FIX STATUS DISTRIBUSI
 	// 24-6-2015
 	//cek dlu isi status_spp
-	$status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
+$status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 ?>
 
-											
+
 <script type="text/javascript">
 	// FIX STATUS DISTRIBUSI
 	// 24-6-2015
 	//disable ketika diload
-		jQuery( document ).ready(function() {
-    
-    	jQuery('#cek').change(function() {
-	        if(jQuery(this).is(":checked")) {
-	            var alamat_rumah =	jQuery('#alamat_rumah').val();
-	    		jQuery('#alamat_surat').val(alamat_rumah);
-	    		jQuery('#alamat_npwp').val(alamat_rumah);
-	        }else{
-	        	jQuery('#alamat_surat').val("");
-	    		jQuery('#alamat_npwp').val("");
-	        }
-        });
+	jQuery( document ).ready(function() {
 
-    	
+		jQuery('#cek').change(function() {
+			if(jQuery(this).is(":checked")) {
+				var alamat_rumah =	jQuery('#alamat_rumah').val();
+				jQuery('#alamat_surat').val(alamat_rumah);
+				jQuery('#alamat_npwp').val(alamat_rumah);
+			}else{
+				jQuery('#alamat_surat').val("");
+				jQuery('#alamat_npwp').val("");
+			}
+		});
+
+
 
 		var status_spp = "<?php echo $status_spp ?>";
 		//alert(status_spp);
@@ -159,28 +159,31 @@
 			$('#tombol').val('batal_otorisasi');
 		}
 		
-	$(document).on('click', '#otorisasi', function(e) {
-		e.preventDefault();
-		 if (confirm('Apakah anda yakin akan mengotorisasi data ini ?')) 
-		{
-			otorisasiData();
-			self.location.reload();
-		}
-		return false;
-	});
-	
-	$(document).on('click', '#batal_otorisasi', function(e) {
-		e.preventDefault();
-		var checked = $(".cb_data:checked").length;
-		if (checked < 1) {
-			alert('Pilih data yang akan dibatalkan otorisasi.');
-		} else if (confirm('Apakah anda yakin akan membatalkan otorisasi data ini ?')) 
-		{
-			unotorisasiData();
-			self.location.reload();
-		}
-		return false;
-	});
+		$(document).on('click', '#otorisasi', function(e) {
+			e.preventDefault();
+			if (confirm('Apakah anda yakin akan mengotorisasi data ini ?')) 
+			{
+				otorisasiData();
+				
+			}
+			loadData1();
+			return false;
+		});
+
+		$(document).on('click', '#batal_otorisasi', function(e) {
+			e.preventDefault();
+			var checked = $(".cb_data:checked").length;
+			if (checked < 1) {
+				alert('Pilih data yang akan dibatalkan otorisasi.');
+			} else if (confirm('Apakah anda yakin akan membatalkan otorisasi data ini ?')) 
+			{
+				unotorisasiData();
+				
+			}
+			loadData1();
+			return false;
+		});
+
 		function otorisasiData()
 		{	
 			var url		= base_marketing_transaksi + 'spp/spp_proses.php',
@@ -191,7 +194,7 @@
 				var list_id = result.act.join(', #');
 				alert(result.msg);		
 			}, 'json');	
-			loadData();
+			// loadData1();
 			return false;
 		}
 		
@@ -205,7 +208,7 @@
 				var list_id = result.act.join(', #');
 				alert(result.msg);		
 			}, 'json');	
-			loadData();
+			// loadData1();
 			return false;
 		}
 		
@@ -298,10 +301,10 @@
 				$('#tgl_proses').removeAttr('readonly');
 			}
 		});
-		
-	});
-	
-	
+
+});
+
+
 </script>
 
 <table>
@@ -330,111 +333,72 @@
 
 	<tr>
 		<td> Telepon Rumah   
-		<td colspan="2"> : <input type="text" name="tlp_rumah" id="tlp_rumah" size="15" value="<?php echo $tlp_rumah; ?>">
-		Telepon Kantor : <input type="text" name="tlp_kantor" id="tlp_kantor" size="15" value="<?php echo $tlp_kantor; ?>">
-		Telepon Lain   :<input type="text" name="tlp_lain" id="tlp_lain" size="15" value="<?php echo $tlp_lain; ?>"></td>
-	</tr>
-	<tr>
-		<td>Identitas </td>
-		<td>:
-		<input type="radio" name="identitas" id="ktp" value="1" <?php echo is_checked('1', $identitas); ?>>KTP
-		<input type="radio" name="identitas" id="sim" value="2" <?php echo is_checked('2', $identitas); ?>>SIM   
-		<input type="radio" name="identitas" id="pasport" value="3" <?php echo is_checked('3', $identitas); ?>>Pasport
-		<input type="radio" name="identitas" id="kims" value="4" <?php echo is_checked('4', $identitas); ?>> KIMS
-	
-		No : <input type="text" name="no_identitas" id="no_identitas" size="20" value="<?php echo $no_identitas; ?>">
-		</td>
-	</tr>
-	<tr>
-		<td> NPWP </td><td> : <input type="text" name="npwp" id="npwp" size="20" value="<?php echo $npwp; ?>">
-		 Jenis : 
-			<select name="jenis_npwp" id="jenis_npwp">
-			<option value="">   -- Jenis --   </option>
-			<option value="1" <?php echo is_selected('1', $jenis_npwp); ?>>Non PKP</option>
-			<option value="2" <?php echo is_selected('2', $jenis_npwp); ?>>PKP</option>
-			</select>
-		</td>
-		
-		<td align="left">Bank 
-			<select name="kbank" id="kbank">
-			<option value="0"> -- Bank -- </option>
-				<?php
-				$obj = $conn->execute("
-					SELECT *
-					FROM 
-					BANK
-					");
+			<td colspan="2"> : <input type="text" name="tlp_rumah" id="tlp_rumah" size="15" value="<?php echo $tlp_rumah; ?>">
+				Telepon Kantor : <input type="text" name="tlp_kantor" id="tlp_kantor" size="15" value="<?php echo $tlp_kantor; ?>">
+				Telepon Lain   :<input type="text" name="tlp_lain" id="tlp_lain" size="15" value="<?php echo $tlp_lain; ?>"></td>
+			</tr>
+			<tr>
+				<td>Identitas </td>
+				<td>:
+					<input type="radio" name="identitas" id="ktp" value="1" <?php echo is_checked('1', $identitas); ?>>KTP
+					<input type="radio" name="identitas" id="sim" value="2" <?php echo is_checked('2', $identitas); ?>>SIM   
+					<input type="radio" name="identitas" id="pasport" value="3" <?php echo is_checked('3', $identitas); ?>>Pasport
+					<input type="radio" name="identitas" id="kims" value="4" <?php echo is_checked('4', $identitas); ?>> KIMS
+
+					No : <input type="text" name="no_identitas" id="no_identitas" size="20" value="<?php echo $no_identitas; ?>">
+				</td>
+			</tr>
+			<tr>
+				<td> NPWP </td><td> : <input type="text" name="npwp" id="npwp" size="20" value="<?php echo $npwp; ?>">
+				Jenis : 
+				<select name="jenis_npwp" id="jenis_npwp">
+					<option value="">   -- Jenis --   </option>
+					<option value="1" <?php echo is_selected('1', $jenis_npwp); ?>>Non PKP</option>
+					<option value="2" <?php echo is_selected('2', $jenis_npwp); ?>>PKP</option>
+				</select>
+			</td>
+
+			<td align="left">Bank 
+				<select name="kbank" id="kbank">
+					<option value="0"> -- Bank -- </option>
+					<?php
+					$obj = $conn->execute("
+						SELECT *
+						FROM 
+						BANK
+						");
 					while( ! $obj->EOF)
 					{
-					$ov = $obj->fields['KODE_BANK'];
-					$oj = $obj->fields['NAMA_BANK'];
-					echo "<option value='$ov'".is_selected($ov, $kbank)."> $oj </option>";
-					$obj->movenext();
+						$ov = $obj->fields['KODE_BANK'];
+						$oj = $obj->fields['NAMA_BANK'];
+						echo "<option value='$ov'".is_selected($ov, $kbank)."> $oj </option>";
+						$obj->movenext();
 					}
-				?>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>Agen </td><td> : 
-			<select name="agen" id="agen">
-			<option value=""> -- Agen -- </option>
-				<?php
-				$obj = $conn->execute("		
-					SELECT * FROM CLUB_PERSONAL
-					WHERE JABATAN_KLUB = 5
-					ORDER BY NAMA 
-					");
-					while( ! $obj->EOF)
-					{
-					$ov = $obj->fields['NOMOR_ID'];
-					$oj = $obj->fields['NAMA'];
-					echo "<option value='$ov'".is_selected($ov, $agen)."> $oj </option>";
-					$obj->movenext();
-					}
-				?>
-			</select>
-			Koordinator :
-			<select name="koordinator" id="koordinator">
-			<option value=""> -- Koordinator -- </option>
-				<?php
-				$obj = $conn->execute("		
-					SELECT * FROM CLUB_PERSONAL
-					WHERE JABATAN_KLUB = 4
-					ORDER BY NAMA 
-					");
-					while( ! $obj->EOF)
-					{
-					$ov = $obj->fields['NOMOR_ID'];
-					$oj = $obj->fields['NAMA'];
-					echo "<option value='$ov'".is_selected($ov, $koordinator)."> $oj </option>";
-					$obj->movenext();
-					}
-				?>
-			</select>
-		</td>
-		<td align="left">Jumlah KPR <input type="text" name="jumlah_kpr" id="jumlah_kpr" size="20" value="<?php echo to_money($jumlah_kpr); ?>"></td>
-	</tr>
-	<tr>
-		<td>Status SPP <td>: 
-			<select name="status_kompensasi" id="status_kompensasi">
-				<option value="">   -- Status SPP --   </option>
-				<option value="1" <?php echo is_selected('1', $status_kompensasi); ?>>KPR</option>
-				<option value="2" <?php echo is_selected('2', $status_kompensasi); ?>>TUNAI</option>
-				<option value="3" <?php echo is_selected('3', $status_kompensasi); ?>>KOMPENSASI</option>
-				<option value="4" <?php echo is_selected('4', $status_kompensasi); ?>>ASSET SETTLEMENT</option>
-				<option value="5" <?php echo is_selected('5', $status_kompensasi); ?>>KPR JAYA</option>
-			</select>
-		</td>
-		<td align="left"> Tgl. Rencana Akad : <input type="text" name="tgl_akad" class = "apply dd-mm-yyyy " id="tgl_akad" size="20" value="<?php echo $tgl_akad; ?>"></td>
-	</tr>
+					?>
+				</select>
+			</td>
+		</tr>
+		<input type="hidden" name="jumlah_kpr" id="jumlah_kpr" size="20" value="<?php echo to_money($jumlah_kpr); ?>">
+		<tr>
+			<td>Status SPP <td>: 
+				<select name="status_kompensasi" id="status_kompensasi">
+					<option value="">   -- Status SPP --   </option>
+					<option value="1" <?php echo is_selected('1', $status_kompensasi); ?>>KPR</option>
+					<option value="2" <?php echo is_selected('2', $status_kompensasi); ?>>TUNAI</option>
+					<option value="3" <?php echo is_selected('3', $status_kompensasi); ?>>KOMPENSASI</option>
+					<option value="4" <?php echo is_selected('4', $status_kompensasi); ?>>ASSET SETTLEMENT</option>
+					<option value="5" <?php echo is_selected('5', $status_kompensasi); ?>>KPR JAYA</option>
+				</select>
+			</td>
+			<td align="left"> Tgl. Rencana Akad : <input type="text" name="tgl_akad" class = "apply dd-mm-yyyy " id="tgl_akad" size="20" value="<?php echo $tgl_akad; ?>"></td>
+		</tr>
 
 
-	<tr>
-		<td> Distribusi SPP </td><td> : 
+		<tr>
+			<td> Distribusi SPP </td><td> : 
 			<input type="radio" name="status_spp" id="sudah" class="status" value="1" <?php echo is_checked('1', $status_spp); ?>>Sudah
 			<input type="radio" name="status_spp" id="belum" class="status" value="2" <?php echo is_checked('2', $status_spp); ?>>Belum  
-		
+
 			<input type="text" name="tgl_proses" id="tgl_proses" size="10" class="apply dd-mm-yyyy" value="<?php echo $tgl_proses; ?>">
 		</td>
 		<td align="left"> Tanda Jadi : <input type="text" name="tanda_jadi" id="tanda_jadi" size="20" value="<?php if(!isset($tanda_jadi)){$tanda_jadi = 20000000;}echo ((to_money($tanda_jadi))); ?>"></td>
@@ -443,19 +407,45 @@
 
 	<tr>
 		<td>Redistribusi SPP </td><td>: 
-			<select name="redistribusi" id="redistribusi">
-				<option value="">   -- Redistribusi SPP --   </option>
-				<option value="1" <?php echo is_selected('1', $redistribusi); ?>>Tidak</option>
-				<option value="2" <?php echo is_selected('2', $redistribusi); ?>>Dalam Proses</option>
-				<option value="3" <?php echo is_selected('3', $redistribusi); ?>>Selesai</option>
-			</select>
-			<input type="text" name="tgl_redistribusi" id="tgl_redistribusi" size="10" class="apply dd-mm-yyyy" value="<?php echo $tgl_redistribusi; ?>">
-		</td>
-		<td align="left">Tgl. Tanda Jadi : <input type="text" name="tgl_tanda_jadi" id="tgl_tanda_jadi" size="10" class="apply dd-mm-yyyy" value="<?php echo $tgl_tanda_jadi; ?>"></td>
-	</tr>
+		<select name="redistribusi" id="redistribusi">
+			<option value="">   -- Redistribusi SPP --   </option>
+			<option value="1" <?php echo is_selected('1', $redistribusi); ?>>Tidak</option>
+			<option value="2" <?php echo is_selected('2', $redistribusi); ?>>Dalam Proses</option>
+			<option value="3" <?php echo is_selected('3', $redistribusi); ?>>Selesai</option>
+		</select>
+		<input type="text" name="tgl_redistribusi" id="tgl_redistribusi" size="10" class="apply dd-mm-yyyy" value="<?php echo $tgl_redistribusi; ?>">
+	</td>
+	<td align="left">Tgl. Tanda Jadi : <input type="text" name="tgl_tanda_jadi" id="tgl_tanda_jadi" size="10" class="apply dd-mm-yyyy" value="<?php echo $tgl_tanda_jadi; ?>"></td>
+	</tr
+
+	<tr>
+		<td>Nama Pejabat </td><td>: 	
+		<input type="text" name="nama_pejabat" id="nama_pejabat" size="30" value="<?php echo $nama_pejabat; ?>">
+	</td>
+</tr>
+<tr>
+	<td>    Jabatan </td><td>: 	
+	<input type="text" name="nama_jabatan" id="nama_jabatan" size="30" value="<?php echo $nama_jabatan; ?>">
+</td>
+</tr>
+<tr>
+	<td>Nama Pejabat </td><td>: 	
+	<input type="text" name="pejabat_spp" id="pejabat_spp" size="30" value="<?php echo $pejabat_spp; ?>">
+</td>
+</tr>
+<tr>
+	<td>    Jabatan </td><td>: 	
+	<input type="text" name="jabatan_spp" id="jabatan_spp" size="30" value="<?php echo $jabatan_spp; ?>">
+</td>
+</tr>
+<tr>
+	<td>Nama Sales </td><td>: 	
+	<input type="text" name="nama_sales" id="nama_sales" size="30" value="<?php echo $nama_sales; ?>">
+</td>
+</tr>
 
 </table>
-						
+
 <table class="t-popup pad2 w100">
 	<tr>
 		<td width="100">Keterangan </td><td>:</td>
@@ -467,7 +457,7 @@
 			<input type="submit" id="save" value=" <?php echo $act; ?> ">
 				<?php /*if($status_otorisasi== 1){
 				echo '<input type="submit" id="print" value="Print">';
-				}*/ ?>
+			}*/ ?>
 			<input type="submit" id="print" value="Print">
 			<input type="reset" id="reset" value=" Reset ">
 			<input type="button" id="close" value=" Tutup ">
@@ -477,8 +467,8 @@
 		</td>
 	</tr>
 </table>
-												
-		<?php
-		close($conn);
-		exit;
-		?>
+
+<?php
+close($conn);
+exit;
+?>

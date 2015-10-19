@@ -73,7 +73,7 @@ $page_start = (($page_num-1) * $per_page);
 <tr>
 	<td>
 		<!--<input type="button" id="hapus" value=" Hapus ">-->	
-		<input type="button" id="<?php echo $tombol; ?>" value=" <?php echo $nama_tombol; ?> ">
+		<!--<input type="button" id="<?php echo $tombol; ?>" value=" <?php echo $nama_tombol; ?> ">-->
 	</td>
 	<td class="text-right">
 		<input type="button" id="prev_page" value=" < ">

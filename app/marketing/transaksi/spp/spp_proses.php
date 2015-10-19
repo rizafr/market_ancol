@@ -163,7 +163,7 @@
 					}
 				}
 				
-				$msg = ($error) ? 'Sebagian data gagal diotorisasi.' : 'Data berhasil diotorisasi.';
+				$msg = 'Data berhasil diotorisasi.';
 			}
 			
 			elseif ($act == 'Batal_Otorisasi') # Proses Batal Otorisasi
@@ -183,7 +183,7 @@
 					}
 				}
 				
-				$msg = ($error) ? 'Sebagian data gagal dibatalkan otorisasi.' : 'Data berhasil dibatalkan otorisasi.';
+				$msg = 'Data berhasil dibatalkan otorisasi.';
 			}
 			
 			$conn->committrans(); 
@@ -300,6 +300,24 @@
 		WHERE KODE_BLOK = '$id'";
 		$obj 		= $conn->execute($query);
 		$lokasi		= $obj->fields['KODE_LOKASI'];
+
+		$query 		= "SELECT 
+					      	[NAMA_PT]
+					      ,[NAMA_DEP]
+					      ,[NAMA_PEJABAT]
+					      ,[NAMA_JABATAN]
+					      ,[PEJABAT_SPP]
+					      ,[JABATAN_SPP]
+					      ,[NAMA_SALES]
+					  FROM [CS_PARAMETER_MARK]";
+		$obj 		= $conn->execute($query);
+
+		$nama_pejabat			= $obj->fields['NAMA_PEJABAT'];
+		$nama_jabatan			= $obj->fields['NAMA_JABATAN'];
+		$pejabat_spp			= $obj->fields['PEJABAT_SPP'];
+		$jabatan_spp			= $obj->fields['JABATAN_SPP'];
+		$nama_sales				= $obj->fields['NAMA_SALES'];
+
 	}
 	else if($act=='Simpan'){
 		$query 		= "SELECT *,s.NPWP AS CS_NPWP FROM SPP S
