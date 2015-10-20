@@ -108,7 +108,7 @@ die_conn($conn);
 		var navpos = $('#menu').offset();
 		console.log(navpos.top);
 		$(window).bind('scroll', function() {
-			if ($(window).scrollTop() > navpos.top) {
+			if ($(window).scrollTop() > 130) {
 				$('#menu').addClass('fixed');
 			}
 			else {
