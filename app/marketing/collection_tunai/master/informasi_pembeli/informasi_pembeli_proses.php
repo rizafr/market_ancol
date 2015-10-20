@@ -141,6 +141,9 @@ if ($act == 'Ubah')
 	$kelengkapan		= $obj->fields['KELENGKAPAN'];		
 	$keterangan			= $obj->fields['KETERANGAN'];	
 	$catatan_penagihan		= $obj->fields['CATATAN_PENAGIHAN'];	
+	$pola_pembayaran		= $obj->fields['POLA_PEMBAYARAN'];	
+	$harga_total		= $obj->fields['HARGA_TOTAL'];	
+	$pola_bayar		= $obj->fields['POLA_BAYAR'];	
 	
 //DATA RENCANA & REALISASI	
 	$luas_tanah			= $obj->fields['LUAS_TANAH'];
@@ -163,7 +166,7 @@ if ($act == 'Ubah')
 	$total_harga 		= to_money($total_tanah + $total_bangunan);
 	$total_ppn			= to_money($ppn_tanah + $ppn_bangunan);
 	
-	$sisa_pembayaran	= ($total_tanah + $total_bangunan) + ($ppn_tanah + $ppn_bangunan);	
+	$sisa_pembayaran	= ($harga_total);	
 	$tanda_jadi 		= $obj->fields['TANDA_JADI'];	
 	$tgl_jadi	 		= $obj->fields['TANGGAL_TANDA_JADI'];
 	$jml_kpr	 		= $obj->fields['JUMLAH_KPR'];

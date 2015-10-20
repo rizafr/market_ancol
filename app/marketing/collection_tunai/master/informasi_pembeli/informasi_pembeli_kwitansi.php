@@ -62,8 +62,8 @@ jQuery(function($) {
 			<td><?php echo $obj->fields['KETERANGAN'];  ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['NILAI']);  ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['NILAI_DIPOSTING']);  ?></td>
-			<td class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" <?php echo $obj->fields['VER_COLLECTION']; ?>></td>
-			<td class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" <?php echo $obj->fields['VER_KEUANGAN']; ?>></td>
+			<td class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" <?php echo $obj->fields['VER_COLLECTION']; ?> checked ></td>
+			<td class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" <?php echo $obj->fields['VER_KEUANGAN']; ?> checked></td>
 		
 		</tr>
 		<?php

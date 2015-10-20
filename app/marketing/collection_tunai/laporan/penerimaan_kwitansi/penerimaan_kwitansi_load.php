@@ -54,19 +54,12 @@ $page_start = (($page_num-1) * $per_page);
 
 <table class="t-data w100">
 <tr>
-	<th rowspan="2">NO.</th>
-	<th rowspan="2">NO. KWITANSI</th>
-	<th rowspan="2">TANGGAL</th>
-	<th rowspan="2">BLOK / NOMOR</th>
-	<th rowspan="2">NAMA PEMBELI</th>
-	<th colspan="3">PENERIMAAN</th>
-	<th rowspan="2">Total</th>
-</tr>
-<tr>
-	<th colspan="1">Angsuran</th>
-	<th colspan="1">Nilai DPP</th>
-	<th colspan="1">PPN</th>
-	
+	<th>NO.</th>
+	<th>NO. KWITANSI</th>
+	<th>TANGGAL</th>
+	<th>BLOK / NOMOR</th>
+	<th>NAMA PEMBELI</th>
+	<th>PENERIMAAN</th>
 </tr>
 <?php
 $total_nilai=0;
@@ -104,9 +97,6 @@ if ($total_data > 0)
 			<td class="text-center"><?php echo $obj->fields['KODE_BLOK']; ?></td>
 			<td><?php echo $obj->fields['NAMA_PEMBAYAR']; ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['NILAI']); ?></td>	
-			<td class="text-right">0</td>
-			<td class="text-right"><?php echo to_money($obj->fields['NILAI_PPN']); ?></td>		
-			<td class="text-right"><?php echo to_money($subtotal); ?></td>		
 		</tr>
 		<?php
 		$i++;
@@ -116,9 +106,6 @@ if ($total_data > 0)
 		<tr> 
 			<td colspan="5" class="text-center"><b> Total </b></td>
 			<td class="text-right"><b>'.to_money($total_nilai).'</b></td>
-			<td class="text-right">0</td>			
-			<td class="text-right"><b>'.to_money($total_ppn).'</b></td>		
-			<td class="text-right"><b>'.to_money($total_total).'</b></td>		
 		</tr>';
 }
 

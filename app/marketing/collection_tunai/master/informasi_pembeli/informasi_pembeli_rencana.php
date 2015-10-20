@@ -32,12 +32,7 @@ jQuery(function($) {
 	<td colspan="2"><?php echo $id; ?></td>
 </tr>
 <br>
-<tr>
-	<td>Luas Tanah</td><td>:</td>
-	<td colspan="2"><?php echo $luas_tanah.' m&sup2;'; ?></td>
-</tr>
-<br>
-	<td>Luas Bangunan</td></td><td>:</td>
+	<td>Luas Semi Gross</td></td><td>:</td>
 	<td colspan="2"><?php echo $luas_bangunan.' m&sup2;'; ?></td>
 </tr>
 <br>
@@ -46,28 +41,12 @@ jQuery(function($) {
 	<td colspan="2"><?php echo $tipe_bangunan; ?></td>
 </tr>
 <tr>
-	<td>Harga Tanah</td></td><td>: </td><td>Rp.</td>
-	<td class="text-right"><?php echo to_money($total_tanah,2); ?></td>
-</tr>
-<tr>
-	<td>Harga Bangunan</td></td><td>: </td><td>Rp.</td>
-	<td class="text-right"><?php echo to_money($total_bangunan,2); ?></td>
-</tr>
-<tr>
-	<td>P.P.N. Tanah</td></td><td>: </td><td>Rp.</td>
-	<td class="text-right"><?php echo to_money($ppn_tanah,2); ?></td>
-</tr>
-<tr>
-	<td>P.P.N. Bangunan</td></td><td>: </td><td>Rp.</td>
-	<td class="text-right"><?php echo to_money($ppn_bangunan,2); ?></td>
-</tr>
-<tr>
-	<td></td></td><td></td>
-	<td colspan="2"><hr></td>
+	<td>Pola Pembayaran</td></td><td>:</td>
+	<td colspan="2"><?php echo $pola_bayar; ?></td>
 </tr>
 <tr>
 	<td>Total Harga</td></td><td>: </td><td>Rp.</td>
-	<td class="text-right"><?php echo to_money($sisa_pembayaran,2); ?></td>
+	<td class="text-right"><?php echo to_money($harga_total,2); ?></td>
 </tr>
 </table>
 
@@ -119,9 +98,11 @@ jQuery(function($) {
 	";
 	$obj = $conn->execute($query);
 
-
+	$total = 0;
 	while( ! $obj->EOF)
 	{
+		$nilai = $obj->fields['NILAI'];
+		$total+= $nilai;
 		?>
 		<tr>
 
@@ -135,6 +116,12 @@ jQuery(function($) {
 	}
 
 ?>
+<tr>
+	<td>TOTAL</td>
+	<td><?php echo to_money($total+$tanda_jadi);?></td>
+	<td></td>
+
+</tr>
 </table>
 <?php ?>
 
