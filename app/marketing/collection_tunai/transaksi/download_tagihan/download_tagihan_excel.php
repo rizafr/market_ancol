@@ -7,7 +7,7 @@
 	$namafile = "Daftar Penagihan "."(".substr(fm_date(date("Y-m-d")),3).").xls";
 	
 	header("Content-type: application/octet-stream");
-	header("Content-Disposition: attachment; filename=$namafile");//ganti nama sesuai keperluan
+	header("Content-Disposition: attachment; filename=\"" . basename($namafile) . "\"");
 	header("Cache-Control:  must-revalidate, post-check=0, pre-check=0");
 	header("Pragma: no-cache");
 	header("Expires: 0");

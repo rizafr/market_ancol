@@ -131,6 +131,10 @@ function deleteData()
 	<td>Telepon</td></td><td>:</td>
 	<td><?php echo $tlp1; ?></td>
 </tr>
+<tr>
+	<td>Pola Bayar</td></td><td>:</td>
+	<td><?php echo $pola_bayar; ?></td>
+</tr>
 </table>
 <table class="t-popup wauto" style="margin-right:35px">
 <tr>
@@ -177,18 +181,22 @@ function deleteData()
 	";
 	$obj = $conn->execute($query);
 	$i = 2;
-
+	$j=1;
+	$total = 0;
 	while( ! $obj->EOF)
 	{
+		$nilai = $obj->fields['NILAI'];
+		$total+= $nilai;
 		?>
 		<tr>
 			<td class="text-center"><?php echo $i;  ?></td>
 			<td><?php echo date("d-m-Y", strtotime($obj->fields['TANGGAL'])); ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['NILAI']);  ?></td>
-			<td><?php echo $obj->fields['JENIS_BAYAR'];  ?></td>
+			<td><?php echo $obj->fields['JENIS_BAYAR'] ." ".$j ?> </td>
 		</tr>
 		<?php
 		$i++;
+		$j++;
 		$obj->movenext();
 	}
 if ($jml_kpr > 0) {	
@@ -202,6 +210,12 @@ if ($jml_kpr > 0) {
 </table>
 <?php } ?>
 
+<tr>
+	<td class="text-center" colspan="2">TOTAL</td>
+	<td><?php echo to_money($total+$tanda_jadi);?></td>
+
+</tr>
+</table>
 <table class="t-data w70">
 <tr>
 	<th colspan=8>REALISASI PENERIMAAN</th>
@@ -210,10 +224,7 @@ if ($jml_kpr > 0) {
 	<th>NO.</th>
 	<th>TANGGAL</th>
 	<th>ANGSURAN</th>
-	<th>OFFICER COL.</th>
 	<th>TGL. IDENTIFIKASI</th>
-	<th>OFFICER KEU.</th>
-	<th>TGL. VER KEU.</th>
 	<th>KETERANGAN</th>
 </tr>
 
@@ -234,10 +245,7 @@ if ($jml_kpr > 0) {
 			<td class="text-center"><?php echo $i; ?></td>
 			<td><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL']))); ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['NILAI']); ?></td>
-			<td><?php echo $obj->fields['COL']; ?></td>
 			<td><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['VER_COLLECTION_TANGGAL']))); ?></td>
-			<td><?php echo $obj->fields['KEU']; ?></td>
-			<td><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['VER_KEUANGAN_TANGGAL']))); ?></td>
 			<td class="text-center"><?php echo $obj->fields['KETERANGAN']; ?></td>
 		</tr>
 		<?php

@@ -24,6 +24,10 @@ html { height:100%; }
 	margin: 30% auto 0;
 }
 
+a:hover{
+	color: #fff !important;
+	transition: all 0.2s ease;
+}
 #wrapper {
 	position:relative;
 	min-height:100% !important;
@@ -38,7 +42,7 @@ body {
 	line-height: 1.6;
 	font-weight: 400;
 	color: #131304;
-	background:url(../../images/bg.png);
+	background:url(../../images/bg.png) !important;;
 }
 #header {
 	position:relative;
@@ -85,7 +89,7 @@ body {
 }
 
 .fixed {  /* To fix main menu container */
-	background: rgba(255, 255, 255, 0.9) !important;
+	background: rgba(255, 255, 255, 1) !important;
     z-index: 9999 !important;
     position: fixed !important;
     left: 0 !important;
@@ -98,6 +102,8 @@ body {
 	  -moz-transition: all 0.4s ease;
 	  -o-transition: all 0.4s ease;
 	  transition: all 0.4s ease;
+	   animation-duration: 0.8s;
+    	animation-name: fadeIn;
 }
 
 #profil {

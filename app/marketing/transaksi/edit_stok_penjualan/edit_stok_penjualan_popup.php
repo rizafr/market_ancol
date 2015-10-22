@@ -92,8 +92,8 @@ require_once('../../../../config/config.php');
 			return false; 
 		}
 		function get_kode_sk_bangunan() {
-			var url = get_base + 'kode_sk_bangunan.php'; 
-			setPopup('Daftar SK Bangunan', url, 600, winHeight-100); 
+			var url = get_base + 'kode_sk_bangunan_setup.php'; 
+			setPopup('Daftar SK Bangunan', url, 700, winHeight-100); 
 			return false; 
 		}
 		function get_kode_penjualan() {
@@ -118,7 +118,7 @@ require_once('../../../../config/config.php');
 			<tr>
 				<td>Tower</td><td>:</td>
 				<td>
-					<input type="text" name="kode_lokasi" id="kode_lokasi" size="1" value="<?php if(isset($kode_lokasi)){echo $kode_lokasi;}else{echo '-';} ?>">
+					<input type="hidden" name="kode_lokasi" id="kode_lokasi" size="1" value="<?php if(isset($kode_lokasi)){echo $kode_lokasi;}else{echo '-';} ?>">
 					<button onclick="return get_kode_lokasi()"> > </button>
 					<input type="text" id="lokasi" size="25" value="<?php if(isset($lokasi)){echo $lokasi;}else{echo '-';} ?>">
 				</td>
@@ -126,7 +126,7 @@ require_once('../../../../config/config.php');
 			<tr>
 				<td>Jenis Unit</td><td>:</td>
 				<td>
-					<input type="text" name="kode_unit" id="kode_unit" size="1" value="<?php if(isset($kode_unit)){echo $kode_unit;}else{echo '-';} ?>">
+					<input type="hidden" name="kode_unit" id="kode_unit" size="1" value="<?php if(isset($kode_unit)){echo $kode_unit;}else{echo '-';} ?>">
 					<button onclick="return get_kode_unit()"> > </button>
 					<input type="text" id="jenis_unit" size="25" value="<?php if(isset($jenis_unit)){echo $jenis_unit;}else{echo '-';} ?>">
 				</td>
@@ -135,7 +135,7 @@ require_once('../../../../config/config.php');
 			<tr>
 				<td>Tipe</td><td>:</td>
 				<td>
-					<input type="text" name="kode_tipe" id="kode_tipe" size="1" value="<?php if(isset($kode_tipe)){echo $kode_tipe;}else{echo '-';} ?>">
+					<input type="hidden" name="kode_tipe" id="kode_tipe" size="1" value="<?php if(isset($kode_tipe)){echo $kode_tipe;}else{echo '-';} ?>">
 					<button onclick="return get_kode_tipe()"> > </button>
 					<input type="text" id="tipe_bangunan" size="25" value="<?php if(isset($tipe_bangunan)){echo $tipe_bangunan;}else{echo '-';} ?>">
 				</td>
@@ -186,7 +186,7 @@ require_once('../../../../config/config.php');
 			<tr>
 				<td>Jenis Penjualan</td><td>:</td>
 				<td>
-					<input type="text" name="kode_penjualan" id="kode_penjualan" size="1" value="<?php if(isset($kode_penjualan)){echo $kode_penjualan;}else{echo '-';} ?>">
+					<input type="hidden" name="kode_penjualan" id="kode_penjualan" size="1" value="<?php if(isset($kode_penjualan)){echo $kode_penjualan;}else{echo '-';} ?>">
 					<button onclick="return get_kode_penjualan()"> > </button>
 					<input type="text" id="jenis_penjualan" size="25" value="<?php if(isset($jenis_penjualan)){echo $jenis_penjualan;}else{echo '-';} ?>">
 				</td>

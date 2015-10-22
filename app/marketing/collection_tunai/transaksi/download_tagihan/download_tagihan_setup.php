@@ -26,13 +26,11 @@
 		<td>Total Data</td><td>:</td>
 		<td id="total-data"></td>
 	</tr>
+
 	<tr>
 	<td width="100">Create Tagihan</td><td width="10">:</td>
 		<td>
-			<select name="pilih" id="pilih" class="wauto">
-				<option value="bca"> Bank BCA </option>
-				<option value="mandiri"> Bank Mandiri </option>
-			</select>
+			<input type="hidden" name="pilih" id="pilih" value="bca">
 			<input type="button" id="download" value=" Create ">		
 		</td>
 	</tr>
@@ -94,7 +92,7 @@ jQuery(function($) {
 	$(document).on('click', '#download', function(e) {
 		e.preventDefault();
 		if(distribusi == 0){
-			alert('Maaf datfar tagihan ini belum didistribusi');
+			alert('Maaf dafTar tagihan ini belum didistribusi');
 		}
 		else{
 			if(bank == 'bca'){
