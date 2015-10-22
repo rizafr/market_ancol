@@ -32,11 +32,6 @@ jQuery(function($) {
 		$('#daftar').hide();	
 	}	
 	
-	jumlah = jQuery('#jumlah').val();		
-		// jumlah	= jumlah.replace(/[^0-9.]/g, '');
-		// jumlah	= (jumlah == '') ? 0 : parseFloat(jumlah);
-		sejumlah = terbilang(jumlah);
-		$('#terbilang').val(sejumlah);
 	
 	$('#nomor, #penerima').inputmask('varchar', { repeat: '30' });	
 	$('#no_customer, #no_tlp').inputmask('mask', { repeat: '15', mask : '9', groupSeparator : '', placeholder : '' });
@@ -44,7 +39,7 @@ jQuery(function($) {
 	$('#nama_pembayar').inputmask('varchar', { repeat: '40' });
 	$('#alamat').inputmask('varchar', { repeat: '60' });
 	$('#keterangan').inputmask('varchar', { repeat: '480' });
-	// $('#jumlah').inputmask('numeric', { repeat: '16' });	
+	$('#jumlah').inputmask('numeric', { repeat: '16' });	
 	
 	$('#jumlah').on('keyup', function(e) {
 		e.preventDefault();
@@ -169,8 +164,22 @@ function daftar_pemesan() {
 	<td><input type="text" name="kode_blok" id="kode_blok" size="10" value="<?php echo $kode_blok; ?>"></td>
 	<td class="text-right">Pembayaran : 
 	<select name="pembayaran" id="pembayaran">
-		<option value="29"> TANDA JADI </option>
-		
+		<option value=""> -- Pembayaran -- </option>
+		<?php
+		$obj = $conn->execute("
+		SELECT *
+		FROM 
+			JENIS_PEMBAYARAN
+		");
+		while( ! $obj->EOF)
+		{
+			$ov = $obj->fields['KODE_BAYAR'];
+			$oj = $obj->fields['JENIS_BAYAR'];
+			$kel = $obj->fields['KELOMPOK'];
+			echo "<option value='$ov#$kel' data-jenis='$oj'".is_selected($ov, $kode_bayar)."> $oj </option>";
+			$obj->movenext();
+		}
+		?>
 	</select>
 	</td>
 </tr>
@@ -219,12 +228,17 @@ function daftar_pemesan() {
 	<td colspan="2"><input type="text" name="keterangan" id="keterangan" size="98" value="<?php echo $keterangan; ?>"></td>
 </tr>
 <tr>
+<?php 
+
+$jumlah=explode(".",$jumlah) ;
+$jumlah = $jumlah[0];
+?>
 	<td>Jumlah Diterima</td><td>:</td>
-	<td>Rp. <input type="text" name="jumlah" id="jumlah" size="15" value="<?php echo to_money (intval($jumlah)); ?>"></td>
+	<td>Rp. <input type="text" name="jumlah" id="jumlah" size="15" value="<?php echo to_money($jumlah); ?>"></td>
 </tr>
 <tr>
-	<td>Terbilang</td><td>:</td>
-	<td colspan="2"><input type="text" name="terbilang" id="terbilang" size="98" readonly="readonly" style="text-transform:uppercase" value="<?php echo ucfirst($terbilang->eja(floatval($jumlah))); ?> rupiah"></td>
+	<td>Terbilang </td><td>:</td>
+	<td colspan="2"><input type="text" name="terbilang" id="terbilang"  size="98" readonly="readonly" style="text-transform:uppercase" value="<?php echo ucfirst($terbilang->eja(bigintval($jumlah))); ?> rupiah"></td>
 </tr>
 <tr>
 	<td>Koordinator</td><td>:</td>

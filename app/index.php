@@ -106,11 +106,12 @@ die_conn($conn);
 
 <script type="text/javascript">
 	jQuery(function($) {
-		var navpos = $('#menu').offset();
+		var navpos = $('#menu').offset();	  		  
 		console.log(navpos.top);
 		$(window).bind('scroll', function() {
-			if ($(window).scrollTop() > 200) {
-				$('#menu').addClass('fixed');
+			var scroll = $(document).height() ;//returns window height
+			if ($(window).scrollTop() >= 200) {
+				$('#menu').addClass('fixed');			
 			}
 			else {
 				$('#menu').removeClass('fixed');

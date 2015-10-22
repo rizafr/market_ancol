@@ -86,6 +86,7 @@ body {
 	border-right: 1px solid #EFEFEF;
 	border-bottom: 1px solid #E2E2E2;
 	box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.04);
+	animation-name: fadeIn;
 }
 
 .fixed {  /* To fix main menu container */
@@ -97,13 +98,12 @@ body {
     width: 100%;
 	margin: 0px 0px !important;
 	border-bottom: 4px solid #b2ebf2 !important;
-	transition: all 0.4s ease;
-	 -webkit-transition: all 0.4s ease;
-	  -moz-transition: all 0.4s ease;
-	  -o-transition: all 0.4s ease;
-	  transition: all 0.4s ease;
+	transition: top 800ms ease 0.8s;
+	 -webkit-transition: top 800ms ease 0.8s;
+	  -moz-transition: top 800ms ease 0.8s;
+	  -o-transition: top 800ms ease 0.8s;
 	   animation-duration: 0.8s;
-    	animation-name: fadeIn;
+    	animation-name: fadeInDown;
 }
 
 #profil {

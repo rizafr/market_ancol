@@ -202,7 +202,7 @@ ex_false($conn->execute($query), $query);
 		<div id="tanggal" class="kata">Jakarta, <?php echo $tanggal; ?></div>	
 		<table width="100%" class="kata footer">
 			<tr>
-				<td width="25%">Pemesan,</td>
+				<td width="25%">&nbsp;</td>
 				<td width="50%"></td>
 				<td width="25%">Yang Menerima,</td>
 			</tr>
@@ -212,9 +212,9 @@ ex_false($conn->execute($query), $query);
 				<td></td>
 			</tr>
 			<tr>
-				<td>( <?php echo $nama_pembayar; ?> )</td>
+				<td>&nbsp;</td>
 				<td></td>
-				<td>( <?php echo $pejabat_penandatangan; ?> )</td>
+				<td>( <?php echo $penerima; ?> )</td>
 			</tr>
 		</table>
 		<div id = "footer">PT. PEMBANGUNAN JAYA ANCOL Tbk.</div>
