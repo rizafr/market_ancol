@@ -58,21 +58,14 @@ jQuery(function($) {
 
 <tr>
 	<th>KODE SK</th>
-	<th>TGL SK</th>
-	<th>KODE</th>
-	<th>CASH KERAS</th>
-	<th>CB36X</th>
-	<th>CB48X</th>
-	<th>KPA24X</th>
-	<th>KPA36X</th>
 </tr>
 
 <?php
 $query = "
-SELECT KODE_SK, KODE_BLOK, TANGGAL, STATUS, HARGA_CASH_KERAS, CB36X, CB48X, KPA24X, KPA36X
+SELECT KODE_SK
 FROM HARGA_SK
 WHERE STATUS='1'
-ORDER BY KODE_SK ASC
+GROUP BY KODE_SK
 
 ";
 
@@ -82,20 +75,8 @@ while( ! $obj->EOF)
 	?>
 	<tr class="onclick" 
 		data-kode_sk="<?php echo $obj->fields['KODE_SK']; ?>"
-		data-harga_cash_keras="<?php echo to_money($obj->fields['HARGA_CASH_KERAS'],2); ?>"
-		data-harga="<?php echo to_money($obj->fields['CB36X'],2); ?>"
-		data-harga2="<?php echo to_money($obj->fields['CB48X'],2); ?>"
-		data-harga3="<?php echo to_money($obj->fields['KPA24X'],2); ?>"
-		data-harga4="<?php echo to_money($obj->fields['KPA36X'],2); ?>"
 		>
 		<td><?php echo $obj->fields['KODE_SK']?></td>
-		<td><?php echo date("d-m-Y", strtotime($obj->fields['TANGGAL'])); ?></td>
-		<td class="text-right"><?php echo $obj->fields['KODE_BLOK']; ?></td>
-		<td class="text-right"><?php echo to_money($obj->fields['HARGA_CASH_KERAS'],2); ?></td>
-		<td class="text-right"><?php echo to_money($obj->fields['CB36X'],2); ?></td>
-		<td class="text-right"><?php echo to_money($obj->fields['CB48X'],2); ?></td>
-		<td class="text-right"><?php echo to_money($obj->fields['KPA24X'],2); ?></td>
-		<td class="text-right"><?php echo to_money($obj->fields['KPA36X'],2); ?></td>
 	</tr>
 	<?php
 	$obj->movenext();

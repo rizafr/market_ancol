@@ -100,7 +100,7 @@ function loadData()
 function showPopup(act, id)
 {
 	var url =	base_marketing + 'collection_tunai/master/informasi_pembeli/informasi_pembeli_popup.php' + '?act=' + act + '&id=' + id;
-	setPopup(act + ' SPP', url, 950, 650);	
+	setPopup(act + ' SPP', url, 900, 600);	
 	return false;
 }
 

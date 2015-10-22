@@ -196,7 +196,7 @@ $('#reserve').on('click', function(e) {
 
 function showPopup2(act, id) {
 	var url = base_marketing_operasional + 'persediaan_awal/siap_jual/informasi_persediaan_popup.php?act=' + act + '&id=' + id;
-	setPopup('Edit Informasi Persediaan', url, 850, 500);
+	setPopup('Edit Informasi Persediaan', url, 850, 600);
 	return false;
 }
 

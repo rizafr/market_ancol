@@ -24,6 +24,10 @@ html { height:100%; }
 	margin: 30% auto 0;
 }
 
+a:hover{
+	color: #fff !important;
+	transition: all 0.2s ease;
+}
 #wrapper {
 	position:relative;
 	min-height:100% !important;
@@ -38,7 +42,7 @@ body {
 	line-height: 1.6;
 	font-weight: 400;
 	color: #131304;
-	background:url(../../images/bg.png);
+	background:url(../../images/bg.png) !important;;
 }
 #header {
 	position:relative;
@@ -82,11 +86,10 @@ body {
 	border-right: 1px solid #EFEFEF;
 	border-bottom: 1px solid #E2E2E2;
 	box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.04);
-	transition: padding 500ms ease 0s;
 }
 
 .fixed {  /* To fix main menu container */
-	background: rgba(255, 255, 255, 0.9) !important;
+	background: rgba(255, 255, 255, 1) !important;
     z-index: 9999 !important;
     position: fixed !important;
     left: 0 !important;
@@ -94,7 +97,13 @@ body {
     width: 100%;
 	margin: 0px 0px !important;
 	border-bottom: 4px solid #b2ebf2 !important;
-	transition: padding 500ms ease 0s !important;
+	transition: all 0.4s ease;
+	 -webkit-transition: all 0.4s ease;
+	  -moz-transition: all 0.4s ease;
+	  -o-transition: all 0.4s ease;
+	  transition: all 0.4s ease;
+	   animation-duration: 0.8s;
+    	animation-name: fadeIn;
 }
 
 #profil {
@@ -454,13 +463,4 @@ body.popup2 {
 body.popup table th,
 body.popup table td {
 	padding:5px 10px;
-}
-
-.fixed{  /* To fix main menu container */
-    z-index: 9999;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    transition: all 0.1s ease 0s;
 }
