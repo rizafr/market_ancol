@@ -192,10 +192,8 @@ if ($total_data > 0)
 			<td><?php echo $POLA_BAYAR; ?></td>
 
 			<?php for($j=0; $j<=$selisih; $j++) { 
-				for ($i=0; $i < $num_fields ; $i++) { 
-					# code...
-					
-				}
+				$nilai = $JUMLAH;
+				$sum_nilai += $nilai ;
 				?>
 			<td class="text-center"><?= to_money($nilai) ?></td>
 			<?php }?>
