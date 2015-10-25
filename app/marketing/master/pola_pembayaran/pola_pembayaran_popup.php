@@ -141,9 +141,9 @@ jQuery(function($) {
 		var url		= this_base + 'pola_pembayaran_proses.php',
 			data	= $('#form').serialize();
 		var total = cal();
-		if(total!=100){
+		if(total<=99){					
 			alert('Total Harus 100%');
-			return false;
+			return false;			
 		}
 		$.post(url, data, function(result) {
 			
@@ -225,7 +225,7 @@ function cek(nilai){
 	<td>Jenis Pembayaran</td><td>:</td>
 	<td>
 		<select name="kode_jenis" id="kode_jenis" class="wauto">
-			<option value="1" <?php echo is_selected('1', $kode_jenis); ?>>KPR</option>
+			<option value="1" <?php echo is_selected('1', $kode_jenis); ?>>KPA</option>
 			<option value="2" <?php echo is_selected('2', $kode_jenis); ?>>TUNAI</option>
 		</select>
 	</td>
@@ -280,7 +280,7 @@ function cek(nilai){
 <tr>
 	<td><input type="checkbox" name="cb_jenis" id="cb_jenis"></td>
 	<td></td>
-	<td>SISA MENJADI KPR</td>
+	<td>SISA MENJADI KPA</td>
 	<td><input type="text" name="nilai_jenis" id="nilai_jenis" size="10" value="<?php echo $nilai_jenis; ?>">&#37;</td>
 </tr>
 <tr>

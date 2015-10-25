@@ -119,11 +119,19 @@
 					<td>
 						<select name="pola_bayar" id="pola_bayar" class="wauto">
 							<option value=""> ---PILIH POLA BAYAR--- </option>
-							<option value="HARGA_CASH_KERAS"> CASH_KERAS </option>
-							<option value="CB36X"> CB36X </option>
-							<option value="CB48X"> CB48X </option> 
-							<option value="KPA24X"> KPA24X </option> 
-							<option value="KPA36X"> KPA36X </option> 
+							<?php
+							$obj = $conn->execute("
+								SELECT * FROM POLA_BAYAR
+								WHERE AKTIF = '1'							
+								");
+								while( ! $obj->EOF)
+								{
+								$ov = $obj->fields['KODE_POLA_BAYAR'];
+								$oj = $obj->fields['NAMA_POLA_BAYAR'];
+								echo "<option value='$oj'".is_selected($ov, $kbank)."> $oj </option>";
+								$obj->movenext();
+								}
+							?>
 						</select>
 					<td>
 				</tr>

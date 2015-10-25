@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 						  WHERE KODE_BLOK		= '$id'
 						  ";
 				ex_false($conn->execute($query), 'Update Pola bayar terlebih dahulu');
+				// ex_false($conn->execute($query), $query);
 
 				//proses penghitungan rencana (angsuran)
 				
@@ -87,51 +88,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				
 				$tanggal_input = '20-'.($next_bln).'-'.$next_thn;
 								
-				// $nilai	= $total;
-				// $total_harga_awal = $total;
+				//proses mengambil ke pola bayar
+					
+				$obj = $conn->execute("		
+										SELECT * FROM POLA_BAYAR
+										WHERE NAMA_POLA_BAYAR = $pola_bayar
+ 									 ");
 				
+				$kode_jenis = $obj->fields['KODE_JENIS'];
+				$nilai1	 	= $obj->fields['NILAI1'];
+				$kali1	 	= $obj->fields['KALI1'];
+				$nilai2		= $obj->fields['NILAI2'];
+				$kali2 		= $obj->fields['KALI2'];
+				$nilai3 	= $obj->fields['NILAI3'];
+				$kali3 		= $obj->fields['KALI3'];
+				$nilai4		= $obj->fields['NILAI4'];
+				$kali4 		= $obj->fields['KALI4'];
+				$nilai5 	= $obj->fields['NILAI5'];
+				$kali5 		= $obj->fields['KALI5'];
+				$nilai_jenis = $obj->fields['NILAI_JENIS'];
+							
 				$hasil_bagi = array();
-				if ($pola_bayar == 'HARGA_CASH_KERAS'){
-					$kode_jenis = 2;
-					$bagi = 1;
-					for($i=0;$i<$bagi;$i++){
-						$hasil_bagi[] = $harga_total/$bagi;
-					}
+				for($i=0;$i<$kali1;$i++){
+					$hasil_bagi[] = ($nilai * $nilai1)/100;
 				}
-				if($pola_bayar == 'CB36X'){
-					$kode_jenis = 2;
-					$bagi = 36;
-					for($i=0;$i<$bagi;$i++){
-						$hasil_bagi[] = $harga_total/$bagi;
-					}
+				for($i=0;$i<$kali2;$i++){
+					$hasil_bagi[] = ($nilai * $nilai2)/100;
 				}
-				if($pola_bayar == 'CB48X'){
-					$kode_jenis = 2;
-					$bagi = 48;
-					for($i=0;$i<$bagi;$i++){
-						$hasil_bagi[] = $harga_total/$bagi;
-					}
+				for($i=0;$i<$kali3;$i++){
+					$hasil_bagi[] = ($nilai * $nilai3)/100;
 				}
-				if($pola_bayar == 'KPA24X'){
-					$kode_jenis = 1;
-					$bagi = 24;
-					$kpa = ($harga_total*40)/100;
-					for($i=0;$i<$bagi;$i++){
-						$hasil_bagi[] = $kpa/$bagi;
-					}
+				for($i=0;$i<$kali4;$i++){
+					$hasil_bagi[] = ($nilai * $nilai4)/100;
+				}
+				for($i=0;$i<$kali5;$i++){
+					$hasil_bagi[] = ($nilai * $nilai5)/100;
 				}
 				
-				if($pola_bayar == 'KPA36X'){
-					$kode_jenis = 1;
-					$bagi = 36;
-					$kpa = ($harga_total*40)/100;
-					for($i=0;$i<$bagi;$i++){
-						$hasil_bagi[] = $kpa/$bagi;
-					}
-				}
-				
+				$jumlah_kali = $kali1+$kali2+$kali3+$kali4+$kali5;
 				$nilai_fix=0;
-				for($i=0;$i<$bagi;$i++){				
+				for($i=0;$i<$jumlah_kali;$i++){				
 					
 					if($i==0){
 							$tanggal = date("Y-m-d",strtotime($tanggal_input));
@@ -141,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 								$nilai_fix = 0;
 							}
 					}else 
-					if ($i == $bagi-1){
+					if ($i == $jumlah_kali-1){
 						$obj = $conn->execute("		
 										SELECT SUM(NILAI) AS JUMLAH FROM RENCANA
 										WHERE KODE_BLOK = '$id'

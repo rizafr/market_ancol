@@ -9,6 +9,12 @@ $blok				= (isset($_REQUEST['kode_blok'])) ? clean($_REQUEST['kode_blok']) : '';
 
 $query = "SELECT POLA_BAYAR	FROM SPP WHERE KODE_BLOK = '$blok'";
 $obj = $conn->execute($query);
+
+$query = "SELECT TANDA_JADI,TANGGAL_TANDA_JADI FROM SPP WHERE KODE_BLOK = '$blok'";
+$obj = $conn->execute($query);
+$tanda_jadi = $obj->fields['TANDA_JADI'];
+$tgl_jadi = $obj->fields['TANGGAL_TANDA_JADI'];
+
 ?>
 
 <div class="title-page">POLA PEMBAYARAN <?php echo $obj->fields['POLA_BAYAR'];  ?></div>
@@ -19,7 +25,12 @@ $obj = $conn->execute($query);
 	<th class="w30">JENIS PEMBAYARAN</th>
 	<th class="w30">NILAI (RP)</th>
 </tr>
-
+<tr>
+	<td class="text-center">1</td>
+	<td><?php echo date("d-m-Y", strtotime($tgl_jadi)); ?></td>
+	<td>TANDA JADI</td>
+	<td class="text-right"><?php echo to_money($tanda_jadi);  ?></td>
+</tr>
 <?php
 	$query = "
 	SELECT *
@@ -30,7 +41,7 @@ $obj = $conn->execute($query);
 	ORDER BY a.TANGGAL
 	";
 	$obj = $conn->execute($query);
-	$i = 1;
+	$i = 2;
 	$total = 0;
 	while( ! $obj->EOF)
 	{
@@ -51,7 +62,7 @@ $obj = $conn->execute($query);
 ?>
 <tr>
 	<td class="text-left" colspan="3">TOTAL</td>
-	<td class="text-right"><?php echo to_money($total);?></td>
+	<td class="text-right"><?php echo to_money($total+$tanda_jadi);?></td>
 	<td></td>
 </tr>
 </table>
