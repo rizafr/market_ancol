@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$query = "SELECT COUNT(KODE_SK) AS TOTAL FROM HARGA_SK WHERE KODE_SK = '$kode_sk'";
 			ex_found($conn->Execute($query)->fields['TOTAL'], "Kode sk \"$kode_sk\" telah terdaftar.");
 			
-			$query = "INSERT INTO HARGA_SK (KODE_SK, KODE_BLOK, CASH_KERAS, CB36X, CB48X, KPA24X, KPA36X, TANGGAL, STATUS) VALUES 
+			$query = "INSERT INTO HARGA_SK (KODE_SK, KODE_BLOK, HARGA_CASH_KERAS, CB36X, CB48X, KPA24X, KPA36X, TANGGAL, STATUS) VALUES 
 			(
 				'$kode_sk',
 				'$kode_blok',
@@ -75,13 +75,13 @@ $msg = "Data harga sk berhasil ditambahkan.";
 				ex_found($conn->Execute($query)->fields['TOTAL'], "Kode sk \"$kode_sk\" telah terdaftar.");
 			}
 			
-			$query = "SELECT * FROM HARGA_SK WHERE KODE_SK = '$kode_sk' AND kode_blok = '$kode_blok' AND CASH_KERAS = '$cash_keras' AND CB48X = '$cb48x' AND CB36X = '$cb36x' AND KPA36X = '$kpa36x' AND KPA24X = '$kpa24x' AND TANGGAL = CONVERT(DATETIME,'$tanggal',105) AND STATUS = '$status'";
+			$query = "SELECT * FROM HARGA_SK WHERE KODE_SK = '$kode_sk' AND kode_blok = '$kode_blok' AND HARGA_CASH_KERAS = '$cash_keras' AND CB48X = '$cb48x' AND CB36X = '$cb36x' AND KPA36X = '$kpa36x' AND KPA24X = '$kpa24x' AND TANGGAL = CONVERT(DATETIME,'$tanggal',105) AND STATUS = '$status'";
 			ex_found($conn->Execute($query)->recordcount(), "Tidak ada data yang berubah.");
 			
 			$query = "
 			UPDATE HARGA_SK 
 			SET 
-				CASH_KERAS = '$cash_keras',
+				HARGA_CASH_KERAS = '$cash_keras',
 				CB36X = '$cb36x',
 				CB48X = '$cb48x',
 				KPA24X = '$kpa24x',
@@ -156,7 +156,7 @@ if ($act == 'Ubah')
 		hb.KODE_SK,
 		hb.KODE_BLOK,
 		hb.TANGGAL,
-		hb.CASH_KERAS,
+		hb.HARGA_CASH_KERAS,
 		hb.CB36X,
 		hb.CB48X,
 		hb.KPA24X,
@@ -168,7 +168,7 @@ if ($act == 'Ubah')
 		");
 	$kode_sk = $id;
 	$kode_blok = $obj->fields['KODE_BLOK'];
-	$cash_keras = $obj->fields['CASH_KERAS'];
+	$cash_keras = $obj->fields['HARGA_CASH_KERAS'];
 	$cb36x = $obj->fields['CB36X'];
 	$cb48x = $obj->fields['CB48X'];
 	$kpa24x = $obj->fields['KPA24X'];

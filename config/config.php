@@ -23,7 +23,7 @@ require_once('adodb/adodb.inc.php');
 require_once('functions.php');
 
 #============== APPLICATION ==============
-define('BASE_URL', 'http://localhost:81/market_ancol/');
+define('BASE_URL', 'http://localhost/market_ancol/');
 define('BASE_APP', BASE_URL . 'app/');
 define('APP_ROOT', 'C:\\uwamp\\www\\market_ancol\\');
 
@@ -31,6 +31,6 @@ define('APP_ROOT', 'C:\\uwamp\\www\\market_ancol\\');
 define('DNS', TRUE);
 
 define('DRIVER', 'mssql');
-define('HOST', 'SYSTEM\SQLEXPRESS');
+define('HOST', 'WAY\SQLEXPRESS');
 define('USR', '');
 define('PWD', '');
