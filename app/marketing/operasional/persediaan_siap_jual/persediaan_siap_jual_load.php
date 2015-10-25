@@ -93,7 +93,7 @@ if ($total_data > 0)
 	";
 	
 	$obj = $conn->SelectLimit($query, $per_page, $page_start);
-	
+
 	while( ! $obj->EOF)
 	{
 		$id = $obj->fields['KODE_BLOK'];

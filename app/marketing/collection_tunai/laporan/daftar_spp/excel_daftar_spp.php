@@ -56,26 +56,16 @@ $set_th = '
 	dari ' . $total_page . '</td>
 </tr>
 <tr>
-	<th rowspan="2">NO.</th>
-	<th rowspan="2">NAMA PEMBELI</th>
-	<th rowspan="2">BLOK</th>
-	<th rowspan="2">ALAMAT</th>
-	<th rowspan="2">NO.TELP</th>
-	<th rowspan="2">TANGGAL SPP</th>
-	<th rowspan="2">TIPE</th>
-	<th rowspan="2">LUAS BANG.</th>
-	<th colspan="2">LUAS TANAH</th>
-	<th colspan="2">TUNAI</th>
-	<th colspan="2">KPR</th>
-
-</tr>
-<tr>
-	<th colspan="1">Kecil 200</th>
-	<th colspan="1">Besar 200</th>
-	<th colspan="1">Lunas</th>
-	<th colspan="1">Belum</th>
-	<th colspan="1">Lunas</th>
-	<th colspan="1">Belum</th>
+	<th>NO.</th>
+	<th>NAMA PEMBELI</th>
+	<th>BLOK</th>
+	<th>ALAMAT</th>
+	<th>NO.TELP</th>
+	<th>TANGGAL SPP</th>
+	<th>TIPE</th>
+	<th>LUAS SEMI GROSS</th>
+	<th>POLA BAYAR </th>
+	<th>HARGA PEMESANAN <br /> (Rp.)</th>
 </tr>
 ';
 
@@ -86,7 +76,7 @@ $set_ttd = '
 </tr>
 <tr>
 	<td colspan="7" class="nb text-center"></td>
-	<td colspan="3" class="nb text-center">' . 'Tangerang, ' .kontgl(date('d M Y')). '</td>
+	<td colspan="3" class="nb text-center">' . 'Jakarta, ' .kontgl(date('d M Y')). '</td>
 </tr>
 <tr>
 	<td colspan="7" class="nb text-center"></td>
@@ -205,26 +195,10 @@ if ($total_data > 0)
 	while( ! $obj->EOF)
 	{
 		$id 				= $obj->fields['KODE_BLOK'];
-		$luas_tanah 		= $obj->fields['LUAS_TANAH'];
 		$luas_bangunan 		= $obj->fields['LUAS_BANGUNAN'];
 		
-		$tanah 				= $luas_tanah * ($obj->fields['HARGA_TANAH']) ;
-		$disc_tanah 		= round($tanah * ($obj->fields['DISC_TANAH'])/100,0) ;
-		$nilai_tambah		= round(($tanah - $disc_tanah) * ($obj->fields['NILAI_TAMBAH'])/100,0) ;
-		$nilai_kurang		= round(($tanah - $disc_tanah) * ($obj->fields['NILAI_KURANG'])/100,0) ;
-		$faktor				= $nilai_tambah - $nilai_kurang;
-		$total_tanah		= $tanah - $disc_tanah + $faktor;
-		$ppn_tanah 			= round($total_tanah * ($obj->fields['PPN_TANAH'])/100,0) ;
-		
-		$bangunan 			= $luas_bangunan * ($obj->fields['HARGA_BANGUNAN']) ;
-		$disc_bangunan 		= round($bangunan * ($obj->fields['DISC_BANGUNAN'])/100,0) ;
-		$total_bangunan		= $bangunan - $disc_bangunan;
-		$ppn_bangunan 		= round($total_bangunan * ($obj->fields['PPN_BANGUNAN'])/100,0) ;
-		
-		$total_harga 		= ($total_tanah + $total_bangunan);
-		$total_ppn			= ($ppn_tanah + $ppn_bangunan);
-		
-		$total_harga_ppn	= ($total_tanah + $total_bangunan) + ($ppn_tanah + $ppn_bangunan);
+		$total_harga 		= $obj->fields['HARGA_TOTAL'];
+		$pola_bayar 		= $obj->fields['POLA_BAYAR'];
 		
 		$TELP_KANTOR	=(trim($obj->fields["TELP_KANTOR"])!="")?trim(strtoupper($obj->fields["TELP_KANTOR"])):"";
 		$TELP_LAIN		=(trim($obj->fields["TELP_LAIN"])!="")?",".trim(strtoupper($obj->fields["TELP_LAIN"])):"";
@@ -243,63 +217,8 @@ if ($total_data > 0)
 			<td class="text-center"><?php echo kontgl(tgltgl(date("d M Y", strtotime($obj->fields['TANGGAL_SPP'])))); ?></td>
 			<td><?php echo $obj->fields['TIPE_BANGUNAN']; ?></td>
 			<td class="text-right"><?php echo $luas_bangunan; ?></td>
-			
-			<?php
-			if($luas_tanah <= 200)
-			{?>
-				<td class="text-right"><?php echo $luas_tanah; ?></td><td></td>
-			<?php
-			}
-			else
-			{?>
-				<td></td><td class="text-right"><?php echo $luas_tanah; ?></td>
-			<?php
-			}
-			?>
-			
-			<?php 
-			$query2 = "
-			SELECT COUNT(*) AS TOTAL FROM SPP WHERE KODE_BLOK IN ($query_blok_lunas)
-			AND KODE_BLOK = '$id'
-			";
-			$obj2 			= $conn->execute($query2);
-			$lunas			= $obj2->fields['TOTAL'];
-			
-			
-			
-			if($status_kompensasi == 2)
-			{
-				if($lunas > 0)
-				{
-				?>
-					<td>Lunas</td><td></td><td></td><td></td>
-				<?php
-				}
-				else
-				{
-				?>
-					<td></td><td>Belum</td><td></td><td></td>
-				<?php
-				}
-			}
-			else if($status_kompensasi == 1)
-			{
-				if($lunas > 0)
-				{
-				?>
-					<td></td><td></td><td>Lunas</td><td></td>
-				<?php
-				}
-				else
-				{
-				?>
-					<td></td><td></td><td></td><td>Belum</td>
-				<?php
-				}
-			}
-			?>
-			
-			
+			<td class="text-right"><?php echo $pola_bayar; ?></td>
+			<td class="text-right"><?php echo to_money($total_harga); ?></td>
 		</tr>
 		<?php
 	

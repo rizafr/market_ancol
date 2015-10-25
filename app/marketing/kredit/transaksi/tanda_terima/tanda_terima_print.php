@@ -31,6 +31,8 @@ $jumlah			= $obj->fields['JUMLAH_DITERIMA'];
 $koordinator	= $obj->fields['KOORDINATOR'];
 $penerima		= $obj->fields['KASIR'];
 $bayar_secara	= $obj->fields['BAYAR_SECARA'];
+$bayar = array("1"=>"Tunai","2"=>"Cek","3"=>"bilyet","4"=>"Lain");
+$bayar_secara = $bayar[$bayar_secara];
 ?>
 
 <!DOCTYPE html>
@@ -172,7 +174,7 @@ $bayar_secara	= $obj->fields['BAYAR_SECARA'];
 			</tr>
 			<tr>
 				<td class="kolom kolom_bawah">1</td>
-				<td class="kolom kolom_bawah">Uang Tunai</td>
+				<td class="kolom kolom_bawah"><?php echo $bayar_secara ?></td>
 				<td class="kolom kolom_bawah"></td>
 				<td class="kolom kolom_bawah"><?php echo $tanggal; ?></td>
 				<td class="kolom kolom_bawah"><?php echo to_money($jumlah); ?>,-</td>
@@ -181,7 +183,7 @@ $bayar_secara	= $obj->fields['BAYAR_SECARA'];
 		<div id="tanggal" class="kata">Jakarta, <?php echo $tanggal; ?></div>	
 		<table width="100%" class="kata footer">
 			<tr>
-				<td width="25%">Pemesan,</td>
+				<td width="25%">&nbsp;</td>
 				<td width="50%"></td>
 				<td width="25%">Yang Menerima,</td>
 			</tr>
@@ -191,9 +193,9 @@ $bayar_secara	= $obj->fields['BAYAR_SECARA'];
 				<td></td>
 			</tr>
 			<tr>
-				<td>( <?php echo $nama_pembayar; ?> )</td>
+				<td>&nbsp;</td>
 				<td></td>
-				<td>( <?php echo $koordinator; ?> )</td>
+				<td>( <?php echo $penerima; ?> )</td>
 			</tr>
 		</table>
 		<div id = "footer">PT. PEMBANGUNAN JAYA ANCOL Tbk.</div>

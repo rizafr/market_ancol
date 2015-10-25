@@ -17,7 +17,10 @@
 </tr>
 <tr>	
 	<td width="100">Bulan</td><td width="10">:</td>
-	<td><input type="text" name="bulan_awal" id="bulan_awal" class="apply mm-yyyy" size="15" value=""> s/d
+	<td>
+		<input type="text" name="bulan_awal" id="bulan_awal" class="apply mm-yyyy" size="15" value=""> s/d
+	</td>
+	<td>
 		<input type="text" name="bulan_akhir" id="bulan_akhir" class="apply mm-yyyy" size="15" value="">
 	</td>
 </tr>
@@ -26,6 +29,7 @@
 	<td>
 		<input type="text" name="per_page" size="3" id="per_page" class=" apply text-center" value="20">
 		<input type="button" name="apply" id="apply" value=" Apply ">
+	</td>
 	</td>
 </tr>
 <tr>

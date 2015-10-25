@@ -59,11 +59,11 @@ function calculate(){
 
 		if ((kode_bayar == 25) || (kode_bayar == 26) || (kode_bayar == 27) || (kode_bayar == 28)) {
 		jp = 'Pembayaran '+ jenis_pembayaran + ' atas pembelian ' + tanah_bangunan +
-			 '\ndi ' + lokasi + ' Blok ' + blok + ' Nomor ' + nomor + ' (TYPE ' + tipe + ') \n' ;
+			 '\ndi ' + lokasi + ' Lantai ' + blok + ' Nomor ' + nomor + ' (TYPE ' + tipe + ') \n' ;
 		}
 		else {
 		jp = 'Pembayaran '+ jenis_pembayaran + ' atas pembelian ' + tanah_bangunan +
-			 '\ndi ' + lokasi + ' Blok ' + blok + ' Nomor ' + nomor + ' (TYPE ' + tipe + ') \n' +
+			 '\ndi ' + lokasi + ' Lantai ' + blok + ' Nomor ' + nomor + ' (TYPE ' + tipe + ') \n' +
 			 jenis_pembayaran + ' : Rp. ' + formatNumber(subtotal) + ',-' +
 			 '\nPPN : Rp. ' + formatNumber(ppn) + ',-' ;
 		}

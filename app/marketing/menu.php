@@ -1,3 +1,4 @@
+ <div class = "collapse navbar-collapse" id = "example-navbar-collapse">
 <li><a href="<?php echo base64_encode('A01_home'); ?>">HOME</a></li>
 <li><a href="">MASTER</a>
 	<ul>
@@ -247,6 +248,6 @@
 		</ul>	
 	</li>
 
-
+</div>
 
 

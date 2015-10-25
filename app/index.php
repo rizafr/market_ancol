@@ -14,6 +14,7 @@ die_conn($conn);
 
 	<!-- CSS -->
 	<link type="text/css" href="../config/css/style.css" rel="stylesheet">
+	<link type="text/css" href="../config/css/animate.css" rel="stylesheet">
 	<link type="text/css" href="../config/css/menu.css" rel="stylesheet">
 	<link type="text/css" href="../plugin/css/zebra/default.css" rel="stylesheet">
 	<link type="text/css" href="../plugin/window/themes/default.css" rel="stylesheet">
@@ -105,11 +106,12 @@ die_conn($conn);
 
 <script type="text/javascript">
 	jQuery(function($) {
-		var navpos = $('#menu').offset();
+		var navpos = $('#menu').offset();	  		  
 		console.log(navpos.top);
 		$(window).bind('scroll', function() {
-			if ($(window).scrollTop() > navpos.top) {
-				$('#menu').addClass('fixed');
+			var scroll = $(document).height() ;//returns window height
+			if ($(window).scrollTop() >= 200) {
+				$('#menu').addClass('fixed');			
 			}
 			else {
 				$('#menu').removeClass('fixed');

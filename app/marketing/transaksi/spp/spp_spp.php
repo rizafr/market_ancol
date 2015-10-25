@@ -416,32 +416,33 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 		<input type="text" name="tgl_redistribusi" id="tgl_redistribusi" size="10" class="apply dd-mm-yyyy" value="<?php echo $tgl_redistribusi; ?>">
 	</td>
 	<td align="left">Tgl. Tanda Jadi : <input type="text" name="tgl_tanda_jadi" id="tgl_tanda_jadi" size="10" class="apply dd-mm-yyyy" value="<?php echo $tgl_tanda_jadi; ?>"></td>
-	</tr
+</tr>
 
-	<tr>
-		<td>Nama Pejabat </td><td>: 	
-		<input type="text" name="nama_pejabat" id="nama_pejabat" size="30" value="<?php echo $nama_pejabat; ?>">
-	</td>
+<tr>
+	<td>Nama Pejabat </td><td>: 	
+	<input type="text" name="nama_pejabat" id="nama_pejabat" size="30" value="<?php echo $nama_pejabat; ?>" readonly>
+</td>
 </tr>
 <tr>
 	<td>    Jabatan </td><td>: 	
-	<input type="text" name="nama_jabatan" id="nama_jabatan" size="30" value="<?php echo $nama_jabatan; ?>">
+	<input type="text" name="nama_jabatan" id="nama_jabatan" size="30" value="<?php echo $nama_jabatan; ?>" readonly>
 </td>
 </tr>
 <tr>
 	<td>Nama Pejabat </td><td>: 	
-	<input type="text" name="pejabat_spp" id="pejabat_spp" size="30" value="<?php echo $pejabat_spp; ?>">
+	<input type="text" name="pejabat_spp" id="pejabat_spp" size="30" value="<?php echo $pejabat_spp; ?>" readonly>
 </td>
 </tr>
 <tr>
 	<td>    Jabatan </td><td>: 	
-	<input type="text" name="jabatan_spp" id="jabatan_spp" size="30" value="<?php echo $jabatan_spp; ?>">
+	<input type="text" name="jabatan_spp" id="jabatan_spp" size="30" value="<?php echo $jabatan_spp; ?>" readonly>
 </td>
 </tr>
 <tr>
-	<td>Nama Sales </td><td>: 	
-	<input type="text" name="nama_sales" id="nama_sales" size="30" value="<?php echo $nama_sales; ?>">
-</td>
+	<td>Nama Sales </td>
+	<td>: 	
+		<input type="text" name="nama_sales" id="nama_sales" size="30" value="<?php echo $nama_sales; ?>" readonly>
+	</td>
 </tr>
 
 </table>
