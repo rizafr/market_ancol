@@ -106,14 +106,14 @@ function hapusData()
 		</select>
 	</td>
 </tr>
-<tr>
+<!--<tr>
 	<td>Jumlah Baris</td><td>:</td>
 	<td>
 		<input type="text" name="per_page" size="3" id="per_page" class="apply text-center" value="20">
 		<input type="button" id="apply" value=" Apply ">
 	</td>
 </tr>
-
+-->
 <tr>
 	<td>Total Data</td><td>:</td>
 	<td id="total-data"></td>

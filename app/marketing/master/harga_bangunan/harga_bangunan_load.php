@@ -109,7 +109,7 @@ if ($total_data > 0)
 			<td width="30" class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
 			<td class="text-center"><?php echo $id; ?></td>
 			<td><?php echo $obj->fields['KODE_BLOK']; ?></td>
-			<td class="text-right"><?php echo to_money($obj->fields['HARGA_CASH_KERAS']); ?></td>
+			<td class="text-right"><?php echo to_money($obj->fields['CASH_KERAS']); ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['CB36X']); ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['CB48X']); ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['KPA24X']); ?></td>

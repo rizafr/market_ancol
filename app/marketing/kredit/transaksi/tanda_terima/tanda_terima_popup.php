@@ -131,7 +131,7 @@ jQuery(function($) {
 
 function daftar_pemesan() {
 	var url = base_marketing + 'kredit/transaksi/tanda_terima/daftar_pemesan.php'; 
-	setPopup('Daftar Pemesan', url, 600, 300); 
+	setPopup('Daftar Pemesan', url, 700, 300); 
 	return false; 
 }
 </script>
