@@ -20,7 +20,7 @@
 	<td width="100" name="label_bangunan" id="label_bangunan">SK Harga</td><td name="b1" id="b1" width="10">:</td>
 	<td>
 		<input type="text" name="kode_sk" id="kode_sk" size="10" value="<?php echo $kode_sk; ?>">
-		<button onclick="return get_kode_sk_bangunan()"  name="btn_sk_bangunan" id="btn_sk_bangunan"> > </button>
+		<button onclick="return get_kode_sk_bangunan()"  name="btn_sk" id="btn_sk"> > </button>
 	</td>
 </tr>
 
@@ -38,17 +38,13 @@
 </tr>
 </table>
 
-<table>
-<tr></tr>
+<table class="t-control wauto">
 <tr>
-	<td>
-	</td>
 	<td>
 		<input type="button" name="update_all" id="update_all" value=" Update SK Untuk Data Tersortir ">
 	</td>
 </tr>
 </table>
-
 <input type="hidden" name="tombol" id="tombol" value="otorisasi">
 <input type="hidden" name="nama_tombol" id="nama_tombol" value="Otorisasi">
 
@@ -61,7 +57,7 @@ jQuery(function($) {
 
 	$('#label_bangunan').hide();
 	$('#kode_sk').hide();
-	$('#btn_sk_bangunan').hide();
+	$('#btn_sk').hide();
 	$('#b1').hide();
 	$('#label_tanah').hide();
 	$('#kode_sk_tanah').hide();
@@ -86,7 +82,7 @@ jQuery(function($) {
 				alert('Pilih SK Harga Yang Akan Ditampilkan');
 			}
 			else{
-				//alert($('#s_opf1').val());
+			alert($('#kode_sk').val());
 			loadData();
 			}
 		}
@@ -105,7 +101,7 @@ jQuery(function($) {
 		if($(this).val() == 's.KODE_BLOK'){
 			$('#label_bangunan').hide();
 			$('#kode_sk').hide();
-			$('#btn_sk_bangunan').hide();
+			$('#btn_sk').hide();
 			$('#b1').hide();
 			$('#label_tanah').hide();
 			$('#kode_sk_tanah').hide();
@@ -116,7 +112,7 @@ jQuery(function($) {
 		} else if($(this).val() == 's.KODE_SK') {
 			$('#label_bangunan').show();
 			$('#kode_sk').show();
-			$('#btn_sk_bangunan').show();
+			$('#btn_sk').show();
 			$('#b1').show();
 			$('#label_tanah').hide();
 			$('#kode_sk_tanah').hide();
@@ -151,13 +147,9 @@ jQuery(function($) {
 			else{
 				var id;
 				var jenis;
-				if($('#s_opf1').val() == 's.KODE_SK_TANAH') {
-					id = $('#kode_sk_tanah').val();
-					jenis = 'Tanah';
-				}
-				else{
+				if($('#s_opf1').val() == 's.KODE_SK') {
 					id = $('#kode_sk').val();
-					jenis = 'Harga SK';
+					jenis = 'Harga_SK';
 				}
 				
 				var act = 'Ubah_SK';

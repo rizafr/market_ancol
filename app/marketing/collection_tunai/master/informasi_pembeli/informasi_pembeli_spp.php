@@ -6,6 +6,20 @@ die_login();
 //die_mod('');
 $conn = conn($sess_db);
 die_conn($conn);
+
+$kode_blok	= $id;
+$blok = explode("-", $kode_blok);
+$no_unit = $blok[1];
+$jml= strlen($blok[0]);
+if($jml>2){
+	$tower = substr($blok[0], 0,1);
+	$lantai = substr($blok[0], 1,2);
+}else{
+	$tower = substr($blok[0], 0,1);
+	$lantai = "0".substr($blok[0], 1,3);	
+}
+$costumer_id="SF".$tower.$lantai.$no_unit;
+
 ?>
 
 <script type="text/javascript">
@@ -27,8 +41,8 @@ jQuery(function($) {
 
 <table class="t-popup pad2 w100">
 <tr>
-	<td width="200"></td>
-	<td class="text-right">No. Customer : <input readonly="readonly" type="text" name="no_customer" id="no_customer" size="10" value="<?php echo $no_customer; ?>"></td>
+	<td width="250">Costumer ID : <input readonly="readonly" type="text" name="costumer_id" id="costumer_id" size="15" value="<?php echo $costumer_id; ?>"> </td>
+	<td>Virtual Account : <input readonly="readonly" type="text" name="no_customer" id="no_customer" size="10" value="<?php echo $no_customer; ?>"></td>
 	<td class="text-right">Tgl SPP : <input readonly="readonly" type="text" name="tgl_spp" id="tgl_spp" size="10" class="" value="<?php echo $tgl_spp; ?>"></td>
 </tr>
 </table>

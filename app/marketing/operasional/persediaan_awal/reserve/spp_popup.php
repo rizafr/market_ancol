@@ -82,7 +82,7 @@ jQuery(function($) {
 			{
 			alert(data.msg);
 			var url =	base_marketing + 'transaksi/spp/spp_popup.php' + '?act=Ubah&id=<?php echo $id;?>&status=0';
-			setPopup(act + ' SPP', url, 903,505);	
+			setPopup(act + ' SPP', url, 903,520);	
 			parent.loadData3();
 			
 			}

@@ -8,6 +8,7 @@
 	$id		= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
 	$status		= (isset($_REQUEST['status'])) ? clean($_REQUEST['status']) : '';
 
+	$costumer_id		= (isset($_REQUEST['costumer_id'])) ? clean($_REQUEST['costumer_id']) : '';
 	$no_customer		= (isset($_REQUEST['no_customer'])) ? clean($_REQUEST['no_customer']) : '';
 	$tgl_spp			= (isset($_REQUEST['tgl_spp'])) ? clean($_REQUEST['tgl_spp']) : '';
 	$no_spp				= (isset($_REQUEST['no_spp'])) ? to_number($_REQUEST['no_spp']) : '';
@@ -85,6 +86,7 @@
 				$query = "
 				UPDATE SPP
 				SET 
+				COSTUMER_ID 		= '$costumer_id',
 				NAMA_PEMBELI 		= '$nama',
 				TANGGAL_SPP			= CONVERT(DATETIME,'$tgl_spp',105),
 				ALAMAT_RUMAH 		= '$alamat_rumah',
@@ -215,6 +217,7 @@
 		$obj 		= $conn->execute($query);
 		
 		$tgl_spp			= tgltgl(f_tgl($obj->fields['TANGGAL_SPP']));	
+		$costumer_id		= $obj->fields['COSTUMER_ID'];
 		$no_customer		= $obj->fields['NOMOR_CUSTOMER'];
 		$no_spp				= $obj->fields['NOMOR_SPP'];
 		$nama				= $obj->fields['NAMA_PEMBELI'];
@@ -326,6 +329,7 @@
 		$obj 		= $conn->execute($query);
 		
 		$tgl_spp			= tgltgl(f_tgl($obj->fields['TANGGAL_SPP']));	
+		$costumer_id		= $obj->fields['COSTUMER_ID'];
 		$no_customer		= $obj->fields['NOMOR_CUSTOMER'];
 		$no_spp				= $obj->fields['NOMOR_SPP'];
 		$nama				= $obj->fields['NAMA_PEMBELI'];

@@ -107,7 +107,7 @@ function loadData()
 function showPopup(act, id)
 {
 	var url =	base_marketing + 'kredit/transaksi/tanda_terima/tanda_terima_popup.php' + '?act=' + act + '&id=' + id;
-	setPopup(act + ' Tanda Terima', url, 700, 550);
+	setPopup(act + ' Tanda Terima', url, 800, 600);
 	return false;
 }
 

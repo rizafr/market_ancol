@@ -225,12 +225,14 @@ if ($jml_kpr > 0) {
 	<th>TANGGAL</th>
 	<th>ANGSURAN</th>
 	<th>TGL. IDENTIFIKASI</th>
+	<th>OFFICER KEU.</th>
+	<th>TGL. VER KEU.</th>
 	<th>KETERANGAN</th>
 </tr>
 
 <?php
 	$query = "
-	SELECT K.TANGGAL, R.NILAI, K.VER_COLLECTION AS COL, K.VER_KEUANGAN AS KEU, K.CATATAN_KWT AS KETERANGAN, K.VER_COLLECTION_TANGGAL, K.VER_KEUANGAN_TANGGAL from REALISASI R JOIN KWITANSI K ON R.KODE_BLOK = K.KODE_BLOK 
+	SELECT K.TANGGAL, R.NILAI, K.VER_COLLECTION AS COL, K.VER_KEUANGAN AS KEU, K.BAYAR_VIA AS KETERANGAN, K.VER_COLLECTION_TANGGAL, K.VER_KEUANGAN_TANGGAL from REALISASI R JOIN KWITANSI K ON R.KODE_BLOK = K.KODE_BLOK 
 	WHERE K.KODE_BLOK = '$kode_blok' AND K.KODE_BLOK = R.KODE_BLOK AND K.NOMOR_KWITANSI = R.NOMOR_KWITANSI
 	ORDER BY TANGGAL
 	";
@@ -240,13 +242,17 @@ if ($jml_kpr > 0) {
 	$nilai = 0;
 	while( ! $obj->EOF)
 	{
+			$bayar_via  = array('1' =>"Tunai",'2' =>"Giro / Cek",'3' =>"Bank O",'4' =>"Lain",'5' =>"Virutal Account" );
+			$keterangan= $bayar_via[$obj->fields['KETERANGAN']];
 		?>
 		<tr> 
 			<td class="text-center"><?php echo $i; ?></td>
 			<td><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL']))); ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['NILAI']); ?></td>
 			<td><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['VER_COLLECTION_TANGGAL']))); ?></td>
-			<td class="text-center"><?php echo $obj->fields['KETERANGAN']; ?></td>
+			<td class="text-center"><?php echo status_check($obj->fields['KEU']); ?></td>
+			<td><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['VER_KEUANGAN_TANGGAL']))); ?></td>
+			<td class="text-center"><?php echo $keterangan ?></td>
 		</tr>
 		<?php
 		$i++;

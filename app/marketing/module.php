@@ -83,6 +83,8 @@ switch (trim(base64_decode($cmd)))
 	# Transaksi
 	case 'A01_virtual_account'				: include('marketing/collection_tunai/transaksi/virtual_account/virtual_account_setup.php');break;
 	case 'A01_ver_kwitansi_col'				: die_mod('C03'); include('marketing/collection_tunai/transaksi/pembayaran/pembayaran_setup.php');break;
+	case 'A01_ver_kwitansi_keu'				: die_mod('C03'); include('marketing/collection_tunai/transaksi/ver_kwitansi_keu/ver_kwitansi_keu_setup.php');break;
+	case 'A01_download_tagihan'				: die_mod('C04'); include('collection_tunai/transaksi/download_tagihan/download_tagihan_setup.php');break;
 	case 'A01_download_tagihan'				: die_mod('C04'); include('collection_tunai/transaksi/download_tagihan/download_tagihan_setup.php');break;
 	case 'A01_pemulihan_wanprestasi'		: die_mod('C05'); include('collection_tunai/transaksi/pemulihan_wanprestasi/pemulihan_wanprestasi_setup.php');break;
 	case 'A01_memo_pembatalan'				: die_mod('C06'); include('collection_tunai/transaksi/memo_pembatalan/memo_pembatalan_setup.php');break;

@@ -126,7 +126,7 @@ jQuery(function($) {
 
 function daftar_pemesan() {
 	var url = base_marketing + 'kredit/transaksi/tanda_terima/daftar_pemesan.php'; 
-	setPopup('Daftar Pemesan', url, 600, 300); 
+	setPopup('Daftar Pemesan', url, 700, 300); 
 	return false; 
 }
 </script>
@@ -197,11 +197,12 @@ function daftar_pemesan() {
 </tr>
 <tr>
 	<td>Pembayaran Secara</td><td>:</td>
-	<td>
+	<td> 
 		<input type="radio" name="bayar_secara" id="tunai" class="status" value="1" <?php echo is_checked('1', $bayar_secara); ?>>Tunai
-		<input type="radio" name="bayar_secara" id="cek" class="status" value="2" <?php echo is_checked('2', $bayar_secara); ?>>Cek   
-		<input type="radio" name="bayar_secara" id="bilyet" class="status" value="3" <?php echo is_checked('3', $bayar_secara); ?>>Bilyet
+		<input type="radio" name="bayar_secara" id="cek" class="status" value="2" <?php echo is_checked('2', $bayar_secara); ?>>Giro / Cek   
+		<input type="radio" name="bayar_secara" id="bilyet" class="status" value="3" <?php echo is_checked('3', $bayar_secara); ?>>Bank O
 		<input type="radio" name="bayar_secara" id="lain" class="status" value="4" <?php echo is_checked('4', $bayar_secara); ?>> Lain
+		<input type="radio" name="bayar_secara" id="virtual_account" class="status" value="5" <?php echo is_checked('5', $bayar_secara); ?>> Virtual Account
 	</td>
 	<td> Bank : 
 		<select name="bank" id="bank">

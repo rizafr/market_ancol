@@ -42,7 +42,7 @@ $page_start = (($page_num-1) * $per_page);
 # End Pagination
 ?>
 
-<table id="pagging-1" class="t-control w40">
+<!--<table id="pagging-1" class="t-control w40">
 <tr>
 	<td>
 		<input type="button" id="tambah" value=" Tambah ">
@@ -57,7 +57,7 @@ $page_start = (($page_num-1) * $per_page);
 		<input type="button" id="next_page" value=" > ">
 	</td>
 </tr>
-</table>
+</table>-->
 
 <table class="t-data w50">
 <tr>
@@ -91,7 +91,7 @@ if ($total_data > 0)
 			<td width="30" class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
 			<td class="text-center"><?php echo $id; ?></td>
 			<?php if($jenis == 1)
-			{?> <td class="text-center">KPR</td>
+			{?> <td class="text-center">KPA</td>
 			<?php
 			} 
 			else if($jenis == 2)
@@ -110,7 +110,7 @@ if ($total_data > 0)
 ?>
 </table>
 
-<table id="pagging-2" class="t-control w40"></table>
+<!--<table id="pagging-2" class="t-control w40"></table>-->
 
 <script type="text/javascript">
 jQuery(function($) {

@@ -18,6 +18,8 @@ if($status_otorisasi=='0'){
 	// 24-6-2015
 	//cek dlu isi status_spp
 $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
+
+
 ?>
 
 
@@ -26,7 +28,7 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 	// 24-6-2015
 	//disable ketika diload
 	jQuery( document ).ready(function() {
-
+	
 		jQuery('#cek').change(function() {
 			if(jQuery(this).is(":checked")) {
 				var alamat_rumah =	jQuery('#alamat_rumah').val();
@@ -308,6 +310,9 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 </script>
 
 <table>
+	<tr>
+		<td> Costumer ID </td><td> : <input readonly="readonly" type="text" name="costumer_id" id="costumer_id" size="11" value="<?php echo $costumer_id; ?>"></td>
+	</tr>
 	<tr>
 		<td width="20"><b>No VA</b> </td><td> : <input type="text" name="no_customer" id="no_customer" size="10" value="<?php echo $no_customer; ?>"></td>
 		<td colspan="2">Tgl / No. SPP : <input type="text" name="tgl_spp" id="tgl_spp" size="10" class="apply dd-mm-yyyy" value="<?php echo $tgl_spp; ?>"> / <input readonly="readonly" type="text" name="no_spp" id="no_spp" size="5" value="<?php echo to_money($no_spp); ?>"></td>

@@ -57,15 +57,10 @@ jQuery(function($) {
 	});
 });
 
-function get_kode_sk_tanah() {
-	var url = get_base + 'kode_sk_tanah.php'; 
-	setPopup('Daftar SK Tanah', url, 500, winHeight-100); 
-	return false; 
-}
 
 function get_kode_sk_bangunan() {
 	var url = get_base + 'kode_sk_bangunan.php'; 
-	setPopup('Daftar SK Bangunan', url, 500, winHeight-100); 
+	setPopup('Daftar Harga SK', url, 500, winHeight-100); 
 	return false; 
 }
 </script>
@@ -79,27 +74,10 @@ function get_kode_sk_bangunan() {
 </tr>
 <tr>
 	<td>SK Baru</td><td>:</td>
-<?php
-if($jenis == 'Tanah')
-{
-?>
-	<td>
-		<input type="text" name="kode_sk_tanah" id="kode_sk_tanah" size="10" value="<?php echo $kode_sk_tanah; ?>">
-		<button onclick="return get_kode_sk_tanah()" name="btn_sk_tanah" id="btn_sk_tanah"> > </button>
-	</td>
-
-<?php
-}
-else
-{
-?>
-	<td>
+<td>
 		<input type="text" name="kode_sk_bangunan" id="kode_sk_bangunan" size="10" value="<?php echo $kode_sk_bangunan; ?>">
 		<button onclick="return get_kode_sk_bangunan()"  name="btn_sk_bangunan" id="btn_sk_bangunan"> > </button>
 	</td>
-<?php
-}
-?>
 </tr>
 <tr>
 	<td colspan="3" class="td-action"><br>
