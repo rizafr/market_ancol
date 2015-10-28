@@ -7,6 +7,18 @@ die_login();
 $conn = conn($sess_db);
 die_conn($conn);
 
+$kode_blok	= $id;
+$blok = explode("-", $kode_blok);
+$no_unit = $blok[1];
+$jml= strlen($blok[0]);
+if($jml>2){
+	$tower = substr($blok[0], 0,1);
+	$lantai = substr($blok[0], 1,2);
+}else{
+	$tower = substr($blok[0], 0,1);
+	$lantai = "0".substr($blok[0], 1,3);	
+}
+$costumer_id="SF".$tower.$lantai.$no_unit;
 
 ?>
 <!DOCTYPE HTML>
@@ -20,6 +32,8 @@ die_conn($conn);
 
 <script type="text/javascript">
 jQuery(function($) {
+	
+
 	$('.dd-mm-yyyy').Zebra_DatePicker({
 		format: 'd-m-Y',
 		readonly_element : false,
@@ -39,14 +53,17 @@ jQuery(function($) {
 <form name="form" id="form" method="post">
 <table class="t-popup pad2 w100">
 <tr>
+	<td> Costumer ID </td><td>: <input readonly="readonly" type="text" name="costumer_id" id="costumer_id" size="15" value="<?php echo $costumer_id; ?>"></td>
+</tr>
+<tr>
 	<td class="text-left"><b>No VA <td>: <input type="text" name="no_customer" id="no_customer" size="25" value="<?php echo $no_va; ?>"></td>
 	<td class="text-right">Tgl / No. SPP : <input readonly="readonly" type="text" name="tgl_spp" id="tgl_spp" size="10" value="<?php echo date('d-m-Y') ;?>"> / <input readonly="readonly" type="text" name="no_spp" id="no_spp" size="5" value=""></td>
 </tr>
 <tr>
 	<td><b>Kode Blok</b></td>
 	<td>: <input readonly="readonly" type="text" name="kode_blok" id="kode_blok" size="25" value="<?php echo $id; ?>"></td>
-<tr>
 </tr>
+<tr>
 	<td> Nama <td>: <input type="text" name="nama" id="nama" size="60" value="<?php echo $nm; ?>"></td>
 </tr>
 <tr>

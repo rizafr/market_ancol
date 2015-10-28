@@ -12,6 +12,7 @@ $no_va				= (isset($_REQUEST['no_va'])) ? clean($_REQUEST['no_va']) : '';
 $telepon			= (isset($_REQUEST['telepon'])) ? clean($_REQUEST['telepon']) : '';
 
 $kode_blok			= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
+$costumer_id		= (isset($_REQUEST['no_customer'])) ? clean($_REQUEST['costumer_id']) : '';
 $no_customer		= (isset($_REQUEST['no_customer'])) ? clean($_REQUEST['no_customer']) : '';
 $tgl_spp			= (isset($_REQUEST['tgl_spp'])) ? clean($_REQUEST['tgl_spp']) : '';
 $nama				= (isset($_REQUEST['nama'])) ? clean($_REQUEST['nama']) : '';
@@ -105,6 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$query = "
 			INSERT INTO SPP 
 			(KODE_BLOK,
+							 COSTUMER_ID,
 							 NOMOR_CUSTOMER,
 							 NOMOR_SPP,
 							 NAMA_PEMBELI,
@@ -134,6 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 							 SPP_REDISTRIBUSI_TANGGAL,
 							 KETERANGAN)
 			VALUES('$id',
+				   '$costumer_id',
 				   '$no_customer',
 				   '$no_spp',
 				   '$nama',
@@ -203,6 +206,7 @@ if ($act == 'Ubah')
 	$obj = $conn->execute($query);
 	
 	$tgl_spp			= tgltgl(f_tgl($obj->fields['TANGGAL_SPP']));	
+	$costumer_id		= $obj->fields['COSTUMER_ID'];
 	$no_spp				= $obj->fields['NOMOR_SPP'];
 	$nama				= $obj->fields['NAMA_PEMBELI'];
 	$alamat_rumah		= $obj->fields['ALAMAT_RUMAH'];

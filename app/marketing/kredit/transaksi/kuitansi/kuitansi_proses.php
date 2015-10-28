@@ -19,6 +19,7 @@ $catatan			= (isset($_REQUEST['catatan'])) ? clean($_REQUEST['catatan']) : '';
 $catatan_kwt		= (isset($_REQUEST['catatan_kwt'])) ? clean($_REQUEST['catatan_kwt']) : '';
 $subtotal			= (isset($_REQUEST['subtotal'])) ? to_number($_REQUEST['subtotal']) : '';
 $ppn				= (isset($_REQUEST['ppn'])) ? to_number($_REQUEST['ppn']) : '';
+//$via				= (isset($_REQUEST['bayar_secara'])) ? to_number($_REQUEST['bayar_secara']) : '';
 
 $blok_baru			= (isset($_REQUEST['blok_baru'])) ? clean($_REQUEST['blok_baru']) : '';
 

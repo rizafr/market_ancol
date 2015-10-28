@@ -16,7 +16,7 @@ $kode_unit		= (isset($_REQUEST['kode_unit'])) ? clean($_REQUEST['kode_unit']) : 
 $kode_sk_tanah	= (isset($_REQUEST['kode_sk_tanah'])) ? clean($_REQUEST['kode_sk_tanah']) : '';
 $kode_faktor	= (isset($_REQUEST['kode_faktor'])) ? clean($_REQUEST['kode_faktor']) : '';
 $kode_tipe		= (isset($_REQUEST['kode_tipe'])) ? clean($_REQUEST['kode_tipe']) : '';
-$kode_sk_bangunan = (isset($_REQUEST['kode_sk_bangunan'])) ? clean($_REQUEST['kode_sk_bangunan']) : '';
+$kode_sk = (isset($_REQUEST['kode_sk'])) ? clean($_REQUEST['kode_sk']) : '';
 $kode_penjualan	= (isset($_REQUEST['kode_penjualan'])) ? clean($_REQUEST['kode_penjualan']) : '';
 
 $class					= (isset($_REQUEST['class'])) ? clean($_REQUEST['class']) : '';
@@ -77,15 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			ex_ha('M17', 'U');
 			
 			ex_empty($kode_blok, 'Kode Blok harus diisi.');
-			ex_empty($kode_desa, 'Desa harus diisi.');
 			ex_empty($kode_lokasi, 'Lokasi harus diisi.');
 			ex_empty($kode_unit, 'Jenis unit harus diisi.');
-			ex_empty($kode_sk_tanah, 'SK tanah harus diisi.');
-			ex_empty($kode_faktor, 'Faktor strategis harus diisi.');
 			ex_empty($kode_tipe, 'Tipe harus diisi.');
-			ex_empty($kode_sk_bangunan, 'SK bangunan harus diisi.');
+			ex_empty($kode_sk, 'SK bangunan harus diisi.');
 			ex_empty($kode_penjualan, 'Jenis penjualan harus diisi.');
-			ex_empty($class, 'Pilih class.');
 			
 			if ($kode_blok != $id)
 			{
@@ -104,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			
 			$query = "
 			UPDATE STOK 
-			SET KODE_SK_TANAH = '$kode_sk_tanah', 
+			SET KODE_SK = '$kode_sk', 
 			
 			WHERE
 			
@@ -118,19 +114,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		{
 			ex_ha('M17', 'U');
 			
-			if($jenis == 'Bangunan')
+			if($jenis == 'Harga_SK')
 			{
-				ex_empty($kode_sk_bangunan, 'SK Bangunan baru harus diisi.');
+				ex_empty($kode_sk, 'SK Harga baru harus diisi.');
 			}
-			
-			
-			if($jenis == 'Bangunan')
+						
+			if($jenis == 'Harga_SK')
 			{
 				$query = "
 				UPDATE STOK 
-				SET KODE_SK_BANGUNAN = '$kode_sk_bangunan' 
+				SET KODE_SK = '$kode_sk' 
 				WHERE
-				KODE_SK_BANGUNAN = '$kode_sk_sebelumnya' AND TERJUAL = '0'
+				KODE_BLOK = '$kode_sk_sebelumnya' AND TERJUAL = '0'
 				";
 			}
 			

@@ -102,7 +102,7 @@ function get_kode_sk_bangunan() {
 	var id = jQuery('#kode_blok').val();
 	var act='Kode Blok';
 	var url = get_base + 'kode_sk_bangunan_setup.php?act=' + act + '&id=' + id; 
-	setPopup('Daftar Harga SK', url, 730, winHeight-100); 
+	setPopup('Daftar Harga SK', url, 750, winHeight-100); 
 	return false; 
 }
 function get_kode_penjualan() {

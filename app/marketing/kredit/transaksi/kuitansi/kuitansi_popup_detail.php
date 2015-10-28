@@ -275,6 +275,15 @@ jQuery(function($) {
 	<td colspan ="3"><b><u>Informasi Pembayaran</u></b></td>
 </tr>
 <tr>
+	<td>Pembayaran Secara :
+		<input type="radio" name="via" id="tunai" class="status" value="1" <?php echo is_checked('1', $via); ?>>Tunai
+		<input type="radio" name="via" id="cek" class="status" value="2" <?php echo is_checked('2', $via); ?>>Giro / Cek   
+		<input type="radio" name="via" id="bilyet" class="status" value="3" <?php echo is_checked('3', $via); ?>>Bank O
+		<input type="radio" name="via" id="lain" class="status" value="4" <?php echo is_checked('4', $via); ?>> Lain
+		<input type="radio" name="via" id="virtual_account" class="status" value="5" <?php echo is_checked('5', $via); ?>> Virtual Account
+	</td>
+</tr>
+<tr>
 	<td>Pembayaran Diterima Tanggal : <input type="text" name="tgl_terima" id="tgl_terima" size="15" class="apply dd-mm-yyyy" value=""></td>
 </tr>
 <tr>

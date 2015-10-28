@@ -25,20 +25,36 @@ if($s_opf1 == 's.KODE_BLOK')
 
 if($s_opf1 == 's.KODE_SK')
 {
-	$query_search .= " AND $s_opf1 = $kode_sk ";
+	$query_search .= " AND $s_opf1 = '$kode_sk' ";
 }
 # Pagination
 $query = "
 SELECT  
-	COUNT(s.KODE_BLOK) AS TOTAL
-FROM 
-	STOK s
-	LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
-	LEFT JOIN HARGA_BANGUNAN hb ON s.KODE_SK_BANGUNAN = hb.KODE_SK
-	WHERE TERJUAL = '0'
-	$query_search
+			s.NO_VA,
+			s.KODE_BLOK,
+			s.LUAS_BANGUNAN,
+			s.STATUS_STOK,
+			s.TERJUAL,
+			t.TIPE_BANGUNAN,
+			hs.HARGA_CASH_KERAS,
+			hs.CB36X,
+			hs.CB48X,
+			hs.KPA24X,
+			hs.KPA36X, 
+			LOKASI, 
+			JENIS_UNIT
+		FROM 
+		STOK s
+		LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
+		LEFT JOIN HARGA_SK hs ON s.KODE_SK = hs.KODE_SK AND s.KODE_BLOK = hs.KODE_BLOK
+		LEFT JOIN LOKASI h ON s.KODE_LOKASI = h.KODE_LOKASI
+		LEFT JOIN JENIS_UNIT i ON s.KODE_UNIT = i.KODE_UNIT
+		WHERE TERJUAL = '0'
+		$query_search
+		ORDER BY s.KODE_BLOK ASC
 ";
-$total_data = $conn->Execute($query)->fields['TOTAL'];
+$total_data = $conn->Execute($query);
+	$total_data = $total_data->RecordCount();
 $total_page = ceil($total_data/$per_page);
 
 $page_num = ($page_num > $total_page) ? $total_page : $page_num;
@@ -82,31 +98,6 @@ $page_start = (($page_num-1) * $per_page);
 <?php
 if ($total_data > 0)
 {
-	$query = "
-	SELECT  
-			s.NO_VA,
-			s.KODE_BLOK,
-			s.LUAS_BANGUNAN,
-			s.STATUS_STOK,
-			s.TERJUAL,
-			t.TIPE_BANGUNAN,
-			hs.HARGA_CASH_KERAS,
-			hs.CB36X,
-			hs.CB48X,
-			hs.KPA24X,
-			hs.KPA36X, 
-			LOKASI, 
-			JENIS_UNIT
-		FROM 
-		STOK s
-		LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
-		LEFT JOIN HARGA_SK hs ON s.KODE_SK = hs.KODE_SK AND s.KODE_BLOK = hs.KODE_BLOK
-		LEFT JOIN LOKASI h ON s.KODE_LOKASI = h.KODE_LOKASI
-		LEFT JOIN JENIS_UNIT i ON s.KODE_UNIT = i.KODE_UNIT
-		WHERE TERJUAL = '0'
-		$query_search
-		ORDER BY s.KODE_BLOK ASC
-	";
 	
 	$obj = $conn->SelectLimit($query, $per_page, $page_start);
 	

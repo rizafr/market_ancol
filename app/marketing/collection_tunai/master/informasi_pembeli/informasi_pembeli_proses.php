@@ -7,6 +7,7 @@ $error	= FALSE;
 $act	= (isset($_REQUEST['act'])) ? clean($_REQUEST['act']) : '';
 $id		= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
 //DATA SPP
+$costumer_id		= (isset($_REQUEST['costumer_id'])) ? clean($_REQUEST['costumer_id']) : '';
 $no_customer		= (isset($_REQUEST['no_customer'])) ? clean($_REQUEST['no_customer']) : '';
 $tgl_spp			= (isset($_REQUEST['tgl_spp'])) ? clean($_REQUEST['tgl_spp']) : '';
 $no_spp				= (isset($_REQUEST['no_spp'])) ? clean($_REQUEST['no_spp']) : '';
@@ -113,6 +114,7 @@ if ($act == 'Ubah')
 	
 	$tgl_spp			= tgltgl(f_tgl($obj->fields['TANGGAL_SPP']));	
 	$no_spp				= $obj->fields['NOMOR_SPP'];
+	$costumer_id		= $obj->fields['COSTUMER_ID'];
 	$no_customer		= $obj->fields['NOMOR_CUSTOMER'];
 	$nama				= $obj->fields['NAMA_PEMBELI'];
 	$alamat_rumah		= $obj->fields['ALAMAT_RUMAH'];
