@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>App | PT JAYA ANCOL PEMBANGUNAN Tbk.</title>
-<link type="image/x-icon" rel="icon" href="images/favicon.ico">
+<title>PT JAYA ANCOL PEMBANGUNAN Tbk.</title>
+<link type="image/x-icon" rel="icon" href="../images/ancol.png">
 
 <!-- CSS -->
 <link type="text/css" href="config/css/style.css" rel="stylesheet">
@@ -60,7 +60,7 @@ jQuery(function($) {
 <div id="wrapper">
 	<div id="header">
 		<span class="market">
-			<span class="big">S</span>istem Administrasi Penjualan Apartemen
+			<span class="big">S</span>istem Administrasi Penjualan Properti
 		</span>
 	</div>
 	<div id="content">

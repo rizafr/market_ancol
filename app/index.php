@@ -10,7 +10,7 @@ die_conn($conn);
 <head>
 	<meta charset="UTF-8">
 	<title>PT Pembangunan Jaya Ancol</title>
-	<link type="image/x-icon" rel="icon" href="../images/favicon.ico">
+	<link type="image/x-icon" rel="icon" href="../images/ancol.png">
 
 	<!-- CSS -->
 	<link type="text/css" href="../config/css/style.css" rel="stylesheet">
@@ -44,7 +44,7 @@ die_conn($conn);
 		<div id="header">
 			<span class="market">
 				<?php 
-				echo '<span class="big">S</span>istem Administrasi Penjualan Apartemen';
+				echo '<span class="big">S</span>istem Administrasi Penjualan Properti';
 				
 				?>
 			</span>

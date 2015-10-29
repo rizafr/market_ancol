@@ -31,8 +31,9 @@ a:hover{
 #wrapper {
 	position:relative;
 	min-height:100% !important;
-	/* padding:0 10px; */
-	margin-bottom:-66px;
+	/* padding:0 10px; 
+	margin-bottom:-66px; */
+	
 }
 body {
 	height:100%;
@@ -55,7 +56,7 @@ body {
 	font-size: 14px;
 	background-color: #222;
 	padding:8px 16px 8px 85px;
-	width: 100%;
+	/*width: 100%;*/
 }
 #header .market {
 	color:#FFFFF2;
@@ -127,7 +128,7 @@ body {
 	position:relative;
 	padding:8px 16px;
 	border-radius:3px 3px 0 0;
-	width: 100%;
+	/*width:100%;*/
 	color: #D4D4D4;
 	font-size: 12px;
 	background-color: #222;
