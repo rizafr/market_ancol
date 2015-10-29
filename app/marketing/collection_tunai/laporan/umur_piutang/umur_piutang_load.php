@@ -103,9 +103,9 @@ $page_start = (($page_num-1) * $per_page);
 <tr>
 	<th colspan="1">Tanggal</th>
 	<th colspan="1">Nilai</th>
-	<th colspan="1">Kurang dari = 45 Hari</th>
-	<th colspan="1">46 - 60 Hari</th>
-	<th colspan="1">Lebih dari 60 hari</th>
+	<th colspan="1">0 to 30</th>
+	<th colspan="1">30 to 60 Hari</th>
+	<th colspan="1">60 to 90</th>
 </tr>
 
 <?php

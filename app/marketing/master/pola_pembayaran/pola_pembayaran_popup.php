@@ -141,7 +141,7 @@ jQuery(function($) {
 		var url		= this_base + 'pola_pembayaran_proses.php',
 			data	= $('#form').serialize();
 		var total = cal();
-		if(total<=99){					
+		if((total<=99)||(total>100.3)){					
 			alert('Total Harus 100%');
 			return false;			
 		}

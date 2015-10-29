@@ -16,7 +16,7 @@
 	$kbank					= (isset($_REQUEST['kbank'])) ? clean($_REQUEST['kbank']) : '';
 	$tanggal_akad			= (isset($_REQUEST['tanggal_akad'])) ? clean($_REQUEST['tanggal_akad']) : '';
 	$cek_auto_akad			= (isset($_REQUEST['cek_auto_akad'])) ? clean($_REQUEST['cek_auto_akad']) : '';
-	$type					= (isset($_REQUEST['type'])) ? clean($_REQUEST['type']) : '';
+	// $type					= (isset($_REQUEST['type'])) ? clean($_REQUEST['type']) : '';
 	
 	
 	
@@ -48,10 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				
 				$harga_total = $obj->fields['HARGA'];
 				
+				$query = "SELECT NAMA_POLA_BAYAR FROM POLA_BAYAR WHERE KODE_POLA = '$pola_bayar'";
+				$obj = $conn->execute($query);
+				
+				$nama_pola = $obj->fields['NAMA_POLA_BAYAR'];
+				
 				//update harga total yang dipalkai pada tabel spp
 				$query = "UPDATE SPP SET 
 							HARGA_TOTAL	= $harga_total,
-							POLA_BAYAR	= '$pola_bayar'
+							POLA_BAYAR	= '$nama_pola'
 						  WHERE KODE_BLOK		= '$id'
 						  ";
 				ex_false($conn->execute($query), 'Update Pola bayar terlebih dahulu');
@@ -59,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 				//proses penghitungan rencana (angsuran)
 				
-				$b = date("d-m-Y");
+				/*$b = date("d-m-Y");
 				$pecah_tgl_skrg = explode("-",$b);
 				$tgl_skrg		= $pecah_tgl_skrg[0];
 				$bln_skrg		= $pecah_tgl_skrg[1];
@@ -87,12 +92,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				}
 				
 				$tanggal_input = '20-'.($next_bln).'-'.$next_thn;
-								
+				*/				
 				//proses mengambil ke pola bayar
 					
 				$obj = $conn->execute("		
 										SELECT * FROM POLA_BAYAR
-										WHERE NAMA_POLA_BAYAR = $pola_bayar
+										WHERE KODE_POLA = '$pola_bayar'
  									 ");
 				
 				$kode_jenis = $obj->fields['KODE_JENIS'];
@@ -107,7 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$nilai5 	= $obj->fields['NILAI5'];
 				$kali5 		= $obj->fields['KALI5'];
 				$nilai_jenis = $obj->fields['NILAI_JENIS'];
-							
+								
+				$nilai = $harga_total;
 				$hasil_bagi = array();
 				for($i=0;$i<$kali1;$i++){
 					$hasil_bagi[] = ($nilai * $nilai1)/100;
@@ -125,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					$hasil_bagi[] = ($nilai * $nilai5)/100;
 				}
 				
+				$jumlah_kpr = ($nilai * $nilai_jenis)/100 ;
 				$jumlah_kali = $kali1+$kali2+$kali3+$kali4+$kali5;
 				$nilai_fix=0;
 				for($i=0;$i<$jumlah_kali;$i++){				
@@ -132,6 +139,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					if($i==0){
 							$tanggal = date("Y-m-d",strtotime($tanggal_input));
 							$nilai_fix = $hasil_bagi[$i] - $tanda_jadi;
+							if($nilai_fix < 0)
+							{	$sisa = $nilai_fix * -1;
+								$nilai_fix = 0;
+							}
+					}else 
+					if($i==1){
+							$query 		= "SELECT TOP 1 DATEADD(month,1,TANGGAL) AS TANGGAL
+										FROM RENCANA
+										WHERE KODE_BLOK = '$id'
+										ORDER BY TANGGAL DESC";
+							$obj 		= $conn->execute($query);						
+							$tanggal	= $obj->fields['TANGGAL'];
+
+							$nilai_fix = $hasil_bagi[$i] - $sisa;
+							if($nilai_fix < 0)
+							{	$sisa = $nilai_fix * -1;
+								$nilai_fix = 0;
+							}
+					}else 					
+					if($i==2){
+							$query 		= "SELECT TOP 1 DATEADD(month,1,TANGGAL) AS TANGGAL
+										FROM RENCANA
+										WHERE KODE_BLOK = '$id'
+										ORDER BY TANGGAL DESC";
+							$obj 		= $conn->execute($query);						
+							$tanggal	= $obj->fields['TANGGAL'];
+
+							$nilai_fix = $hasil_bagi[$i] - $sisa;
 							if($nilai_fix < 0)
 							{	$sisa = $nilai_fix * -1;
 								$nilai_fix = 0;
@@ -154,7 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 							$nilai_fix = $harga_total - ($jumlah + $tanda_jadi);
 						}
 						else if ($kode_jenis == 1){
-							$nilai_fix = $hasil_bagi[$i];
+							$nilai_fix = $harga_total - ($jumlah + $tanda_jadi + $jumlah_kpr);
 						}
 						
 					}
@@ -186,7 +221,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 										WHERE KODE_BLOK = '$id'
  									 ");
 				$jumlah	 	= $obj->fields['JUMLAH'];
-				$jumlah_kpr = $harga_total - ($jumlah + $tanda_jadi);
 				$hasil = '';
 				if($cek_auto_akad = 'yes'){
 					$query 		= "SELECT TOP 1 DATEADD(month,1,TANGGAL) AS TANGGAL
@@ -208,18 +242,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 							STATUS_KOMPENSASI	= '$kode_jenis',
 							JUMLAH_KPR			= '$jumlah_kpr',
 							TANGGAL_AKAD		= '$hasil',
-							KETERANGAN 			= '$pola_bayar'
+							KETERANGAN 			= '$nama_pola'
 						  WHERE KODE_BLOK		= '$id'
 						  ";
 				
 				ex_false($conn->execute($query), $query);
 
-				if($type=='cash'){
-					$query = "UPDATE SPP SET TANGGAL_AKAD = NULL WHERE KODE_BLOK = '$id'";
-					ex_false($conn->execute($query), $query);
-				}
+				// if($type=='cash'){
+					// $query = "UPDATE SPP SET TANGGAL_AKAD = NULL WHERE KODE_BLOK = '$id'";
+					// ex_false($conn->execute($query), $query);
+				// }
 
 				$msg = 'Rencana pembayaran berhasil dibuat';
+				
 			}
 		
 		$conn->committrans(); 
@@ -422,20 +457,8 @@ if ($act == 'Rencana')
 	$r_base_sisa_2			= $r_base_sisa_1 - $tanda_jadi;
 	$obj = $conn->execute("SELECT TANGGAL_AKAD FROM SPP WHERE KODE_BLOK = '$id'");
 	$tgl = date("d-m-Y", strtotime($obj->fields['TANGGAL_AKAD']));
+	
 }
 
-	$b = date("d-m-Y");
-	$pecah_tgl_skrg = explode("-",$b);
-	$tgl_skrg		= $pecah_tgl_skrg[0];
-	$bln_skrg		= $pecah_tgl_skrg[1];
-	$thn_skrg		= $pecah_tgl_skrg[2];	
-	$next_bln		= $bln_skrg + 1;
-	$next_thn		= $thn_skrg;
-	if($next_bln > 12)
-	{
-		$next_bln = $next_bln % 12;
-		$next_thn = $next_thn + 1;
-		
-	}
-	$default_tgl_bayar	= '20-'.($next_bln).'-'.$next_thn;
+	
 ?>

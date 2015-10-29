@@ -63,6 +63,10 @@
 			}
 		});
 
+		$('#close').on('click', function(e) {
+		e.preventDefault();
+		return parent.loadData();
+		});
 		
 		$('#save').on('click', function(e) {
 			e.preventDefault();
@@ -128,7 +132,8 @@
 								{
 								$ov = $obj->fields['KODE_POLA_BAYAR'];
 								$oj = $obj->fields['NAMA_POLA_BAYAR'];
-								echo "<option value='$oj'".is_selected($ov, $kbank)."> $oj </option>";
+								$value = $obj->fields['KODE_POLA'];
+								echo "<option value='$value'".is_selected($value)."> $oj </option>";
 								$obj->movenext();
 								}
 							?>
@@ -136,15 +141,15 @@
 					<td>
 				</tr>
 				
-				<tr>
+				<!--<tr>
 					<td>Tanggal Bayar Awal</td>
 					<td>:</td>
 					<td><input type="radio" name = 'cek_auto_awal' id = "awal_on" class='cek_auto_awal' value = 'yes' checked> 1 Bulan setelah tgl. jadi </td>
-				</tr>
+				</tr>-->
 				<tr>
-					<td></td>
-					<td></td>
-					<td><input type="radio" name = 'cek_auto_awal' id = "awal_off" class='cek_auto_awal' value = 'no'>Tentukan Tanggal : <input type="text" readonly name = "tgl_spp" id="tgl_spp" class = 'dd-mm-yyyy' value="<?php echo $default_tgl_bayar ?>"></td>
+					<td>Tanggal Bayar Awal</td>
+					<td>:</td>
+					<td><input type="text" name = "tgl_spp" id="tgl_spp" class = 'dd-mm-yyyy' value="<?php echo date('d-m-Y') ?>"></td>
 				</tr>
 				<tr>
 					<td>Tanggal Akad</td>
@@ -168,7 +173,7 @@
 
 			</table>
 				<input type="hidden" name = "keterangan" id = "keterangan">
-				<input type="hidden" name = "type" id = "type">
+				<!--<input type="hidden" name = "type" id = "type">-->
 				<input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
 				<input type="hidden" name="act" id="act" value="Apply">
 				<input type="hidden" name="kode_bayar" id="kode_bayar" value="4">

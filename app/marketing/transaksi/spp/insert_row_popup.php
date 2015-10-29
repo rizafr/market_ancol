@@ -34,6 +34,14 @@
 	
 	<script type="text/javascript">
 	jQuery(function($) {
+		
+		//menghitung sisa_bayar
+		var sisa_bayar = 0;
+		var total =maul_conv(jQuery('#total_bayar').val());
+		var current = maul_conv(jQuery('#total_current').val());
+		 sisa_bayar = total-current;
+		 jQuery('#sisa_bayar').val(sisa_bayar);
+		 
 		$.fn.digits = function(){ 
 		    return this.each(function(){ 
 		        $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") ); 
@@ -48,6 +56,7 @@
 		jQuery('.nilai').inputmask('decimal', { repeat: '30', decimal: '.',negative:false, scale: '19', groupSize:3, groupSeparator: ',',autoGroup: true});
 		jQuery('#total_current').inputmask('decimal', { repeat: '30', decimal: '.',negative:false, scale: '19', groupSize:3, groupSeparator: ',',autoGroup: true});
 		jQuery('#total_bayar').inputmask('decimal', { repeat: '30', decimal: '.',negative:false, scale: '19', groupSize:3, groupSeparator: ',',autoGroup: true});
+		jQuery('#sisa_bayar').inputmask('decimal', { repeat: '30', decimal: '.',negative:false, scale: '19', groupSize:3, groupSeparator: ',',autoGroup: true});
 
 		$('#tutup').on('click', function(e) {
 			e.preventDefault();
@@ -64,7 +73,12 @@
 			var total = maul_conv(jQuery('#total_current').val());
 			var total_bayar = maul_conv(jQuery('#total_bayar').val());
 			
+			
 			if(cek_tanggal()){
+				return false;
+			}
+
+			if(cek_total()){
 				return false;
 			}
 
@@ -88,7 +102,31 @@
 		});
 
 	});
-
+	
+	function cek_total(){
+		var total_current = maul_conv(jQuery('#total_current').val());
+		var total_bayar = maul_conv(jQuery('#total_bayar').val());		
+		var sisa_bayar = maul_conv(jQuery('#sisa_bayar').val());		
+		if (total_current > total_bayar) {
+			alert('TOTAL CURRENT TIDAK BOLEH MELEBIHI TOTAL BAYAR.');
+			return	true;
+		}
+		if (sisa_bayar > 0) {
+			alert('MASIH ADA KEKURANGAN SISA PEMBAYARAN.');
+			if (sisa_bayar > 0) {
+			document.getElementById("sisa_bayar").style.color = "red";
+			}
+			else{
+				document.getElementById("sisa_bayar").style.color = "black";
+			}
+			return	true;
+		}
+		
+		
+		
+	
+	}
+	
 	function cek_tanggal(){
 		var max = Number(jQuery('#max').val());	
 		for(var a=1;a<=max;a++){
@@ -122,7 +160,8 @@
 		'</tr>' +
 		'').insertAfter('#tr-ref-'+ max);
 		
-		jQuery('#nilai_'+id).inputmask('decimal', { repeat: '30', decimal: '.',negative:false, scale: '19', groupSize:3, groupSeparator: ',',autoGroup: true});
+		// jQuery('#nilai_'+id).inputmask('decimal', { repeat: '30', decimal: '.',negative:false, scale: '19', groupSize:3, groupSeparator: ',',autoGroup: true});
+		jQuery('#nilai_'+id).inputmask('numeric', { repeat: '12' });
 		
 		jQuery('#tanggal_bayar_'+id).Zebra_DatePicker({
 			format: 'd-m-Y'
@@ -169,11 +208,20 @@
 	function hitung_all(){
 		var max = Number(jQuery('#max').val());
 		var total = 0;
+		
 		for(var a = 1;a<=max;a++){
 			total += maul_conv(jQuery('#nilai_'+a).val());
 		}
 		jQuery('#total_current').val(total);
 		var total_bayar = maul_conv(jQuery('#total_bayar').val());
+		
+		//menghitung sisa_bayar
+		var sisa_bayar = 0;
+		var total =maul_conv(jQuery('#total_bayar').val());
+		var current = maul_conv(jQuery('#total_current').val());
+		 sisa_bayar = total-current;
+		 jQuery('#sisa_bayar').val(sisa_bayar);
+		
 		if(total!=total_bayar){
 			document.getElementById("total_current").style.color = "red";
 		}
@@ -181,6 +229,8 @@
 			document.getElementById("total_current").style.color = "black";
 		}
 		return false;
+		
+		
 	}
 
 	
@@ -206,7 +256,7 @@
 								<td><input type="text" name="tanggal_bayar_<?php echo $run;?>" id="tanggal_bayar_<?php echo $run;?>" class="tanggal_bayar" size="15" value="<?php echo date('d-m-Y', strtotime($data_->fields['TANGGAL']));?>"></td>
 								<td>
 									<select name="jenis_bayar_<?php echo $run;?>" id="jenis_bayar_<?php echo $run;?>">
-										<?php
+									<?php
 										$query = "SELECT * FROM JENIS_PEMBAYARAN ORDER BY JENIS_BAYAR, KODE_BAYAR";
 										$data = $conn->Execute($query);
 										while (!$data->EOF) {
@@ -273,6 +323,10 @@
 				<tr>
 					<td colspan="2">Total Bayar : </td>
 					<td><input type="text" name="total_bayar" id="total_bayar" readonly value="<?php echo $r_total;?>"></td>
+				</tr>
+				<tr>
+					<td colspan="2">Sisa Bayar : </td>
+					<td><input type="text" name="sisa_bayar" id="sisa_bayar" readonly value=""></td>
 				</tr>
 			</table>
 			<input type="submit" id="save" value="Apply"> <input type="button" id="tutup" value=" Tutup ">

@@ -6,6 +6,8 @@
 	
 	$tanda_jadi				= (isset($_REQUEST['tanda_jadi'])) ? to_number($_REQUEST['tanda_jadi']) : '';
 	$jumlah					= (isset($_REQUEST['jumlah'])) ? clean($_REQUEST['jumlah']) : '';	
+	$total_current			= (isset($_REQUEST['total_current'])) ? clean($_REQUEST['total_current']) : '';	
+	$total_bayar			= (isset($_REQUEST['total_bayar'])) ? clean($_REQUEST['total_bayar']) : '';	
 	$tanggal_input			= (isset($_REQUEST['tgl_spp'])) ? clean($_REQUEST['tgl_spp']) : '';
 	$kode_bayar				= (isset($_REQUEST['kode_bayar'])) ? clean($_REQUEST['kode_bayar']) : '';
 	$keterangan				= (isset($_REQUEST['keterangan'])) ? clean($_REQUEST['keterangan']) : '';
@@ -30,14 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		$error = false;
 		
 		if ($act == 'Apply') # Proses Ubah
-			{
+			{						
 				$query = "DELETE FROM RENCANA WHERE KODE_BLOK = '$id'";
 				ex_false($conn->execute($query), $query);
 
 				for($a=1;$a<=$max;$a++){
 					$tgl_bayar	= (isset($_REQUEST['tanggal_bayar_'.$a])) ? clean($_REQUEST['tanggal_bayar_'.$a]) : '';
-					$nilai	= (isset($_REQUEST['nilai_'.$a])) ? to_number($_REQUEST['nilai_'.$a]) : '';
-					$jb	= (isset($_REQUEST['jenis_bayar_'.$a])) ? to_number($_REQUEST['jenis_bayar_'.$a]) : '';
+					$nilai	= (isset($_REQUEST['nilai_'.$a])) ? bigintval($_REQUEST['nilai_'.$a]) : '';
+					$jb	= (isset($_REQUEST['jenis_bayar_'.$a])) ? bigintval($_REQUEST['jenis_bayar_'.$a]) : '';
 					$query = "INSERT INTO RENCANA (KODE_BLOK,TANGGAL,KODE_BAYAR, NILAI, KETERANGAN)
 								VALUES('$id',
 								CONVERT(DATETIME,'$tgl_bayar',105),
@@ -50,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					}
 
 				$msg = 'Rencana pembayaran berhasil dibuat';
+			
 			}
 		
 		$conn->committrans(); 
@@ -252,100 +255,15 @@ if ($act == 'Rencana')
 	$query = "SELECT NILAI, TANGGAL, KODE_BAYAR FROM RENCANA WHERE KODE_BLOK = '$id' ORDER BY TANGGAL";
 	$data_ = $conn->Execute($query);
 	$total = $data_->rowCount();
-	$query = " SELECT  
-		s.*,
-		f.NILAI_TAMBAH, 
-		f.NILAI_KURANG, 
-		
-		(s.LUAS_TANAH * ht.HARGA_TANAH) AS BASE_HARGA_TANAH, 
-		(
-			((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-			((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-		) AS FS_HARGA_TANAH, 
-		
-		(
-			(
-				(s.LUAS_TANAH * ht.HARGA_TANAH) + 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100)
-			)
-			* s.DISC_TANAH / 100
-		) AS DISC_HARGA_TANAH, 
-		
-		(
-			(
-				((s.LUAS_TANAH * ht.HARGA_TANAH) + 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-				((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100))
-				-
-				(
-					((s.LUAS_TANAH * ht.HARGA_TANAH) + 
-					((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_TAMBAH / 100) - 
-					((s.LUAS_TANAH * ht.HARGA_TANAH) * f.NILAI_KURANG / 100))
-					* s.DISC_TANAH / 100
-				)
-			) * s.PPN_TANAH / 100
-		) AS PPN_HARGA_TANAH, 
-		
-		
-		(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) AS BASE_HARGA_BANGUNAN, 
-		((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100) AS DISC_HARGA_BANGUNAN, 
-		(
-			(
-				(s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) -
-				((s.LUAS_BANGUNAN * hb.HARGA_BANGUNAN) * s.DISC_BANGUNAN / 100)
-			) * s.PPN_BANGUNAN / 100
-		) AS PPN_HARGA_BANGUNAN, 
-		
-		d.NAMA_DESA,
-		l.LOKASI,
-		ju.JENIS_UNIT,
-		ht.HARGA_TANAH AS HARGA_TANAH_SK,
-		f.FAKTOR_STRATEGIS,
-		t.TIPE_BANGUNAN,
-		hb.HARGA_BANGUNAN AS HARGA_BANGUNAN_SK,
-		p.JENIS_PENJUALAN
-	FROM 
-		STOK s
-		
-		LEFT JOIN HARGA_BANGUNAN hb ON s.KODE_SK_BANGUNAN = hb.KODE_SK
-		LEFT JOIN HARGA_TANAH ht ON s.KODE_SK_TANAH = ht.KODE_SK
-		
-		LEFT JOIN DESA d ON s.KODE_DESA = d.KODE_DESA
-		LEFT JOIN LOKASI l ON s.KODE_LOKASI = l.KODE_LOKASI
-		LEFT JOIN JENIS_UNIT ju ON s.KODE_UNIT = ju.KODE_UNIT
-		LEFT JOIN FAKTOR f ON s.KODE_FAKTOR = f.KODE_FAKTOR
-		LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
-		LEFT JOIN JENIS_PENJUALAN p ON s.KODE_PENJUALAN = p.KODE_JENIS
-	WHERE
-		KODE_BLOK = '$id'";
-	$obj = $conn->Execute($query);$r_luas_tanah			= $obj->fields['LUAS_TANAH'];
-	$r_base_harga_tanah		= $obj->fields['BASE_HARGA_TANAH'];
-	$r_nilai_tambah			= $obj->fields['NILAI_TAMBAH'];
-	$r_nilai_kurang			= $obj->fields['NILAI_KURANG'];
-	$r_fs_harga_tanah		= $obj->fields['FS_HARGA_TANAH'];
-	$r_disc_tanah			= $obj->fields['DISC_TANAH'];
-	$r_disc_harga_tanah		= $obj->fields['DISC_HARGA_TANAH'];
-	$r_ppn_tanah			= $obj->fields['PPN_TANAH'];
-	$r_ppn_harga_tanah		= $obj->fields['PPN_HARGA_TANAH'];
-	$r_harga_tanah			= $r_base_harga_tanah + $r_fs_harga_tanah - $r_disc_harga_tanah + $r_ppn_harga_tanah;
 	
-	$r_luas_bangunan		= $obj->fields['LUAS_BANGUNAN'];
-	$r_base_harga_bangunan	= $obj->fields['BASE_HARGA_BANGUNAN'];
-	$r_fs_harga_bangunan	= 0;
-	$r_disc_bangunan		= $obj->fields['DISC_BANGUNAN'];
-	$r_disc_harga_bangunan	= $obj->fields['DISC_HARGA_BANGUNAN'];
-	$r_ppn_bangunan			= $obj->fields['PPN_BANGUNAN'];
-	$r_ppn_harga_bangunan	= $obj->fields['PPN_HARGA_BANGUNAN'];
-	$r_harga_bangunan		= $r_base_harga_bangunan + $r_fs_harga_bangunan - $r_disc_harga_bangunan + $r_ppn_harga_bangunan;
-	$r_total = $r_harga_tanah +  $r_harga_bangunan ;
-
 	$query = "SELECT SUM(NILAI) AS NILAI_TOTAL FROM RENCANA WHERE KODE_BLOK = '$id'";
 	$nilai_total = $conn->Execute($query)->fields['NILAI_TOTAL'];
 
-	$query = "SELECT TANDA_JADI FROM SPP WHERE KODE_BLOK = '$id'";
-	$tanda_jadi = $conn->Execute($query)->fields['TANDA_JADI'];
-	$r_total -= $tanda_jadi;
+	$query = "SELECT TANDA_JADI,JUMLAH_KPR,HARGA_TOTAL FROM SPP WHERE KODE_BLOK = '$id'";
+	$tanda_jadi 	= $conn->Execute($query)->fields['TANDA_JADI'];
+	$jumlah_kpr 	= $conn->Execute($query)->fields['JUMLAH_KPR'];
+	$harga_total	= $conn->Execute($query)->fields['HARGA_TOTAL'];
+	$r_total = $harga_total - ($tanda_jadi + $jumlah_kpr);
 
 }
 	

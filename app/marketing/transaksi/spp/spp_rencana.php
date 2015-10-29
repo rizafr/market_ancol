@@ -83,7 +83,7 @@ function delete_rencana(id, tgl)
 <tr>
 	<td>
 		<input type="button" id="tambah" value=" Rencana ">
-		<!--<input type="button" id="insert_row" value=" Insert Per Row ">-->
+		<input type="button" id="insert_row" value=" Insert Per Row ">
 		<input type="button" id="close" value=" Tutup ">
 	</td>
 </tr>
