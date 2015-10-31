@@ -1,9 +1,6 @@
-<form name="form" id="form" method="post">
-<table class="t-control2">
-    <tr>
-      <td style="font-size:20px;text-align:center;font-weight:bold" >Daftar Peringatan Wanprestasi</td>
-    </tr>
-</table>	
+<div class="title-page">Daftar Peringatan Wanprestasi</div>
+
+<form name="form" id="form" method="post">	
 <table class="t-control">
 	<tr>
       <td>Tanggal</td><td>:</td>

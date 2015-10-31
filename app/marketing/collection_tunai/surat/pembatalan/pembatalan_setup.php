@@ -1,9 +1,6 @@
+<div class="title-page">Daftar Administrasi Pembatalan</div>
+
 <form name="form" id="form" method="post">
-<table class="t-control2">
-    <tr>
-      <td style="font-size:20px;text-align:center;font-weight:bold" >Daftar Administrasi Pembatalan </td>
-    </tr>
-</table>	
 <table class="t-control">
 	<tr>
       <td>Tanggal</td><td>:</td>

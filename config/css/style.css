@@ -1,5 +1,15 @@
 @import 'opensans.css';
 
+/*
+ * reset
+ */
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+	margin: 0; 
+	padding: 0;
+}
+
+
 * { 
 	font-family: 'Open Sans', Helvetica, sans-serif,Arial;
 	font-weight: 500;
@@ -25,7 +35,7 @@ html { height:100%; }
 }
 
 a:hover{
-	color: #fff !important;
+	color: #3C3838;
 	transition: all 0.2s ease;
 }
 #wrapper {
@@ -33,7 +43,7 @@ a:hover{
 	min-height:100% !important;
 	/* padding:0 10px; 
 	margin-bottom:-66px; */
-	
+
 }
 body {
 	height:100%;

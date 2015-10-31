@@ -6,7 +6,7 @@
 	<td width="100">Pilih / Pencarian</td><td width="10">:</td>
 	<td>
 		<select name="field1" id="field1" class="wauto">
-			<option value="1"> KAV / BANGUNAN </option>
+			<option value="1"> KODE BLOK</option>
 			<option value="2"> LAIN-LAIN </option>
 		</select>
 		<input type="text" name="search1" id="search1" class="apply" value="">
