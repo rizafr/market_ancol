@@ -22,6 +22,7 @@ die_conn($conn);
 
 	<!-- JS -->
 	<script type="text/javascript" src="../plugin/js/jquery-1.10.2.min.js"></script>
+	
 	<script type="text/javascript" src="../plugin/js/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="../config/js/menu.js"></script>
 	<script type="text/javascript" src="../plugin/js/jquery.inputmask.custom.js"></script>
