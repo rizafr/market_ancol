@@ -88,10 +88,12 @@ $page_start = (($page_num-1) * $per_page);
 <table class="t-data w100">
 <tr>
 
-	<th class="w15">BLOK / NOMOR</th>
+	<th class="w10">BLOK / NOMOR</th>
+	<th class="w10">COSTUMER ID</th>
+	<th class="w10">VIRTUAL ACCOUNT</th>
 	<th class="w20">NAMA PEMBELI</th>
-	<th class="w10">TANGGAL SPP</th>
-	<th class="w10">TANGGAL BATAS</th>
+	<th class="w8">TANGGAL SPP</th>
+	<th class="w8">TANGGAL BATAS</th>
 	<th class="w10">JUMLAH HARI</th>
 	<th class="w45">ALAMAT RUMAH</th>
 </tr>
@@ -112,6 +114,8 @@ if ($total_data > 0)
 	while( ! $obj->EOF)
 	{
 		$id = $obj->fields['KODE_BLOK'];
+		$no_va= $obj->fields['NOMOR_CUSTOMER'];
+		$costumer_id = $obj->fields['COSTUMER_ID'];
 		$tgl1 = tgltgl(date("d-m-Y", strtotime($tgl)));
 		$tgl2 = tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_SPP'])));
 		$diff = strtotime($tgl1) - strtotime($tgl2);
@@ -119,7 +123,9 @@ if ($total_data > 0)
 			
 		?>
 		<tr class="onclick" id="<?php echo $id; ?>"> 
-			<td><?php echo $id; ?></td>
+			<td class="text-center"><?php echo $id; ?></td>
+			<td class="text-center"><?php echo $costumer_id; ?></td>
+			<td class="text-center"><?php echo $no_va; ?></td>
 			<td><?php echo $obj->fields['NAMA_PEMBELI'];  ?></td>
 			<td class="text-center"><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_SPP'])));  ?></td>
 			<td class="text-center"><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['TGL_BATAS'])));  ?></td>
