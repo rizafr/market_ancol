@@ -13,6 +13,7 @@ die_conn($conn);
 	<link type="image/x-icon" rel="icon" href="../images/ancol.png">
 
 	<!-- CSS -->
+	<!-- <link type="text/css" href="../config/css/bootstrap.css" rel="stylesheet">-->
 	<link type="text/css" href="../config/css/style.css" rel="stylesheet">
 	<link type="text/css" href="../config/css/animate.css" rel="stylesheet">
 	<link type="text/css" href="../config/css/menu.css" rel="stylesheet">

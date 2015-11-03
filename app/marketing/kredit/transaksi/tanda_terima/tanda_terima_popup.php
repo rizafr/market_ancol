@@ -32,7 +32,7 @@ jQuery(function($) {
 		$('#daftar').hide();	
 	}	
 	
-	
+
 	$('#nomor, #penerima').inputmask('varchar', { repeat: '30' });	
 	$('#no_customer, #no_tlp').inputmask('mask', { repeat: '15', mask : '9', groupSeparator : '', placeholder : '' });
 	$('#kode_blok').inputmask('varchar', { repeat: '15' });	
@@ -50,6 +50,18 @@ jQuery(function($) {
 		$('#terbilang').val(sejumlah);
 		return false;
 	});
+
+	$('#jumlah').on('keyin', function(e) {
+		e.preventDefault();
+		jumlah = jQuery('#jumlah').val();		
+		jumlah	= jumlah.replace(/[^0-9.]/g, '');
+		jumlah	= (jumlah == '') ? 0 : parseFloat(jumlah);
+		sejumlah = terbilang(jumlah);
+		$('#terbilang').val(sejumlah);
+		return false;
+	});
+
+
 	
 	$('#close').on('click', function(e) {
 		e.preventDefault();
@@ -231,8 +243,7 @@ function daftar_pemesan() {
 <tr>
 <?php 
 
-$jumlah=explode(".",$jumlah) ;
-$jumlah = $jumlah[0];
+
 ?>
 	<td>Jumlah Diterima</td><td>:</td>
 	<td>Rp. <input type="text" name="jumlah" id="jumlah" size="15" value="<?php echo to_money($jumlah); ?>"></td>

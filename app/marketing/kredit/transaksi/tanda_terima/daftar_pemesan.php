@@ -23,6 +23,8 @@ ex_conn($conn);
 <script type="text/javascript" src="../../../../../plugin/window/javascripts/prototype.js"></script>
 <script type="text/javascript" src="../../../../../plugin/window/javascripts/window.js"></script>
 <script type="text/javascript" src="../../../../../config/js/main.js"></script>
+<script type="text/javascript" src="../../../../../config/js/terbilang_js.js"></script>
+
 <script type="text/javascript">
 jQuery(function($) {
 	/* -- FILTER -- */
@@ -77,6 +79,7 @@ jQuery(function($) {
 			telepon = $(this).data('telepon');
 			agen = $(this).data('agen');
 			koordinator = $(this).data('koordinator');
+			//sejumlah = terbilang(tanda_jadi);
 		
 		parent.jQuery('#kode_blok').val(kode_blok);
 		parent.jQuery('#nama_pembayar').val(nama_pembayar);
@@ -86,6 +89,7 @@ jQuery(function($) {
 		parent.jQuery('#no_tlp').val(telepon);
 		parent.jQuery('#penerima').val(agen);
 		parent.jQuery('#koordinator').val(koordinator);
+		//parent.jQuery('#terbilang').val(sejumlah);
 		
 		parent.window.focus();
 		parent.window.popup.close();

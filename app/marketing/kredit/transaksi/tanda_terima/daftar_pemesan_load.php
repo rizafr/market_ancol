@@ -60,6 +60,7 @@ $page_start = (($page_num-1) * $per_page);
 	<th class="w5">NO.</th>
 	<th class="w10">KODE BLOK</th>
 	<th class="w20">NAMA PEMESAN</th>
+	<th class="w20">TANDA JADI</th>
 	<th class="w10">TANGGAL</th>
 </tr>
 
@@ -78,11 +79,14 @@ if ($total_data > 0)
 	while( ! $obj->EOF)
 	{
 		$id = $obj->fields['KODE_BLOK'];
+		$jumlah = $obj->fields['TANDA_JADI'];;
+		$jumlah=explode(".",$jumlah) ;
+		$jumlah = $jumlah[0];
 		?>
 		<tr class="onclick" id="<?php echo $id; ?>"
 		data-kode_blok="<?php echo $obj->fields['KODE_BLOK']; ?>"
 		data-nama_pembayar="<?php echo $obj->fields['NAMA_PEMBELI']; ?>"
-		data-tanda_jadi="<?php echo $obj->fields['TANDA_JADI']; ?>"
+		data-tanda_jadi="<?php echo to_money($jumlah); ?>"
 		data-alamat="<?php echo $obj->fields['ALAMAT_RUMAH']; ?>"
 		data-telepon="<?php echo $obj->fields['TELP_LAIN']; ?>"
 		data-keterangan="<?php echo $obj->fields['POLA_BAYAR']; ?>"
@@ -92,6 +96,7 @@ if ($total_data > 0)
 			<td class="text-center"><?php echo $i; ?></td>
 			<td><?php echo $id; ?></td>
 			<td><?php echo $obj->fields['NAMA_PEMBELI']; ?></td>
+			<td><?php echo to_money($jumlah) ?></td>
 			<td><?php echo f_tgl($obj->fields['TANGGAL_SPP']); ?></td>
 		</tr>
 		<?php
