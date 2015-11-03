@@ -196,6 +196,7 @@ if ($total_data > 0)
 <?php
 
 if ($total_data > 0)
+	echo "Total Data: ".$total_data;
 {
 	$sum_nilai=array();
 	$sum_kolom = array();
@@ -248,6 +249,7 @@ if ($total_data > 0)
 			<?php }
 		?>
 		<td class="text-center"><b><?php echo to_money(array_sum($sum_nilai)); ?></b></td>
+	</tr>
 <?php	
 }
 ?>

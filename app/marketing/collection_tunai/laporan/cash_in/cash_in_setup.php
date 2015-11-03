@@ -70,10 +70,16 @@ jQuery(function($) {
 		return false;
 	});
 	
+	// $(document).on('click', '#print', function(e) {
+	// 	e.preventDefault();
+	// 	var url = base_marketing + 'collection_tunai/laporan/cash_in/print_cash_in.php?' + $('#form').serialize();
+	// 	open_print(url)
+	// 	return false;
+	// });
+
 	$(document).on('click', '#print', function(e) {
 		e.preventDefault();
-		var url = base_marketing + 'collection_tunai/laporan/cash_in/print_cash_in.php?' + $('#form').serialize();
-		open_print(url)
+		window.open(base_marketing + 'collection_tunai/laporan/cash_in/print_cash_in.php?' + $('#form').serialize());
 		return false;
 	});
 	
