@@ -100,11 +100,21 @@ $file_type  = array('xls','xlsx');
 				
 				
 				// Skip data jika kode_blok dan va sudah ada
-				$kode_blok		= $val[2];
+				$kode_blok		= $val[1];
 				$kode_blok		= (!empty($kode_blok)) ? clean($kode_blok) : '';
-				$virtual_account= $val[1];
-				$virtual_account = (!empty($virtual_account)) ? clean($virtual_account) : '';
 				
+				$blok = explode("-", $kode_blok);
+				$no_unit = $blok[1];
+				$jml= strlen($blok[0]);
+				if($jml>2){
+					$tower = substr($blok[0], 0,1);
+					$lantai = substr($blok[0], 1,2);
+				}else{
+					$tower = substr($blok[0], 0,1);
+					$lantai = "0".substr($blok[0], 1,3);	
+				}
+				$virtual_account="888".$lantai.$no_unit;
+
 				$query = "
 				SELECT COUNT(KODE_BLOK) AS TOTAL FROM STOK WHERE KODE_BLOK = '$kode_blok' OR NO_VA = '$virtual_account'
 				";
@@ -118,11 +128,11 @@ $file_type  = array('xls','xlsx');
 				if ($total_data == 0) {
 					
 					$kode_sk 				= $val[0];
-					$kode_unit 				= $val[3];
-					$kode_lokasi 			= $val[4];
-					$kode_tipe 				= $val[5];
-					$kode_penjualan 		= $val[6];
-					$luas_bangunan 			= $val[7];
+					$kode_unit 				= $val[2];
+					$kode_lokasi 			= $val[3];
+					$kode_tipe 				= $val[4];
+					$kode_penjualan 		= $val[5];
+					$luas_bangunan 			= $val[6];
 					
 					$kode_lokasi	= (!empty($kode_lokasi)) ? clean($kode_lokasi) : '';
 					$kode_unit		= (!empty($kode_unit)) ? clean($kode_unit) : '';

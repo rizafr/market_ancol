@@ -124,7 +124,7 @@ $page_start = (($page_num-1) * $per_page);
 		LEFT JOIN LOKASI h ON s.KODE_LOKASI = h.KODE_LOKASI
 		LEFT JOIN JENIS_UNIT i ON s.KODE_UNIT = i.KODE_UNIT
 		$query_search
-		ORDER BY s.KODE_BLOK ASC
+		ORDER BY s.NO_VA ASC
 		";
 
 		$obj = $conn->SelectLimit($query, $per_page, $page_start);
