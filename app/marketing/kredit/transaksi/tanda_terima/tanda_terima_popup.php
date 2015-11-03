@@ -51,7 +51,7 @@ jQuery(function($) {
 		return false;
 	});
 
-	$('#jumlah').on('keyin', function(e) {
+	$('#jumlah').on('focus', function(e) {
 		e.preventDefault();
 		jumlah = jQuery('#jumlah').val();		
 		jumlah	= jumlah.replace(/[^0-9.]/g, '');

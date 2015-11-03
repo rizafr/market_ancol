@@ -86,7 +86,7 @@ if ($total_data > 0)
 		<tr class="onclick" id="<?php echo $id; ?>"
 		data-kode_blok="<?php echo $obj->fields['KODE_BLOK']; ?>"
 		data-nama_pembayar="<?php echo $obj->fields['NAMA_PEMBELI']; ?>"
-		data-tanda_jadi="<?php echo to_money($jumlah); ?>"
+		data-tanda_jadi="<?php echo bigintval($jumlah); ?>"
 		data-alamat="<?php echo $obj->fields['ALAMAT_RUMAH']; ?>"
 		data-telepon="<?php echo $obj->fields['TELP_LAIN']; ?>"
 		data-keterangan="<?php echo $obj->fields['POLA_BAYAR']; ?>"
