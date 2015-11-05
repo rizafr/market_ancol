@@ -69,12 +69,12 @@ $array_bulan[0]		= 'Desember';
 $a	= 0;
 while($a <= $selisih)
 {
-	$next_bulan 	= $startMonth + $a;
+	$next_bulan 	= $startMonth + $a +1;
 	$next_tahun		= $startYear;
 	if($next_bulan > 12)
 	{
 		$next_bulan 	= $next_bulan % 12;
-		$next_tahun 	= $startYear + 1; 
+		$next_tahun 	= $startYear + 1;
 	}
 	
 	$proyeksi_bulan[$a] = $array_bulan[$next_bulan].' '.$next_tahun;
@@ -173,7 +173,7 @@ if ($total_data > 0)
 			}else{
 				$data_cash_in[$index]->BULAN[$i] = '-';
 			}
-		}
+		}	
 		$index++;
 		$obj->movenext();
 	}
@@ -196,7 +196,6 @@ if ($total_data > 0)
 <?php
 
 if ($total_data > 0)
-	echo "Total Data: ".$total_data;
 {
 	$sum_nilai=array();
 	$sum_kolom = array();
