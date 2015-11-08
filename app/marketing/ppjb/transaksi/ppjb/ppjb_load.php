@@ -48,27 +48,20 @@ $page_start = (($page_num-1) * $per_page);
 
 <table class="t-data w60">
 <tr>
-	<th class="w15">BLOK / NOMOR</th>
-	<th class="w30">NAMA PEMBELI</th>
-	<th class="w15">TGL. PPJB</th>
-	<th>JENIS PPJB</th>
+	<th class="w10">BLOK / NOMOR</th>
+	<th class="w25">NAMA PEMBELI</th>
+	<th class="w15">TGL. PAIJB / PPJB</th>
+	<th>JENIS PAIJB / PPJB</th>
 	<th >NOMOR</th>
-	<th >STATUS PPJB</th>
+	<th >STATUS CETAK PPJB</th>
+	<th >STATUS CETAK PAIJB</th>
 </tr>
 
 <?php
 if ($total_data > 0)
-{
-	// $query = "
-	// SELECT *
-	// FROM 
-		// SPP
-	// $query_search
-	// ORDER BY KODE_BLOK
-	// ";
-	
+{	
 	$query = "
-			SELECT a.KODE_BLOK, a.NAMA_PEMBELI,b.NOMOR, b.TANGGAL, c.NAMA_JENIS
+			SELECT a.KODE_BLOK, a.NAMA_PEMBELI,b.NOMOR, b.TANGGAL, c.NAMA_JENIS, b.STATUS_CETAK, b.STATUS_CETAK_PAIJB
 			FROM 
 				  SPP a
 			LEFT OUTER  JOIN CS_PPJB b ON a.KODE_BLOK = b.KODE_BLOK
@@ -83,12 +76,27 @@ if ($total_data > 0)
 		$NAMA_PEMBELI = (isset($obj->fields['NAMA_PEMBELI'])) ? ($obj->fields['NAMA_PEMBELI']) : '';
 		$NAMA_JENIS = (!isset($obj->fields['NAMA_JENIS']) || is_null($obj->fields['NAMA_JENIS'])) ? '' : $obj->fields['NAMA_JENIS']; 
 		$NOMOR = (!isset($obj->fields['NOMOR']) || is_null($obj->fields['NOMOR'])) ? '' : $obj->fields['NOMOR']; 
-		if($NOMOR!=''){
-			$STATUS="SUDAH PPJB";
-			$cek="sudah";
-		}else{
-			$STATUS="BELUM PPJB";
+		$STATUS_CETAK = $obj->fields['STATUS_CETAK'];
+		// if($NOMOR!=''){
+		// 	$STATUS="SUDAH PPJB";
+		// 	$cek="sudah";
+		// }else{
+		// 	$STATUS="BELUM PPJB";
+		// 	$cek="belum";
+		// }
+		if($STATUS_CETAK==NULL || $STATUS_CETAK=='0'){
+			$STATUS_PPJB="BELUM CETAK PPJB";
 			$cek="belum";
+		}else{
+			$STATUS_PPJB="SUDAH CETAK PPJB";
+			$cek="sudah";
+		}
+		if($STATUS_CETAK_PAIJB==NULL || $STATUS_CETAK_PAIJB=='0'){
+			$STATUS_PAIJB="BELUM CETAK PAIJB";
+			$cek="belum";
+		}else{
+			$STATUS_PAIJB="SUDAH CETAK PAIJB";
+			$cek="sudah";
 		}
 		?>
 		<tr class="onclick <?php echo $cek; ?>" id="<?php echo $id; ?>" > 
@@ -97,7 +105,8 @@ if ($total_data > 0)
 			<td class="text-center"><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL']))); ?></td>
 			<td><?php echo $NAMA_JENIS ?></td>
 			<td class="text-center"><?php echo $NOMOR; ?></td>
-			<td class="text-center"><?php echo $STATUS; ?></td>
+			<td class="text-center"><?php echo $STATUS_PPJB; ?></td>
+			<td class="text-center"><?php echo $STATUS_PAIJB; ?></td>
 		</tr>
 		<?php
 		$obj->movenext();

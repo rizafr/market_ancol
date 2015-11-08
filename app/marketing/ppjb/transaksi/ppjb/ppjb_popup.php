@@ -433,7 +433,7 @@ jQuery(function($) {
 <tr>
 	<td class="td-action" colspan=3>
 		<input type="button" id="ttd" value=" Ttd ">
-		<input type="button" id="ppjb" value=" PPJB ">
+		<input type="button" id="ppjb" value=" PPJB / PAIJB">
 		<input type="button" id="addendum2" value=" Addendum ">
 		<input type="button" id="lampiran" value=" Lampiran ">
 		<input type="button" id="alamat" value=" Alamat ">

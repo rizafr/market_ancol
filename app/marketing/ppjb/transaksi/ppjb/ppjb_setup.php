@@ -1,4 +1,5 @@
-<div class="title-page">PERJANJIAN PENGIKATAN JUAL BELI (PPJB)</div>
+<!-- <div class="title-page">PERJANJIAN AWAL IKATAN JUAL BELI / PERJANJIAN PENGIKATAN JUAL BELI</div> -->
+<div class="title-page">PAIJB / PPJB</div>
 
 <form name="form" id="form" method="post">
 	<table class="t-control wauto">
@@ -13,7 +14,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Status PPJB</td><td>:</td>
+			<td>Status PAIJB / PPJB</td><td>:</td>
 			<td>
 				<input type="radio" name="status_ppjb" id="all" class="status" value="0" checked="true"> <label for="sbs">All</label>
 				<input type="radio" name="status_ppjb" id="sudah" class="status" value="1" > <label for="sbb">Sudah</label>&nbsp;&nbsp;
@@ -131,7 +132,7 @@
 		function showPopup(act, id)
 		{
 			var url =	base_marketing + 'ppjb/transaksi/ppjb/ppjb_popup.php' + '?act=' + act + '&id=' + id;	
-			setPopup('Perjanjian Pengikatan Jual Beli (PPJB)', url, 1000, 580);	
+			setPopup('Perjanjian Awal Ikatan Jual Beli (PAIJB) / Perjanjian Pengikatan Jual Beli (PPJB)', url, 1000, 580);	
 			return false;
 		}
 		

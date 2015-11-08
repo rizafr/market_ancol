@@ -68,14 +68,14 @@
 	</ul>
 </li>
 
-<li><a href="">PPJB</a>
+<li><a href="">PAIJB / PPJB</a>
 	<ul>
 		<li><a href="">Transaksi<span></span></a>
 			<ul>
-				<li><a href="<?php echo base64_encode('A01_ppjb'); ?>">Perjanjian Pengikatan Jual Beli (PPJB)</a></li>
-				<li><a href="<?php echo base64_encode('A01_verifikasi_ppjb'); ?>">Verifikasi PPJB</a></li>
+				<li><a href="<?php echo base64_encode('A01_ppjb'); ?>">Perjanjian Awal Ikatan Jual Beli / Perjanjian Pengikatan Jual Beli</a></li>
+				<li><a href="<?php echo base64_encode('A01_verifikasi_ppjb'); ?>">Verifikasi PAIJB / PPJB</a></li>
 				<li class="separator"></li>
-				<li><a href="<?php echo base64_encode('A01_pembatalan_ppjb'); ?>">Pembatalan PPJB</a></li>
+				<li><a href="<?php echo base64_encode('A01_pembatalan_ppjb'); ?>">Pembatalan PAIJB / PPJB</a></li>
 				<li><a href="<?php echo base64_encode('A01_pengalihan_hak'); ?>">Pengalihan Hak</a></li>
 			</ul>
 		</li>
