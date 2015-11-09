@@ -2,6 +2,22 @@
 require_once('kuitansi_proses.php');
 require_once('../../../../../config/terbilang.php');
 $terbilang = new Terbilang;
+
+$nilai_rencana= array();
+$i=1;
+$query = "		
+SELECT NILAI FROM RENCANA
+		WHERE KODE_BLOK = '$id'
+	";
+	$obj = $conn->execute($query);
+while( ! $obj->EOF)
+	{
+		$nilai = $obj->fields['NILAI'];
+		$nilai_rencana[$i]= $nilai;
+		$obj->movenext();
+		$i++;
+	}
+
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +45,7 @@ function calculate(){
 		var sel_jenis_pembayaran	= jQuery('#jenis_pembayaran option:selected');
 			jenis_pembayaran		= sel_jenis_pembayaran.data('jenis');
 			kode_bayar				= jQuery('#jenis_pembayaran').val();
+		    count_rencana= <?php echo $count_rencana?>;
 		
 		tanah_bangunan		= '<?php echo tanah_bangunan($luas_bangunan); ?>';
 		lokasi				= '<?php echo $lokasi; ?>';		
@@ -58,11 +75,11 @@ function calculate(){
 		} 
 
 		if ((kode_bayar == 25) || (kode_bayar == 26) || (kode_bayar == 27) || (kode_bayar == 28)) {
-		jp = 'Pembayaran '+ jenis_pembayaran + ' atas pembelian ' + tanah_bangunan +
+		jp = 'Pembayaran '+ jenis_pembayaran + ' ke '+count_rencana+' atas pembelian ' + tanah_bangunan +
 			 '\ndi ' + lokasi + ' Lantai ' + blok + ' Nomor ' + nomor + ' (TYPE ' + tipe + ') \n' ;
 		}
 		else {
-		jp = 'Pembayaran '+ jenis_pembayaran + ' atas pembelian ' + tanah_bangunan +
+		jp = 'Pembayaran '+ jenis_pembayaran + ' ke '+count_rencana+ ' atas pembelian ' + tanah_bangunan +
 			 '\ndi ' + lokasi + ' Lantai ' + blok + ' Nomor ' + nomor + ' (TYPE ' + tipe + ') \n' +
 			 jenis_pembayaran + ' : Rp. ' + formatNumber(subtotal) + ',-' +
 			 '\nPPN : Rp. ' + formatNumber(ppn) + ',-' ;
@@ -109,6 +126,14 @@ jQuery(function($) {
 	if ('<?php echo $act; ?>' == 'Tambah') {
 		$('#post, #bon, #print, #rr').hide();	
 	}	
+
+	jumlah = jQuery('#jumlah').val();		
+		jumlah	= jumlah.replace(/[^0-9.]/g, '');
+		jumlah	= (jumlah == '') ? 0 : parseFloat(jumlah);
+		sejumlah = terbilang(jumlah);
+		jQuery('#sejumlah').val(sejumlah);
+		jQuery('#diposting').val(jumlah);
+
 	var tgl_terima = jQuery('#tgl_terima').val();
 	if(tgl_terima==''){
 		alert('Tanggal Pembayaran Diterima Harus Diisi');
@@ -186,11 +211,11 @@ jQuery(function($) {
 					alert(data.msg);
 					parent.loadData();
 				}
-				// else if (data.act == 'Tambah')
-				// {
-					// alert(data.msg);
-					// parent.loadData();
-				// }
+				else if (data.act == 'Tambah')
+				{
+					alert(data.msg);
+					parent.loadData();
+				}
 		}, 'json');
 		return false;
 	});
@@ -262,8 +287,15 @@ jQuery(function($) {
 </table>
 <table class="t-popup">
 <tr>
+		<?php 
+	if($act=='Tambah'){
+	?>
+	<td>Jumlah Rp. : <input <?php if($act!='Tambah'){echo "readonly";}?> type="text" name="jumlah" id="jumlah" size="15" value="<?php echo to_money($nilai_rencana[$count_rencana]); ?>"></td>	
+	<td>Diposting Rp. : <input <?php if($act!='Tambah'){echo "readonly";}?> type="text" name="diposting" id="diposting" size="15" value="<?php echo to_money($nilai_rencana[$count_rencana]); ?>"></td>
+	<?php }else{?>
 	<td>Jumlah Rp. : <input <?php if($act!='Tambah'){echo "readonly";}?> type="text" name="jumlah" id="jumlah" size="15" value="<?php echo to_money($jumlah); ?>"></td>	
 	<td>Diposting Rp. : <input <?php if($act!='Tambah'){echo "readonly";}?> type="text" name="diposting" id="diposting" size="15" value="<?php echo to_money($diposting); ?>"></td>
+	<?php }?>
 	<td>Jakarta, <input readonly="readonly" type="text" name="tanggal" id="tanggal" size="15" class="apply dd-mm-yyyy" value="<?php echo $tanggal; ?>"></td>
 </tr>
 </table>
@@ -292,6 +324,14 @@ jQuery(function($) {
 <tr>
 	<td colspan ="2">Catatan Kwitansi : <textarea type="text" name="catatan_kwt" id="catatan_kwt" rows="6" cols="100"><?php echo $catatan_kwt; ?></textarea></td></tr>
 </tr>
+
+<tr>
+	<td class="" colspan="3">
+		<input type="submit" id="save" value=" <?php echo $act; ?> ">
+		<!--<input type="reset" id="reset" value=" Reset ">-->
+		
+	</td>
+</tr>
 <tr>
 	<td class="td-action" colspan="3">
 		<!--
@@ -300,13 +340,6 @@ jQuery(function($) {
 		<input type="button" id="rr" value=" R-R "> -->
 		<input type="button" id="print" value=" Print ">	
 		<input type="button" id="close" value=" Tutup ">
-	</td>
-</tr>
-<tr>
-	<td class="" colspan="3">
-		<input type="submit" id="save" value=" <?php echo $act; ?> ">
-		<!--<input type="reset" id="reset" value=" Reset ">-->
-		
 	</td>
 </tr>
 </table>

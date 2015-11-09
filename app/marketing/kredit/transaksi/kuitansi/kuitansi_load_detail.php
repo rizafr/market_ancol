@@ -7,21 +7,21 @@ $id		= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
 ?>
 
 <table class="t-data w100">
-<tr>
-	<th class="w5">NO.</th>
-	<th class="w15">NOMOR KWITANSI</th>
-	<th class="w10">TANGGAL BAYAR</th>
-	<th class="w10">JUMLAH (Rp)</th>
-	<th class="w50">REDAKSI</th>
-	<th class="w30">CATATAN</th>
-</tr>
+	<tr>
+		<th class="w5">NO.</th>
+		<th class="w15">NOMOR KWITANSI</th>
+		<th class="w10">TANGGAL BAYAR</th>
+		<th class="w10">JUMLAH (Rp)</th>
+		<th class="w50">REDAKSI</th>
+		<th class="w30">CATATAN</th>
+	</tr>
 
-<?php
+	<?php
 	$query = "
 	
 	SELECT NOMOR_KWITANSI, STATUS_KWT, TANGGAL,NILAI, KETERANGAN, CATATAN, TYPE = 'KWITANSI'
 	FROM 
-		KWITANSI
+	KWITANSI
 	WHERE KODE_BLOK = '$id'
 	ORDER BY TANGGAL
 	";
@@ -38,45 +38,45 @@ $id		= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
 			<td class="text-center"><?php echo $i; ?></td>
 			<?php 
 			if($status == '0')
+				{?>
+			<td>-</td>
+			<?php
+		}
+		else 
 			{?>
-				<td>-</td>
-			<?php
-			}
-			else 
-			{?>
-				<td><?php echo $id; ?></td>
-			<?php
-			}
-			?>
-			<td><?php echo date("d M Y", strtotime($obj->fields['TANGGAL']));  ?></td>
-			<td class="text-right"><?php echo to_money($obj->fields['NILAI']);  ?></td>
-			<?php
-			if($status == '0')
-			{?>
-				<td>-</td>
-			<?php
-			}
-			else
-			{?>
-				<td><?php echo $obj->fields['KETERANGAN'];  ?></td>
-			<?php
-			}
-			?>
-			
-			<td><?php echo $obj->fields['CATATAN'];  ?></td>
-			
-		</tr>
+		<td><?php echo $id; ?></td>
 		<?php
-		$i++;
-		$obj->movenext();
 	}
+	?>
+	<td><?php echo date("d M Y", strtotime($obj->fields['TANGGAL']));  ?></td>
+	<td class="text-right"><?php echo to_money($obj->fields['NILAI']);  ?></td>
+	<?php
+	if($status == '0')
+		{?>
+	<td>-</td>
+	<?php
+}
+else
+	{?>
+<td><?php echo $obj->fields['KETERANGAN'];  ?></td>
+<?php
+}
+?>
+
+<td><?php echo $obj->fields['CATATAN'];  ?></td>
+
+</tr>
+<?php
+$i++;
+$obj->movenext();
+}
 ?>
 </table>
 
 <script type="text/javascript">
-jQuery(function($) {
-	t_strip('.t-data');
-});
+	jQuery(function($) {
+		t_strip('.t-data');
+	});
 </script>
 
 <?php

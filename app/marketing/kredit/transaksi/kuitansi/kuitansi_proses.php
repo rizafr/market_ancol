@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			
 			$query = "
 			INSERT INTO KWITANSI (
-				KODE_BLOK, NOMOR_KWITANSI, NAMA_PEMBAYAR, TANGGAL, KODE_BAYAR, NILAI, KETERANGAN, NILAI_DIPOSTING, TANGGAL_BAYAR, BAYAR_VIA, CATATAN, CATATAN_KWT PPN, NILAI_NETT, VER_COLLECTION, VER_KEUANGAN
+				KODE_BLOK, NOMOR_KWITANSI, NAMA_PEMBAYAR, TANGGAL, KODE_BAYAR, NILAI, KETERANGAN, NILAI_DIPOSTING, TANGGAL_BAYAR, BAYAR_VIA, CATATAN, CATATAN_KWT, PPN, NILAI_NETT, VER_COLLECTION, VER_KEUANGAN
 			)
 			VALUES(
 				'$id', 'XXX', '$nama_pembayar', CONVERT(DATETIME,'$tanggal',105), $jenis_pembayaran, $jumlah, '$keterangan', $diposting, CONVERT(DATETIME,'$tgl_terima',105), '$via', '$catatan', '$catatan_kwt', $ppn, $subtotal, '0', '0'
@@ -266,10 +266,10 @@ if ($act == 'Ubah')
 	$via			= $obj->fields['BAYAR_VIA'];
 	$catatan		= $obj->fields['CATATAN'];
 	$catatan_kwt	= $obj->fields['CATATAN_KWT'];
-	$biro 				= $obj->fields['VER_COLLECTION'];
-	$keuangan			= $obj->fields['VER_KEUANGAN'];
-	$pindah 			= $obj->fields['STATUS_PINDAH_BLOK'];
-	$posting 			= $obj->fields['STATUS_POSTING'];
+	$biro 			= $obj->fields['VER_COLLECTION'];
+	$keuangan		= $obj->fields['VER_KEUANGAN'];
+	$pindah 		= $obj->fields['STATUS_PINDAH_BLOK'];
+	$posting 		= $obj->fields['STATUS_POSTING'];
 
 	$jenis_bayar		= $obj->fields['JENIS_BAYAR'];	
 	if ($jenis_bayar == NULL) {
@@ -293,6 +293,9 @@ if ($act == 'Ubah')
 
 if ($act == 'Tambah')
 {
+	$query 			= "SELECT COUNT(*)+1 AS COUNT_RENCANA FROM RENCANA R JOIN KWITANSI K ON R.KODE_BLOK = K.KODE_BLOK WHERE R.KODE_BLOK = '$id' AND MONTH(K.TANGGAL) = MONTH(R.TANGGAL) AND YEAR(K.TANGGAL) = YEAR(R.TANGGAL) AND K.KODE_BAYAR = '4'";
+	$count_rencana  = $conn->Execute($query)->fields['COUNT_RENCANA']; 
+
 	$query = "
 		SELECT * FROM SPP a
 		LEFT JOIN STOK b ON a.KODE_BLOK = b.KODE_BLOK

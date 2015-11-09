@@ -77,7 +77,7 @@ function showPopup(act, id)
 {
 		var url =	base_marketing + 'kredit/transaksi/kuitansi/kuitansi_popup_detail.php' +	'?act=' + act +	'&id=' + id,
 		title	= (act == 'Simpan') ? 'Tambah' : act;
-		setPopup(title + ' Kwitansi Penjualan Unit Kaveling / Bangunan', url, 800, 400);	
+		setPopup(title + ' Kwitansi Penjualan Unit Apartemen', url, 800, 400);	
 	return false;	
 	
 	
@@ -278,8 +278,8 @@ if ($jml_kpr > 0) {
 <table id="pagging-1" class="t-control w100">
 <tr>
 	<td>
-		<!--<input type="button" id="tambah" value=" Tambah ">
-		<input type="button" id="hapus" value=" Hapus ">
+		<input type="button" id="tambah" value=" Tambah ">
+		<!--<input type="button" id="hapus" value=" Hapus ">
 		<input type="button" id="rr" value=" R-R ">-->
 		<input type="button" id="pindah" value=" Pindah Blok ">
 		<input type="button" id="close" value=" Tutup "></td>
