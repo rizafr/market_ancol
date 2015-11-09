@@ -44,7 +44,7 @@ jQuery(function($) {
 			data	= $('#form-login').serialize();
 		
 		$.post(url, data, function(result) {
-			/*alert(result.msg);*/
+			alert(result.msg);
 			if (result.error == false) {
 				location.href = base_app;
 			}

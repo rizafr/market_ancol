@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND $act == 'login')
 		$_SESSION['MODUL_HA']	= $modul_ha;
 		$_SESSION['HOME']	= 'home';
 		
-		$msg = '';
+		$msg = 'Selamat Anda berhasil login';
 	}
 	catch(Exception $e)
 	{

@@ -2,7 +2,7 @@
 require_once('../../../../../config/config.php');
 die_login();
 //die_app('A');
-die_mod('A03');
+die_mod('A02');
 $conn = conn($sess_db);
 die_conn($conn);
 
@@ -10,21 +10,29 @@ die_conn($conn);
 $per_page	= (isset($_REQUEST['per_page'])) ? max(1, $_REQUEST['per_page']) : 20;
 $page_num	= (isset($_REQUEST['page_num'])) ? max(1, $_REQUEST['page_num']) : 1;
 
-$s_opf1		= (isset($_REQUEST['s_opf1'])) ? clean($_REQUEST['s_opf1']) : '';
+$s_opf1 = (isset($_REQUEST['s_opf1'])) ? clean($_REQUEST['s_opf1']) : '';
 $s_opv1	= (isset($_REQUEST['s_opv1'])) ? clean($_REQUEST['s_opv1']) : '';
+$s_app_id	= (isset($_REQUEST['s_app_id'])) ? clean($_REQUEST['s_app_id']) : '';
 
 $query_search = '';
-if ($s_opv1 != '')
-{
-	$query_search .= " AND $s_opf1 LIKE '%$s_opv1%' ";
+$and = '';
+if ($s_opv1 != '') {
+	$query_search .= " $s_opf1 LIKE '%$s_opv1%' "; $and = " AND ";
+}
+if ($s_app_id != '') {
+	$query_search .= " $and a.APP_ID LIKE '%$s_app_id%' "; $and = " AND ";
+}
+if ($query_search != '') {
+	$query_search = " WHERE " . $query_search;
 }
 
 # Pagination
 $query = "
 SELECT 
-	COUNT(USER_ID) AS TOTAL
+	COUNT(m.MENU_ID) AS TOTAL
 FROM 
-	USER_APPLICATIONS 
+	MENUS m
+	LEFT JOIN APPLICATIONS a ON a.APP_ID = m.APP_ID
 $query_search
 ";
 $total_data = $conn->Execute($query)->fields['TOTAL'];
@@ -37,11 +45,6 @@ $page_start = (($page_num-1) * $per_page);
 
 <table id="pagging-1" class="t-control">
 <tr>
-	<td>
-		<input type="button" id="tambah" value=" Tambah ">
-		<input type="button" id="hapus" value=" Hapus ">
-	</td>
-	
 	<td class="text-right">
 		<input type="button" id="prev_page" value=" < ">
 		Hal : <input type="text" name="page_num" size="5" class="page_num apply text-center" value="<?php echo $page_num; ?>">
@@ -54,11 +57,9 @@ $page_start = (($page_num-1) * $per_page);
 
 <table class="t-data">
 <tr>
-	<th width="30"><input type="checkbox" id="cb_all"></th>
-	<th>USER ID</th>
-	<th>LOGIN ID</th>
-	<th>NAMA</th>
-	<th>ROLE</th>
+	<th>ID</th>
+	<th>APP</th>
+	<th>MENU</th>
 </tr>
 
 <?php
@@ -66,26 +67,26 @@ if ($total_data > 0)
 {
 	$query = "
 	SELECT 
-		U.*, A.APP_NAME
+		m.MENU_ID, 
+		a.APP_NAME,
+		m.MENU_NAME
 	FROM 
-		USER_APPLICATIONS U
-		LEFT JOIN APPLICATIONS A ON U.ROLE = A.APP_ID
+		MENUS m
+		LEFT JOIN APPLICATIONS a ON a.APP_ID = m.APP_ID
 	$query_search
-	ORDER BY LOGIN_ID ASC
+	ORDER BY m.APP_ID, m.MENU_ID ASC
 	";
 	
 	$obj = $conn->SelectLimit($query, $per_page, $page_start);
 	
 	while( ! $obj->EOF)
 	{
-		$id = $obj->fields['USER_ID'];
+		$id = $obj->fields['MENU_ID'];
 		?>
 		<tr class="onclick" id="<?php echo $id; ?>"> 
-			<td width="30" class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
 			<td class="text-center"><?php echo $id; ?></td>
-			<td><?php echo $obj->fields['LOGIN_ID']; ?></td>
-			<td><?php echo $obj->fields['FULL_NAME']; ?></td>
 			<td><?php echo $obj->fields['APP_NAME']; ?></td>
+			<td><?php echo $obj->fields['MENU_NAME']; ?></td>
 		</tr>
 		<?php
 		$obj->movenext();

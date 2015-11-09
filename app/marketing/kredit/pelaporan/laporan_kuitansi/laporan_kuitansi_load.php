@@ -54,17 +54,13 @@ $page_start = (($page_num-1) * $per_page);
 
 <table class="t-nowrap t-data wm100">
 <tr>
-	<th rowspan="2">NO.</th>
-	<th rowspan="2">NOMOR KUITANSI</th>
-	<th rowspan="2">BLOK / NOMOR</th>
-	<th rowspan="2">NAMA PEMBAYAR</th>
-	<th rowspan="2">TANGGAL</th>
-	<th rowspan="2">NILAI</th>
-	<th colspan="2">PARAF</th>
-</tr>
-<tr>
-	<th colspan="1">Col.</th>
-	<th colspan="1">Keu.</th>
+	<th>NO.</th>
+	<th>NOMOR KUITANSI</th>
+	<th>BLOK / NOMOR</th>
+	<th>NAMA PEMBAYAR</th>
+	<th>TANGGAL</th>
+	<th>NILAI <BR /> RP</th>
+	<th>PARAF KEU</th>
 </tr>
 
 <?php
@@ -91,7 +87,6 @@ if ($total_data > 0)
 			<td><?php echo $obj->fields['NAMA_PEMBAYAR']; ?></td>
 			<td><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL']))); ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['NILAI']); ?></td>
-			<td class="text-center"><?php echo status_check($obj->fields['VER_COLLECTION']); ?></td>
 			<td class="text-center"><?php echo status_check($obj->fields['VER_KEUANGAN']); ?></td>
 		</tr>
 		<?php

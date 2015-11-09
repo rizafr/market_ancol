@@ -121,7 +121,7 @@
 				<tr>	
 					<td>Jenis Transaksi</td><td>:</td>
 					<td>
-						<select name="pola_bayar" id="pola_bayar" class="wauto">
+						<select name="kode_pola_bayar" id="kode_pola_bayar" class="wauto">
 							<option value=""> ---PILIH POLA BAYAR--- </option>
 							<?php
 							$obj = $conn->execute("
@@ -133,7 +133,7 @@
 								$ov = $obj->fields['KODE_POLA_BAYAR'];
 								$oj = $obj->fields['NAMA_POLA_BAYAR'];
 								$value = $obj->fields['KODE_POLA'];
-								echo "<option value='$value'".is_selected($value)."> $oj </option>";
+								echo "<option value='$ov'".is_selected($ov)."> $oj </option>";
 								$obj->movenext();
 								}
 							?>

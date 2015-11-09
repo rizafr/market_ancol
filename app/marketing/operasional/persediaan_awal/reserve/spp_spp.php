@@ -1,6 +1,8 @@
 <?php
 require_once('spp_proses.php');
 require_once('../../../../../config/config.php');
+require_once('../../../../../config/terbilang.php');
+$terbilang = new Terbilang;
 die_login();
 //die_app('');
 //die_mod('');
@@ -13,9 +15,11 @@ $no_unit = $blok[1];
 $jml= strlen($blok[0]);
 if($jml>2){
 	$tower = substr($blok[0], 0,1);
+	$tower = $terbilang->tower($tower);
 	$lantai = substr($blok[0], 1,2);
 }else{
 	$tower = substr($blok[0], 0,1);
+	$tower = $terbilang->tower($tower);
 	$lantai = "0".substr($blok[0], 1,3);	
 }
 $costumer_id="SF".$tower.$lantai.$no_unit;

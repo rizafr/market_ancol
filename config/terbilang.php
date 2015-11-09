@@ -211,5 +211,52 @@ Class Terbilang {
 		return $nama.' '.$tgl_temp[2];	
 
 	}
+
+	//
+	function tower($tower){
+		$tower = strtoupper($tower);
+		$kode = '';
+		switch ($tower) {
+			case 'A':
+				$kode = '01';
+				break;
+			case 'B':
+				$kode = '02';
+				break;
+			case 'C':
+				$kode = '03';
+				break;
+			case 'D':
+				$kode = '04';
+				break;
+			case 'E':
+				$kode = '05';
+				break;
+			case 'F':
+				$kode = '06';
+				break;
+			case 'G':
+				$kode = '07';
+				break;
+			case 'H':
+				$kode = '08';
+				break;
+			case 'I':
+				$kode = '09';
+				break;
+			case 'J':
+				$kode = '10';
+				break;
+			case 'K':
+				$kode = '11';
+				break;
+			case 'L':
+				$kode = '12';
+				break;
+			default:
+				break;
+		}
+		return $kode;
+	}
 }
 ?>

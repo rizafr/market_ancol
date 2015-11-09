@@ -64,8 +64,10 @@ switch (trim(base64_decode($cmd)))
 	
 	#User Management
 	case 'A01_aplications'				: die_mod('A01'); include('marketing/utilitas/security_management/aplications/aplications_setup.php');break;
+	case 'A01_menus'					: die_mod('A02'); include('marketing/utilitas/security_management/menus/menus_setup.php');break;
 	case 'A01_modules'					: die_mod('A02'); include('marketing/utilitas/security_management/modules/modules_setup.php');break;
 	case 'A01_manage_users'				: die_mod('A03'); include('marketing/utilitas/security_management/users/users_setup.php');break;
+	case 'A01_manage_menus'				: die_mod('A04'); include('marketing/utilitas/security_management/manage_menus/manage_menus_setup.php');break;
 	case 'A01_manage_modules'			: die_mod('A04'); include('marketing/utilitas/security_management/manage_modules/manage_modules_setup.php');break;
 	case 'A01_rights'					: die_mod('A05'); include('marketing/utilitas/security_management/rights/rights_setup.php');break;
 	case 'A01_pemulihan_spp'			: die_mod('A06'); include('marketing/utilitas/pemulihan_spp/pemulihan_spp_setup.php');break;

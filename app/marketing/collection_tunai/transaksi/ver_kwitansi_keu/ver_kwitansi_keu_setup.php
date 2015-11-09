@@ -13,6 +13,14 @@
 	</td>
 </tr>
 
+<tr>
+		<td>Status Verifikasi</td><td>:</td>
+		<td>
+			<input type="radio" name="ver_keuangan" id="ver_keuangan" class="ver_keuangan" value="1" checked="true"><label for="ver_keuangan">Sudah</label>
+			<input type="radio" name="ver_keuangan" id="ver_keuangan" class="ver_keuangan" value="0"> <label for="ver_keuangan">Belum</label>
+		</td>
+	</tr>	
+
 <tr>	
 	<td>Periode</td><td>:</td>
 	<td><input type="text" name="periode_awal" id="periode_awal" class="apply dd-mm-yyyy" size="15" value=""> s/d

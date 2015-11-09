@@ -10,12 +10,15 @@ $per_page	= (isset($_REQUEST['per_page'])) ? max(1, $_REQUEST['per_page']) : 20;
 $page_num	= (isset($_REQUEST['page_num'])) ? max(1, $_REQUEST['page_num']) : 1;
 
 $field1				= (isset($_REQUEST['field1'])) ? clean($_REQUEST['field1']) : '';
+$ver_keuangan		= (isset($_REQUEST['ver_keuangan'])) ? clean($_REQUEST['ver_keuangan']) : '';
 $search1			= (isset($_REQUEST['search1'])) ? clean($_REQUEST['search1']) : '';
 $periode_awal		= (isset($_REQUEST['periode_awal'])) ? clean($_REQUEST['periode_awal']) : '';
 $periode_akhir		= (isset($_REQUEST['periode_akhir'])) ? clean($_REQUEST['periode_akhir']) : '';
 
 $query_search1 = '';
 $query_search2 = '';
+
+
 if ($periode_awal <> '' || $periode_akhir <> '')
 {
 	$query_search1 .= "WHERE TANGGAL >= CONVERT(DATETIME,'$periode_awal',105) AND TANGGAL <= CONVERT(DATETIME,'$periode_akhir',105)";
@@ -27,6 +30,10 @@ if ($periode_awal <> '' || $periode_akhir <> '')
 	
 }
 
+
+	$query_search .= " AND VER_KEUANGAN = $ver_keuangan ";
+
+
 /* Pagination */
 if ($field1 == 1)
 {
@@ -36,6 +43,7 @@ if ($field1 == 1)
 	FROM 
 	KWITANSI
 
+	$query_search
 	$query_search1
 	$query_search2
 	";
@@ -48,6 +56,7 @@ else if ($field1 == 2)
 	FROM 
 	KWITANSI_LAIN_LAIN
 
+	$query_search
 	$query_search1
 	$query_search2
 	";
@@ -90,7 +99,6 @@ if ($field1 == 1)
 			<th class="w40">KETERANGAN</th>
 			<th class="w15">NILAI</th>
 			<th class="w25">NILAI DIPOSTING</th>
-			<th class="w5">COLLECTION</th>
 			<th class="w5">KEUANGAN<input type="checkbox" id="cb_all"></th>
 		</tr>
 		<?php
@@ -108,7 +116,6 @@ if ($field1 == 1)
 				<th class="w25">NAMA</th>
 				<th class="w40">KETERANGAN</th>
 				<th class="w15">NILAI</th>
-				<th class="w5">COLLECTION</th>
 				<th class="w5">KEUANGAN<input type="checkbox" id="cb_all"></th></tr>
 				<?php
 			}
@@ -156,7 +163,6 @@ if ($field1 == 1)
 							<td><?php echo $obj->fields['KETERANGAN']; ?></td>
 							<td><?php echo to_money($obj->fields['NILAI']); ?></td>
 							<td><?php echo to_money($obj->fields['NILAI_DIPOSTING']); ?></td>
-							<td class="text-center"><?php echo status_check($obj->fields['VER_COLLECTION']); ?></td>
 							<td class="text-center">
 								<input type="checkbox" name="cb_data[]" value=<?php echo $id; ?> class="cb_data" <?php echo is_checked('1', $obj->fields['VER_KEUANGAN']); ?>>
 							</td>

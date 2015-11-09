@@ -1,6 +1,5 @@
 <?php
-require_once('users_proses.php');
-require_once('../../../../../config/config.php');
+require_once('menus_proses.php');
 ?>
 
 <!DOCTYPE html>
@@ -23,14 +22,12 @@ require_once('../../../../../config/config.php');
 <script type="text/javascript" src="../../../../../plugin/window/javascripts/window.js"></script>
 <script type="text/javascript" src="../../../../../config/js/main.js"></script>
 <script type="text/javascript">
-var this_base = base_marketing + 'utilitas/security_management/users/';
+var this_base = base_marketing + 'utilitas/security_management/menus/';
 
 jQuery(function($) {
 	
-	$('#user_id').inputmask('varchar', { repeat: 5 });
-	$('#login_id').inputmask('varchar', { repeat: 10 });
-	$('#password_id').inputmask('varchar', { repeat: 20 });
-	$('#full_name').inputmask('varchar', { repeat: 40 });
+	$('#modul_id').inputmask('varchar', { repeat: 5 });
+	$('#modul_name').inputmask('varchar', { repeat: 30 });
 	
 	$('#tutup').on('click', function(e) {
 		e.preventDefault();
@@ -39,7 +36,7 @@ jQuery(function($) {
 	
 	$('#simpan').on('click', function(e) {
 		e.preventDefault();
-		var url		= this_base + 'users_proses.php',
+		var url		= this_base + 'menus_proses.php',
 			data	= $('#form').serialize();
 			
 		$.post(url, data, function(result) {
@@ -63,44 +60,31 @@ jQuery(function($) {
 <form name="form" id="form" method="post">
 <table>
 <tr>
-	<td width="50">User ID</td><td width="10">:</td>
-	<td><input type="text" name="user_id" id="user_id" size="15" value="<?php echo $user_id; ?>"></td>
+	<td width="50">ID</td><td width="10">:</td>
+	<td><?php echo $id; ?></td>
 </tr>
 <tr>
-	<td>Login ID</td><td>:</td>
-	<td><input type="text" name="login_id" id="login_id" size="25" value="<?php echo $login_id; ?>"></td>
-</tr>
-<tr>
-	<td>Password</td><td>:</td>
-	<td><input type="password" name="passowrd_id" id="passowrd_id" size="25" value="<?php echo $passowrd_id; ?>"></td>
-</tr>
-<tr>
-	<td>Nama</td><td>:</td>
-	<td><input type="text" name="full_name" id="full_name" size="50" value="<?php echo $full_name; ?>"></td>
-</tr>
-<tr>
-	<td>ROLE</td><td>:</td>
+	<td>App</td><td>:</td>
 	<td>
-	<select name="role" id="role">
-		<option value=""> -- Role -- </option>
-		<?php
-		$obj = $conn->execute("		
-			SELECT APP_ID, APP_NAME
-				FROM APPLICATIONS
-		");
-		while( ! $obj->EOF)
-		{	
-			$ov = $obj->fields['APP_ID'];
-			$on = $obj->fields['APP_NAME'];
-			?>
-			<option value="<?php echo $ov?>" <?php echo ($ov == $role) ? 'selected' : ''; ?>><?= $on." (".$ov.")"?></option>
+		<select name="app_id" id="app_id">
+			<option value=""> -- Pilih -- </option>
 			<?php
-			$obj->movenext();
-		}
-
-		?>
-	</select>
+			$obj = $conn->Execute("SELECT APP_ID, APP_NAME FROM APPLICATIONS ORDER BY APP_ID ASC");
+			
+			while( ! $obj->EOF)
+			{
+				$ov = $obj->fields['APP_ID'];
+				$on = $obj->fields['APP_NAME'];
+				echo "<option value='$ov' " . is_selected($ov, $app_id) . "> $on ($ov) </option>";
+				$obj->movenext();
+			}
+			?>
+		</select>
 	</td>
+</tr>
+<tr>
+	<td>Modul</td><td>:</td>
+	<td><input type="text" name="modul_name" id="modul_name" size="50" value="<?php echo $modul_name; ?>"></td>
 </tr>
 <tr>
 	<td colspan="2"></td>
@@ -118,5 +102,4 @@ jQuery(function($) {
 
 </body>
 </html>
-<?php 
-close($conn); ?>
+<?php close($conn); ?>

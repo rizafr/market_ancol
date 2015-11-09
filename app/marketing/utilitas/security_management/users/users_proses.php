@@ -11,6 +11,7 @@ $user_id = (isset($_REQUEST['user_id'])) ? clean($_REQUEST['user_id']) : '';
 $login_id = (isset($_REQUEST['login_id'])) ? clean($_REQUEST['login_id']) : '';
 $passowrd_id = (isset($_REQUEST['passowrd_id'])) ? clean($_REQUEST['passowrd_id']) : '';
 $full_name = (isset($_REQUEST['full_name'])) ? clean($_REQUEST['full_name']) : '';
+$role = (isset($_REQUEST['role'])) ? clean($_REQUEST['role']) : '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
@@ -32,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			ex_empty($login_id, 'Login id harus diisi.');
 			ex_empty($passowrd_id, 'Password harus diisi.');
 			ex_empty($full_name, 'Nama harus diisi.');
+			ex_empty($role, 'Role harus diisi.');
 		
 			$query = "SELECT COUNT(USER_ID) AS TOTAL FROM USER_APPLICATIONS WHERE USER_ID = '$user_id'";
 			ex_found($conn->Execute($query)->fields['TOTAL'], "User ID \"$user_id\" telah terdaftar.");
@@ -39,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$query = "SELECT COUNT(LOGIN_ID) AS TOTAL FROM USER_APPLICATIONS WHERE LOGIN_ID = '$login_id'";
 			ex_found($conn->Execute($query)->fields['TOTAL'], "login id \"$login_id\" telah terdaftar.");
 			
-			$query = "INSERT INTO USER_APPLICATIONS (USER_ID, LOGIN_ID, PASSOWRD_ID, FULL_NAME)
-			VALUES('$user_id', '$login_id', '$passowrd_id', '$full_name')";
+			$query = "INSERT INTO USER_APPLICATIONS (USER_ID, LOGIN_ID, PASSOWRD_ID, FULL_NAME, ROLE)
+			VALUES('$user_id', '$login_id', '$passowrd_id', '$full_name','$role')";
 			ex_false($conn->Execute($query), $query);
 					
 			$msg = "User \"$login_id\" berhasil ditambahkan.";
@@ -53,7 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			ex_empty($login_id, 'Login id harus diisi.');
 			ex_empty($passowrd_id, 'Password harus diisi.');
 			ex_empty($full_name, 'Nama harus diisi.');
-			
+			ex_empty($role, 'Role harus diisi.');
+
 			$ols_login_id = $conn->Execute("SELECT LOGIN_ID FROM USER_APPLICATIONS WHERE USER_ID = '$id'")->fields['LOGIN_ID'];
 			
 			if ($user_id != $id)
@@ -73,7 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			SET USER_ID = '$user_id',
 				LOGIN_ID = '$login_id',
 				PASSOWRD_ID = '$passowrd_id',
-				FULL_NAME = '$full_name'
+				FULL_NAME = '$full_name',
+				ROLE = '$role'
 			WHERE
 				USER_ID = '$id'
 			";
@@ -129,5 +133,7 @@ if ($act == 'Edit')
 	$login_id = $obj->fields['LOGIN_ID'];
 	$passowrd_id = $obj->fields['PASSOWRD_ID'];
 	$full_name = $obj->fields['FULL_NAME'];
+	$role = $obj->fields['ROLE'];
+	$role = clean($role);
 }
 ?>

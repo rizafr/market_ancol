@@ -9,7 +9,7 @@
 	$tanggal_input			= (isset($_REQUEST['tgl_spp'])) ? clean($_REQUEST['tgl_spp']) : '';
 	$kode_bayar				= (isset($_REQUEST['kode_bayar'])) ? clean($_REQUEST['kode_bayar']) : '';
 	// $keterangan				= (isset($_REQUEST['keterangan'])) ? clean($_REQUEST['keterangan']) : '';
-	$pola_bayar				= (isset($_REQUEST['pola_bayar'])) ? clean($_REQUEST['pola_bayar']) : '';
+	$kode_pola_bayar		= (isset($_REQUEST['kode_pola_bayar'])) ? clean($_REQUEST['kode_pola_bayar']) : '';
 	$status_kompensasi		= (isset($_REQUEST['status_kompensasi'])) ? clean($_REQUEST['status_kompensasi']) : '';
 	$uang_muka				= (isset($_REQUEST['uang_muka'])) ? clean($_REQUEST['uang_muka']) : '';
 	$total					= (isset($_REQUEST['total'])) ? clean($_REQUEST['total']) : '';
@@ -34,11 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		
 		if ($act == 'Apply') # Proses Ubah
 			{
-				ex_empty($pola_bayar, 'Pola Bayar harus diisi.');				
+				ex_empty($kode_pola_bayar, 'Pola Bayar harus diisi.');				
 				
 				$query = "DELETE FROM RENCANA WHERE KODE_BLOK = '$id'";
 				ex_false($conn->execute($query), $query);
 				
+				$query = "SELECT KODE_POLA, NAMA_POLA_BAYAR FROM POLA_BAYAR WHERE KODE_POLA_BAYAR = '$kode_pola_bayar'";
+				$obj = $conn->execute($query);
+
+				$pola_bayar = $obj->fields['KODE_POLA'];
+				$nama_pola = $obj->fields['NAMA_POLA_BAYAR'];
+
 				//proses pengambilan harga sk yang dipilih sesuai pola bayar
 				$query = "SELECT count(KODE_BLOK) as TOTAL FROM HARGA_SK WHERE KODE_SK=(SELECT KODE_SK FROM STOK WHERE KODE_BLOK = '$id') AND KODE_BLOK='$id'";
 				ex_not_found($conn->Execute($query)->fields['TOTAL'], "Pola Bayar Tidak Tersedia");
@@ -47,11 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$obj = $conn->execute($query);
 				
 				$harga_total = $obj->fields['HARGA'];
-				
-				$query = "SELECT NAMA_POLA_BAYAR FROM POLA_BAYAR WHERE KODE_POLA = '$pola_bayar'";
-				$obj = $conn->execute($query);
-				
-				$nama_pola = $obj->fields['NAMA_POLA_BAYAR'];
 				
 				//update harga total yang dipalkai pada tabel spp
 				$query = "UPDATE SPP SET 
@@ -97,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					
 				$obj = $conn->execute("		
 										SELECT * FROM POLA_BAYAR
-										WHERE KODE_POLA = '$pola_bayar'
+										WHERE KODE_POLA = '$pola_bayar' AND KODE_POLA_BAYAR = '$kode_pola_bayar'
  									 ");
 				
 				$kode_jenis = $obj->fields['KODE_JENIS'];
