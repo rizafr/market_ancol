@@ -43,9 +43,9 @@ if ($field1 == 1)
 	FROM 
 	KWITANSI
 
-	$query_search
 	$query_search1
 	$query_search2
+	$query_search
 	";
 }
 else if ($field1 == 2)
@@ -56,9 +56,9 @@ else if ($field1 == 2)
 	FROM 
 	KWITANSI_LAIN_LAIN
 
-	$query_search
 	$query_search1
 	$query_search2
+	$query_search
 	";
 }
 

@@ -28,7 +28,7 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 	// 24-6-2015
 	//disable ketika diload
 	jQuery( document ).ready(function() {
-	
+
 		jQuery('#cek').change(function() {
 			if(jQuery(this).is(":checked")) {
 				var alamat_rumah =	jQuery('#alamat_rumah').val();
@@ -304,6 +304,27 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 			}
 		});
 
+	//dinamis jabatan
+	var count = 0;
+
+	$("#add_btn").click(function(){
+		count += 1;
+		$('#ttd').append(
+			'<tr class="records">'
+			+ '<td><input id="nama_' + count + '" name="nama_' + count + '" type="text" size="20"></td>'
+			+ '<td><input id="jabatan_' + count + '" name="jabatan_' + count + '" type="text" size="30"></td>'
+			+ '<td><input type="button" name="del_btn" value="Hapus" class="remove_item">'
+			+ '<input id="rows_' + count + '" name="rows[]" value="'+ count +'" type="hidden"></td></tr>'
+			);
+	});
+
+	$( document ).on( "click", ".remove_item", function(ev) {
+		if (ev.type == 'click') {
+			$(this).parents(".records").fadeOut();
+			$(this).parents(".records").remove();
+		}
+	});
+
 });
 
 
@@ -450,6 +471,42 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 	</td>
 </tr>
 
+</table>
+<table>
+	<tr>
+		<td>Form Tanda Tangan</td>
+		<td><input type="button" name="add_btn" value="Tambah" id="add_btn"></td>
+	</tr>
+	<tr>
+		<td>Nama</td><td>Jabatan</td><td>&nbsp;</td>
+	</tr>
+	<tbody id="ttd">
+	<?php
+		$obj = $conn->execute("
+			SELECT *
+			FROM 
+			SPP_TANDA_TANGAN
+			WHERE KODE_BLOK='$id';
+			");
+		$count=0;
+		while( ! $obj->EOF)
+		{	
+
+			$kode_blok = $obj->fields['KODE_BLOK'];
+			$nama = $obj->fields['NAMA'];
+			$jabatan = $obj->fields['JABATAN'];
+			
+			echo "<tr>";
+			echo "<td><input type='text' name='nama_'.$count.' value='$nama'></td>";
+			echo "<td><input type='text' name='jabatan_'.$count.' value='$jabatan'></td>";
+			echo "</tr>";
+			$obj->movenext();
+			$count++;
+		}
+		
+		?>
+		<!-- nanti rows nya muncul di sini -->
+	</tbody>
 </table>
 
 <table class="t-popup pad2 w100">

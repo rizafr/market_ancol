@@ -16,8 +16,8 @@
 <tr>
 		<td>Status Verifikasi</td><td>:</td>
 		<td>
-			<input type="radio" name="ver_keuangan" id="ver_keuangan" class="ver_keuangan" value="1" checked="true"><label for="ver_keuangan">Sudah</label>
-			<input type="radio" name="ver_keuangan" id="ver_keuangan" class="ver_keuangan" value="0"> <label for="ver_keuangan">Belum</label>
+			<input type="radio" name="ver_keuangan" id="ver_keuangan" class="ver_keuangan" value="1" > <label for="ver_keuangan">Sudah</label>
+			<input type="radio" name="ver_keuangan" id="ver_keuangan" class="ver_keuangan" value="0" checked="true"> <label for="ver_keuangan">Belum</label>
 		</td>
 	</tr>	
 

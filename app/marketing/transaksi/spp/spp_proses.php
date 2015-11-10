@@ -39,7 +39,7 @@
 	$redistribusi		= (isset($_REQUEST['redistribusi'])) ? clean($_REQUEST['redistribusi']) : '';
 	$tgl_redistribusi	= (isset($_REQUEST['tgl_redistribusi'])) ? clean($_REQUEST['tgl_redistribusi']) : '';
 	$keterangan			= (isset($_REQUEST['keterangan'])) ? clean($_REQUEST['keterangan']) : '';
-
+	
 	$r_nama_desa			= '';
 	$r_lokasi				= '';
 	$r_jenis_unit			= '';
@@ -118,6 +118,16 @@
 				KODE_BLOK = '$id'
 				";			
 				ex_false($conn->execute($query), $query);
+
+				//PROSES TANDA TANGAN
+				foreach ($_POST['rows'] as $key => $count ){
+					$nama = $_POST['nama_'.$count];
+					$jabatan = $_POST['jabatan_'.$count];
+
+					$ttd = "INSERT INTO SPP_TANDA_TANGAN (KODE_BLOK,NAMA,JABATAN) VALUES ('$id','$nama','$jabatan')";
+
+					ex_false($conn->execute($ttd), $ttd);
+				}
 				
 				$msg = 'Data SPP berhasil diubah.';
 			}
@@ -305,14 +315,14 @@
 		$lokasi		= $obj->fields['KODE_LOKASI'];
 
 		$query 		= "SELECT 
-					      	[NAMA_PT]
-					      ,[NAMA_DEP]
-					      ,[NAMA_PEJABAT]
-					      ,[NAMA_JABATAN]
-					      ,[PEJABAT_SPP]
-					      ,[JABATAN_SPP]
-					      ,[NAMA_SALES]
-					  FROM [CS_PARAMETER_MARK]";
+		[NAMA_PT]
+		,[NAMA_DEP]
+		,[NAMA_PEJABAT]
+		,[NAMA_JABATAN]
+		,[PEJABAT_SPP]
+		,[JABATAN_SPP]
+		,[NAMA_SALES]
+		FROM [CS_PARAMETER_MARK]";
 		$obj 		= $conn->execute($query);
 
 		$nama_pejabat			= $obj->fields['NAMA_PEJABAT'];
