@@ -488,7 +488,7 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 			SPP_TANDA_TANGAN
 			WHERE KODE_BLOK='$id';
 			");
-		$count=0;
+		$count=1;
 		while( ! $obj->EOF)
 		{	
 
@@ -496,9 +496,11 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 			$nama = $obj->fields['NAMA'];
 			$jabatan = $obj->fields['JABATAN'];
 			
-			echo "<tr>";
-			echo "<td><input type='text' name='nama_'.$count.' value='$nama'></td>";
-			echo "<td><input type='text' name='jabatan_'.$count.' value='$jabatan'></td>";
+			echo "<tr class='records'>";
+			echo "<input type='hidden' name='ttd[]' value='$count'>";
+			echo "<td><input type='text' name='ttd_nama_$count' value='$nama' size='20'></td>";
+			echo "<td><input type='text' name='ttd_jabatan_$count' value='$jabatan' size='30'></td>";
+			echo "<td><input type='button' name='del_btn' value='Hapus' class='remove_item'></td>";
 			echo "</tr>";
 			$obj->movenext();
 			$count++;

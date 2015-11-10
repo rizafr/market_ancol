@@ -165,6 +165,29 @@ $no_unit = $blok[1];
 $tower = substr($blok[0],-2,1); //A1
 $lantai = substr($blok[0], 1);
 
+
+
+$ttd = $conn->execute("
+	SELECT *
+	FROM 
+	SPP_TANDA_TANGAN
+	WHERE KODE_BLOK='$id';
+");
+
+$tt = $conn->execute("
+	SELECT *
+	FROM 
+	SPP_TANDA_TANGAN
+	WHERE KODE_BLOK='$id';
+");
+
+$t = $conn->execute("
+	SELECT *
+	FROM 
+	SPP_TANDA_TANGAN
+	WHERE KODE_BLOK='$id';
+");
+
 ?>
 
 <!DOCTYPE html>
@@ -394,18 +417,52 @@ $lantai = substr($blok[0], 1);
 		<br/>
 		<table cellspacing="0" width="100%" border="0" class="kata_profil pad ttd">
 			<tr>
-				<td width="35%" class="border_table"><a>Pembeli</a></td>
-				<td width="35%" class="border_table" >Sales</a></td>
+				<td width="25%" class="border_table"><a>Pembeli</a></td>
+				<?php
+		
+				while( ! $ttd->EOF)
+				{	
+
+					$jabatan = $ttd->fields['JABATAN'];
+					
+					echo "<td width='15%' class='border_table' ><a>$jabatan</a></td>";
+					$ttd->movenext();
+				}
+		
+				?>
+				<td width="15%" class="border_table" ><a>Sales</a></td>
 				<td width="30%" class="border_table" colspan="2"><a>PT. PEMBANGUNAN JAYA ANCOL TBK</a></td>
 			</tr>
 			<tr>
 				<td height="50" class="border_table"></td>
+				<?php
+		
+				while( ! $tt->EOF)
+				{	
+
+					echo "<td class='border_table'></td>";
+					$tt->movenext();
+				}
+				
+				?>
 				<td class="border_table"></td>
 				<td class="border_table"></td>
 				<td class="border_table"></td>
 			</tr>
 			<tr>
 				<td class="border_table"><?= $nama?></td>
+				<?php 
+				while( ! $t->EOF)
+				{	
+
+					$nama_ttd = $t->fields['NAMA'];
+					$jabatan = $t->fields['JABATAN'];
+					
+					echo "<td class='border_table' >&nbsp;<br/>&nbsp;<br/>$nama_ttd<br /> <a>$jabatan</a></td>";
+					$t->movenext();
+				}
+
+				?>
 				<td class="border_table">&nbsp;<br/>&nbsp;<br/><?= $nama_sales ?> <br /> Sales / Agent</td>
 				<td class="border_table">&nbsp;<br/>&nbsp;<br/><?= $nama_pejabat ?><br/><?= $nama_jabatan?></td>
 				<td class="border_table">&nbsp;<br/><?= $pejabat_spp ?><br/><?= $jabatan_spp?></td>
