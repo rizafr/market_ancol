@@ -1,3 +1,4 @@
+<meta http-equiv="refresh" content="10" />
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">    
 <link rel="stylesheet" href="../config/css/antrian/bootstrap.css">
 <link rel="stylesheet" href="../config/css/antrian/frontend.css">
@@ -92,6 +93,7 @@ $obj->movenext();
 }
 
 ?>
+<input type="button" value="Reload Page" onClick="window.location.reload()">
 <div class="row">
     <div class="col-md-6">
         <table class="table" >					
