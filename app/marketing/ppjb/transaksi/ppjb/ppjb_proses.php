@@ -23,7 +23,8 @@ $tanggal_tt_pejabat		= (isset($_REQUEST['tgl3'])) ? clean($_REQUEST['tgl3']) : '
 $tanggal_penyerahan		= (isset($_REQUEST['tgl4'])) ? clean($_REQUEST['tgl4']) : '';
 $nama_pembeli			= (isset($_REQUEST['nama_pembeli'])) ? clean($_REQUEST['nama_pembeli']) : '';
 $nomor_arsip			= (isset($_REQUEST['no_arsip'])) ? clean($_REQUEST['no_arsip']) : '';
-$status_cetak			= (isset($_REQUEST['tercetak'])) ? clean($_REQUEST['tercetak']) : '0';
+$status_cetak			= (isset($_REQUEST['tercetak_ppjb'])) ? clean($_REQUEST['tercetak_ppjb']) : '0';
+$status_cetak_paijb		= (isset($_REQUEST['tercetak_paijb'])) ? clean($_REQUEST['tercetak_paijb']) : '0';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
@@ -50,12 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			INSERT INTO CS_PPJB (KODE_BLOK, TANGGAL,  
 			MASA_BANGUN, PROSEN_P_HAK, DAYA_LISTRIK, JENIS, ADDENDUM, CATATAN,
 			TANGGAL_PINJAM_PEMBELI, TANGGAL_TT_PEMBELI, TANGGAL_TT_PEJABAT, TANGGAL_PENYERAHAN,
-			STATUS_CETAK, NAMA_PEMBELI, NOMOR_ARSIP)
+			STATUS_CETAK, STATUS_CETAK_PAIJB, NAMA_PEMBELI, NOMOR_ARSIP)
 			
 			VALUES ('$id', CONVERT(DATETIME,'$tanggal',105),  
 			'$masa_bangun', '$prosen_p_hak', '$daya_listrik', '$jenis_ppjb', '$addendum', '$catatan',
 			CONVERT(DATETIME,'$tanggal_pinjam_pembeli',105), CONVERT(DATETIME,'$tanggal_tt_pembeli',105), CONVERT(DATETIME,'$tanggal_tt_pejabat',105), CONVERT(DATETIME,'$tanggal_penyerahan',105),
-			'$status_cetak', '$nama_pembeli', '$nomor_arsip')
+			'$status_cetak', '$status_cetak_paijb', '$nama_pembeli', '$nomor_arsip')
 			";
 			ex_false($conn->execute($query), $query);
 			
@@ -76,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			MASA_BANGUN = '$masa_bangun', PROSEN_P_HAK = '$prosen_p_hak', DAYA_LISTRIK = '$daya_listrik', JENIS = '$jenis_ppjb', ADDENDUM = '$addendum', 
 			CATATAN = '$catatan',
 			TANGGAL_PINJAM_PEMBELI = CONVERT(DATETIME,'$tanggal_pinjam_pembeli',105), TANGGAL_TT_PEMBELI = CONVERT(DATETIME,'$tanggal_tt_pembeli',105), TANGGAL_TT_PEJABAT = CONVERT(DATETIME,'$tanggal_tt_pejabat',105), TANGGAL_PENYERAHAN = CONVERT(DATETIME,'$tanggal_penyerahan',105),
-			STATUS_CETAK = '$status_cetak', NOMOR_ARSIP = '$nomor_arsip'			
+			STATUS_CETAK = '$status_cetak', STATUS_CETAK_PAIJB='$status_cetak_paijb', NOMOR_ARSIP = '$nomor_arsip'			
 			WHERE KODE_BLOK = '$id'
 			";			
 			ex_false($conn->execute($query), $query);
@@ -146,8 +147,20 @@ if ($act == 'Ubah')
 		LEFT JOIN KELURAHAN g ON z.KODE_KELURAHAN = g.KODE_KELURAHAN
 		LEFT JOIN KECAMATAN h ON z.KODE_KECAMATAN = h.KODE_KECAMATAN
 		LEFT JOIN USER_APPLICATIONS i ON z.OFFICER_OTORISASI = i.USER_ID
+		LETF JOIN REALISASI r ON r.KODE_BLOK = z.KODE_BLOK
 	WHERE a.KODE_BLOK = '$id'";
+
+	$query2 = "
+	SELECT P.KODE_BLOK, SUM(R.NILAI) AS JUMLAH
+	FROM
+	CS_PPJB P, REALISASI R
+	WHERE P.KODE_BLOK = R.KODE_BLOK AND
+	P.KODE_BLOK = '$id'
+	GROUP BY P.KODE_BLOK
+	";
+
 	$obj = $conn->execute($query);
+	$obj2 = $conn->execute($query2);
 	
 	//DATA PEMBELI
 	$kode_blok 			= $obj->fields['KODE_BLOK'];
@@ -166,7 +179,8 @@ if ($act == 'Ubah')
 	
 	$total_harga 		= $obj->fields['HARGA_TOTAL'];
 	$nilai_tanda_jadi	= to_money($obj->fields['TANDA_JADI']);
-	$sisa_pembayaran	= to_money(($total_harga) - $obj->fields['TANDA_JADI']);	
+	$sisa_pembayaran	= to_money(($total_harga) - $obj->fields['TANDA_JADI']);
+	$telah_bayar 		= to_money($obj2->fields['JUMLAH']);		
 
 	//DATA PPJB
 	$nomor 				= $obj->fields['NOMOR'];
@@ -208,8 +222,22 @@ if ($act == 'Ubah')
 		LEFT JOIN TIPE c ON b.KODE_TIPE = c.KODE_TIPE
 		LEFT JOIN HARGA_BANGUNAN e ON b.KODE_SK_BANGUNAN = e.KODE_SK
 		LEFT JOIN FAKTOR f ON b.KODE_FAKTOR = f.KODE_FAKTOR
+		LEFT JOIN REALISASI r ON r.KODE_BLOK = a.KODE_BLOK
+		LEFT JOIN CS_PPJB p ON p.KODE_BLOK = a.KODE_BLOK
+		LEFT JOIN USER_APPLICATIONS i ON p.OFFICER_OTORISASI = i.USER_ID
 	WHERE a.KODE_BLOK = '$id'";
+
+	$query2 = "
+	SELECT P.KODE_BLOK, SUM(R.NILAI) AS JUMLAH
+	FROM
+	CS_PPJB P, REALISASI R
+	WHERE P.KODE_BLOK = R.KODE_BLOK AND
+	P.KODE_BLOK = '$id'
+	GROUP BY P.KODE_BLOK
+	";
+
 	$obj = $conn->execute($query);
+	$obj2 = $conn->execute($query2);
 	
 	//DATA PEMBELI
 	$kode_blok 			= $obj->fields['KODE_BLOK'];
@@ -226,9 +254,33 @@ if ($act == 'Ubah')
 	$tipe_bangunan 		= $obj->fields['TIPE_BANGUNAN'];
 	$luas_bangunan 		= $obj->fields['LUAS_BANGUNAN'];
 	
+	//DATA PPJB
+	$nomor 				= $obj->fields['NOMOR'];
+	$tanggal			= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL'])));
+	$pembangunan1		= $obj->fields['MASA_BANGUN'];
+	$pembangunan2		= pembangunan($obj->fields['MASA_BANGUN']);
+	$prosentase1		= $obj->fields['PROSEN_P_HAK'];
+	$prosentase2		= prosentase($obj->fields['PROSEN_P_HAK']);
+	$daya_listrik		= $obj->fields['DAYA_LISTRIK'];
+	$jenis_ppjb			= $obj->fields['JENIS'];
+	$addendum			= $obj->fields['ADDENDUM'];
+	$catatan			= $obj->fields['CATATAN'];
+
+	//VERIFIKASI
+	$tanggal_ver		= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_OTORISASI'])));
+	$oleh				= $obj->fields['LOGIN_ID'];
+	
+	//TANDA TANGAN DAN PENYERAHAN PPJB
+	$tgl1				= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_PINJAM_PEMBELI'])));
+	$tgl2				= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_TT_PEMBELI'])));
+	$tgl3				= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_TT_PEJABAT'])));
+	$tgl4				= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_PENYERAHAN'])));
+	$status_cetak		= $obj->fields['STATUS_CETAK'];
+	$nomor_arsip		= $obj->fields['NOMOR_ARSIP'];
 	
 	$total_harga 		= $obj->fields['HARGA_TOTAL'];
 	$nilai_tanda_jadi	= to_money($obj->fields['TANDA_JADI']);
-	$sisa_pembayaran	= to_money(($total_harga) - $obj->fields['TANDA_JADI']);	
+	$sisa_pembayaran	= to_money(($total_harga) - $obj->fields['TANDA_JADI']);
+	$telah_bayar 		= to_money($obj2->fields['JUMLAH']);	
 } 
 ?>

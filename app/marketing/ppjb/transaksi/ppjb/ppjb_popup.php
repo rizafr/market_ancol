@@ -266,6 +266,14 @@ jQuery(function($) {
 	<td>Nilai Tanda Jadi</td></td><td>:</td>
 	<td><?php echo 'Rp. '.$nilai_tanda_jadi; ?></td>
 </tr>
+<tr>
+	<td>Pembayaran</td></td><td>:</td>
+	<td><?php echo 'Rp. '.$telah_bayar; ?></td>
+</tr>
+<tr>
+	<td>Sisa Pembayaran</td></td><td>:</td>
+	<td><?php echo 'Rp. '.$sisa_pembayaran; ?></td>
+</tr>
 </table>
 
 <div class="clear"><br></div>
@@ -346,28 +354,6 @@ jQuery(function($) {
 	</td>
 </tr>
 <tr>
-	<td>Addendum</td><td><input type="hidden" id="kode_jenis_addendum" value="<?php echo $addendum; ?>">:</td>
-	<td>
-	<select name="addendum" id="addendum">
-		<option value=""> -- Addendum -- </option>
-		<?php
-		$obj = $conn->execute("
-		SELECT *
-		FROM 
-			CS_JENIS_PPJB_ADDENDUM
-		");
-		while( ! $obj->EOF)
-		{
-			$ov = $obj->fields['KODE_JENIS'];
-			$on = $obj->fields['NAMA_JENIS'];
-			echo "<option value='$ov'" . is_selected($ov, $addendum) . "> $on </option>";
-			$obj->movenext();
-		}
-	?>
-	</select>
-	</td>
-</tr>
-<tr>
 	<td>Catatan</td><td>:</td>
 </tr>
 <tr>
@@ -420,10 +406,17 @@ jQuery(function($) {
 	<td><input type="text" name="tgl4" id="tgl4" size="15" class="apply dd-mm-yyyy" value="<?php echo $tgl4; ?>"></td>
 </tr>
 <tr>
-	<td>Tercetak</td></td><td>:</td>
+	<td>PPJB Tercetak</td></td><td>:</td>
 	<td>
-		<input type="radio" name="tercetak" id="tercetak_belum" value="0" <?php echo is_checked('0', $status_cetak); ?>> <label for="tercetak_belum">Belum</label>
-		<input type="radio" name="tercetak" id="tercetak_sudah" value="1" <?php echo is_checked('1', $status_cetak); ?>> <label for="tercetak_belum">Sudah</label>
+		<input type="radio" name="tercetak_ppjb" id="tercetak_belum_ppjb" value="0" <?php echo is_checked('0', $status_cetak); ?>> <label for="tercetak_belum_ppjb">Belum</label>
+		<input type="radio" name="tercetak_ppjb" id="tercetak_sudah_ppjb" value="1" <?php echo is_checked('1', $status_cetak); ?>> <label for="tercetak_belum_ppjb">Sudah</label>
+	</td>
+</tr>
+<tr>
+	<td>PAIJB Tercetak</td></td><td>:</td>
+	<td>
+		<input type="radio" name="tercetak_paijb" id="tercetak_belum_paijb" value="0" <?php echo is_checked('0', $status_cetak_paijb); ?>> <label for="tercetak_belum_paijb">Belum</label>
+		<input type="radio" name="tercetak_paijb" id="tercetak_sudah_paijb" value="1" <?php echo is_checked('1', $status_cetak_paijb); ?>> <label for="tercetak_belum_paijb">Sudah</label>
 	</td>
 </tr>
 <tr>
