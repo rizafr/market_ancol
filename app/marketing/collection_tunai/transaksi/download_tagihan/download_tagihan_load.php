@@ -113,8 +113,9 @@ $page_start = (($page_num-1) * $per_page);
 
 <table class="t-data w100">
 <tr>
-	<th class="w10">KODE BLOK</th>
-	<th class="w10">NO PELANGGAN</th>
+	<th class="w8">KODE BLOK</th>
+	<th class="w7">COSTUMER ID</th>
+	<th class="w7">VIRTUAL ACCOUNT</th>
 	<th class="w20">NAMA PELANGGAN</th>
 	<th class="w15">ANGSURAN</th>
 	<th class="w15">DENDA</th>
@@ -127,7 +128,7 @@ $page_start = (($page_num-1) * $per_page);
 if ($total_data > 0)
 {
 	$query = "
-	SELECT a.KODE_BLOK, b.NAMA_PEMBELI, a.NILAI, a.TANGGAL, ISNULL(b.NOMOR_CUSTOMER,'-') AS NO_CUSTOMER, b.TANDA_JADI
+	SELECT a.KODE_BLOK, b.COSTUMER_ID, b.NAMA_PEMBELI, a.NILAI, a.TANGGAL, ISNULL(b.NOMOR_CUSTOMER,'-') AS NO_CUSTOMER, b.TANDA_JADI
 	from RENCANA a JOIN SPP b
 	ON a.KODE_BLOK = b.KODE_BLOK
 	WHERE MONTH(TANGGAL) = $bln
@@ -150,6 +151,7 @@ if ($total_data > 0)
 		?>
 		<tr class="onclick" id="<?php echo $id; ?>">
 			<td class="text-center"><?php echo $obj->fields['KODE_BLOK']; ?></td>
+			<td class="text-center"><?php echo $obj->fields['COSTUMER_ID']; ?></td>
 			<td class="text-center"><?php echo $obj->fields['NO_CUSTOMER']; ?></td>
 			<td class="text-left"><?php echo $obj->fields['NAMA_PEMBELI']; ?></td>
 			

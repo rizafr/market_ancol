@@ -245,6 +245,9 @@ $query = "
 
 if ($act == 'Ubah')
 {
+	$query 			= "SELECT COUNT(*)+1 AS COUNT_RENCANA FROM RENCANA R JOIN KWITANSI K ON R.KODE_BLOK = K.KODE_BLOK WHERE R.KODE_BLOK = '$id' AND MONTH(K.TANGGAL) = MONTH(R.TANGGAL) AND YEAR(K.TANGGAL) = YEAR(R.TANGGAL) AND K.KODE_BAYAR = '4'";
+	$count_rencana  = $conn->Execute($query)->fields['COUNT_RENCANA']; 
+	
 	$query = "
 		SELECT * FROM KWITANSI a
 		LEFT JOIN STOK b ON a.KODE_BLOK = b.KODE_BLOK
