@@ -206,8 +206,8 @@ $t = $conn->execute("
 						<a id ="kata_no">No.</a>
 					</div>		
 				</td>
-				<td width="10%" align = "right"><img src="header_oseana.jpg" id = 'logo_seafront_gambar'/></td>
-				<td width="1%" align="right"><img src="header_ancol.jpg" id = 'logo_ancol_gambar'/></td>
+				<td width="10%" align = "right"><img src="../../../../images/header_oseana.jpg" id = 'logo_seafront_gambar'/></td>
+				<td width="1%" align="right"><img src="../../../../images/header_ancol.jpg" id = 'logo_ancol_gambar'/></td>
 			</tr>
 		</table>
 		<table border="0" width="100%" class = 'pad'>
@@ -397,7 +397,7 @@ $t = $conn->execute("
 				<td colspan="3">Jika ingin melakukan pembayaran untuk Unit 1 di Lantai 1</td>
 			</tr>
 			<tr>
-				<td colspan="3">Contoh : 016868800101</td>
+				<td colspan="3">Contoh : 016868880101</td>
 			</tr>
 			<tr>
 				<td colspan="3">Semua pembayaran hanya dapat dilakukan secara transfer ke rekening diatas</td>
@@ -495,7 +495,7 @@ $t = $conn->execute("
 
 		</a>
 	</table>
-	Pembayaran : <br />
+	Pembayaran : <?= $pola_bayar ?><br />
 	<table class="kata_profil pad_kpr ttd" id = 'table_kpr' width="55%" cellspacing="0" >
 		<tr>
 			<td width="15%" class="border_table">Keterangan</td>
