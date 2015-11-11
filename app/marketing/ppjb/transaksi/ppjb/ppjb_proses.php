@@ -179,8 +179,11 @@ if ($act == 'Ubah')
 	
 	$total_harga 		= $obj->fields['HARGA_TOTAL'];
 	$nilai_tanda_jadi	= to_money($obj->fields['TANDA_JADI']);
-	$sisa_pembayaran	= to_money(($total_harga) - $obj->fields['TANDA_JADI']);
-	$telah_bayar 		= to_money($obj2->fields['JUMLAH']);		
+	$telah_bayar 		= to_money($obj2->fields['JUMLAH']);
+	$sisa_pembayaran	= to_money(($total_harga) - $obj->fields['TANDA_JADI'] - $obj2->fields['JUMLAH']);	
+
+	$persentase_paijb   = (10/100)*$total_harga;
+	$persentase_ppjb	= (20/100)*$total_harga;		
 
 	//DATA PPJB
 	$nomor 				= $obj->fields['NOMOR'];
@@ -204,6 +207,7 @@ if ($act == 'Ubah')
 	$tgl3				= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_TT_PEJABAT'])));
 	$tgl4				= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_PENYERAHAN'])));
 	$status_cetak		= $obj->fields['STATUS_CETAK'];
+	$status_cetak_paijb = $obj->fields['STATUS_CETAK_PAIJB'];
 	$nomor_arsip		= $obj->fields['NOMOR_ARSIP'];
 	
 	$query = "SELECT COUNT(*) AS JML FROM CS_PPJB WHERE KODE_BLOK = '$id'";
@@ -276,11 +280,15 @@ if ($act == 'Ubah')
 	$tgl3				= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_TT_PEJABAT'])));
 	$tgl4				= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_PENYERAHAN'])));
 	$status_cetak		= $obj->fields['STATUS_CETAK'];
+	$status_cetak_paijb = $obj->fields['STATUS_CETAK_PAIJB'];
 	$nomor_arsip		= $obj->fields['NOMOR_ARSIP'];
 	
 	$total_harga 		= $obj->fields['HARGA_TOTAL'];
 	$nilai_tanda_jadi	= to_money($obj->fields['TANDA_JADI']);
-	$sisa_pembayaran	= to_money(($total_harga) - $obj->fields['TANDA_JADI']);
-	$telah_bayar 		= to_money($obj2->fields['JUMLAH']);	
+	$telah_bayar 		= to_money($obj2->fields['JUMLAH']);
+	$sisa_pembayaran	= to_money(($total_harga) - $obj->fields['TANDA_JADI'] - $obj2->fields['JUMLAH']);	
+
+	$persentase_paijb   = 0.1*$total_harga;
+	$persentase_ppjb	= 0.2*$total_harga;
 } 
 ?>

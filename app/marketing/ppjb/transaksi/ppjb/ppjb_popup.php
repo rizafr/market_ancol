@@ -11,7 +11,7 @@ require_once('ppjb_proses.php');
 <link type="text/css" href="../../../../../plugin/css/zebra/default.css" rel="stylesheet">
 
 <link type="text/css" href="../../../../../plugin/window/themes/default.css" rel="stylesheet">
-<link type="text/css" href="../../../../plugin/window/themes/mac_os_x.css" rel="stylesheet">
+<link type="text/css" href="../../../../../plugin/window/themes/mac_os_x.css" rel="stylesheet">
 
 <!-- JS -->
 <script type="text/javascript" src="../../../../../plugin/js/jquery-1.10.2.min.js"></script>
@@ -145,25 +145,19 @@ jQuery(function($) {
 		e.preventDefault();		
 		var kode_jenis_ppjb = $('#kode_jenis_ppjb').val();
 		var jenis_ppjb = $('#jenis_ppjb').val();
-		window.open(base_marketing + 'ppjb/transaksi/ppjb/ppjb_cetak.php?id=<?php echo $id; ?>&act=Ubah&kode_jenis_ppjb='+kode_jenis_ppjb+'&jenis_ppjb='+jenis_ppjb);		
+		var telah_bayar = <?php echo bigintval($telah_bayar); ?>;
+		var persentase_paijb = $('#persentase_paijb').val();
+		var persentase_ppjb = $('#persentase_ppjb').val();
+		var url = base_marketing + 'ppjb/transaksi/ppjb/pilih_cetak.php?id=<?php echo $id; ?>&act=Ubah&kode_jenis_ppjb='+kode_jenis_ppjb+'&jenis_ppjb='+jenis_ppjb+'&telah_bayar='+telah_bayar+'&persentase_paijb='+persentase_paijb+'&persentase_ppjb='+persentase_ppjb;
+		setPopup('Cetak PAIJB/PPJB', url, 260, 100);
 		return false;
 	});
+
 	//addendum
 	var addendum = $('#addendum').val();
 	if(addendum == ''){	
 		$('#addendum2').hide();
 	}
-	
-	// $('#addendum').on('change', function(e) {
-	// var addendum = $('#addendum').val();
-	//alert(addendum);
-		// if(addendum == ''){	
-			// $('#addendum2').hide();
-		// }else{
-			// $('#addendum2').show();
-		// }
-	// });
-	
 	
 		$('#addendum2').on('click', function(e) {
 			e.preventDefault();		
@@ -172,7 +166,6 @@ jQuery(function($) {
 			window.open(base_marketing + 'ppjb/transaksi/ppjb/addendum_cetak.php?id=<?php echo $id; ?>&act=Ubah&kode_jenis_addendum='+kode_jenis_addendum);		
 			return false;
 		});
-	
 	
 	$('#alamat').on('click', function(e) {
 		e.preventDefault();		
@@ -192,6 +185,27 @@ jQuery(function($) {
 		return false;
 	});
 });
+
+	function loadData(Jenis)
+	{
+		if (popup) { popup.close(); }
+		var data = jQuery('#form').serialize();
+		var jenis = jenis;
+		jQuery('#t-detail').load(base_marketing + 'ppjb/transaksi/ppjb/ppjb_popup.php', data);
+		
+		cekStatus(Jenis);
+		return false;
+	}
+
+	function cekStatus(jenis)
+	{
+		var jenis = jenis;
+		if(jenis == 'paijb'){
+			document.getElementById("tercetak_sudah_paijb").checked = true;
+		} else if(jenis == 'ppjb'){
+			document.getElementById("tercetak_sudah_ppjb").checked = true;	
+		}
+	}
 </script>
 </head>
 <body class="popup2">
@@ -427,7 +441,6 @@ jQuery(function($) {
 	<td class="td-action" colspan=3>
 		<input type="button" id="ttd" value=" Ttd ">
 		<input type="button" id="ppjb" value=" PPJB / PAIJB">
-		<input type="button" id="addendum2" value=" Addendum ">
 		<input type="button" id="lampiran" value=" Lampiran ">
 		<input type="button" id="alamat" value=" Alamat ">
 	</td>
@@ -444,6 +457,8 @@ jQuery(function($) {
 
 <input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
 <input type="hidden" name="act" id="act" value="<?php echo $act; ?>">
+<input type="hidden" name="persentase_paijb" id="persentase_paijb" value="<?php echo $persentase_paijb; ?>">
+<input type="hidden" name="persentase_ppjb" id="persentase_ppjb" value="<?php echo $persentase_ppjb; ?>">
 </form>
 
 </body>

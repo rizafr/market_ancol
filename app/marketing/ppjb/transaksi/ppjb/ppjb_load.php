@@ -77,6 +77,7 @@ if ($total_data > 0)
 		$NAMA_JENIS = (!isset($obj->fields['NAMA_JENIS']) || is_null($obj->fields['NAMA_JENIS'])) ? '' : $obj->fields['NAMA_JENIS']; 
 		$NOMOR = (!isset($obj->fields['NOMOR']) || is_null($obj->fields['NOMOR'])) ? '' : $obj->fields['NOMOR']; 
 		$STATUS_CETAK = $obj->fields['STATUS_CETAK'];
+		$STATUS_CETAK_PAIJB = $obj->fields['STATUS_CETAK_PAIJB'];
 		// if($NOMOR!=''){
 		// 	$STATUS="SUDAH PPJB";
 		// 	$cek="sudah";

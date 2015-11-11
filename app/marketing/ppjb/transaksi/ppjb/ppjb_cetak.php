@@ -1,11 +1,22 @@
 <?php
 	require_once('../../../../../config/config.php');
 	require_once('../../../../../config/terbilang.php');
-	require_once('ppjb_proses.php');
+	require_once('ppjb_proses.php');	
 	
 	$kode_jenis_ppjb	= (isset($_REQUEST['kode_jenis_ppjb'])) ? $_REQUEST['kode_jenis_ppjb'] : '';
 	$jenis_ppjb	= (isset($_REQUEST['jenis_ppjb'])) ? $_REQUEST['jenis_ppjb'] : '';
-	
+	$id		= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
+	$jenis  = (isset($_REQUEST['jenis'])) ? clean($_REQUEST['jenis']) : '';
+
+	$from_query = '';
+	if ($jenis == 'paijb')
+	{
+		$from_query .= " FROM CS_JENIS_PAIJB ";
+		$status .= " STATUS_CETAK_PAIJB ";
+	} else if($jenis == 'ppjb') {
+		$from_query .= " FROM CS_JENIS_PPJB ";
+		$status .= " STATUS_CETAK ";
+	}
 	//	query data pembeli
 	$query = "
 	SELECT *
@@ -28,7 +39,7 @@
 	SELECT KODE_JENIS
 	,NAMA_JENIS
 	,NAMA_FILE
-	FROM CS_JENIS_PPJB
+	$from_query
 	WHERE KODE_JENIS = '$kode_jenis_ppjb'
 	";
 	$obj = $conn->execute($query);
@@ -38,7 +49,12 @@
 	$NAMA_JENIS 			= $obj->fields['NAMA_JENIS'];
 	$NAMA_FILE 				= $obj->fields['NAMA_FILE'];
 	
-	
+	//query update status cetak PPJB
+	$query2 = "
+	UPDATE CS_PPJB SET $status='1' WHERE KODE_BLOK='$id';
+	";
+	$obj = $conn->execute($query2);
+
 	//Format Tanggal Berbahasa Indonesia 
 	
 	// Array Hari
@@ -113,7 +129,11 @@
 		
 		$path='E:\\';
 		
-		$nama_file= "PPJB ".$nama_template." ".$nama_pembeli." ". $tanggal . " " . $bulan . " " . $tahun .".doc";
+		if($jenis == 'paijb'){
+			$nama_file= "PAIJB ".$nama_template." ".$nama_pembeli." ". $tanggal . " " . $bulan . " " . $tahun .".doc";
+		} else if($jenis == 'ppjb'){
+			$nama_file= "PPJB ".$nama_template." ".$nama_pembeli." ". $tanggal . " " . $bulan . " " . $tahun .".doc";
+		}
 		// $document->save('E:\\andonnikahTemplate.docx');
 		//$document->save('E:\\'.$nama_file);
 		

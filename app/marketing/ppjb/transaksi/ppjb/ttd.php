@@ -18,6 +18,9 @@ $id		= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
 <link type="text/css" href="../../../../../config/css/style.css" rel="stylesheet">
 <link type="text/css" href="../../../../../plugin/css/zebra/default.css" rel="stylesheet">
 
+<link type="text/css" href="../../../../../plugin/window/themes/default.css" rel="stylesheet">
+<link type="text/css" href="../../../../../plugin/window/themes/mac_os_x.css" rel="stylesheet">
+
 <!-- JS -->
 <script type="text/javascript" src="../../../../../plugin/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="../../../../../plugin/js/jquery-migrate-1.2.1.min.js"></script>
@@ -25,6 +28,9 @@ $id		= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
 <script type="text/javascript" src="../../../../../plugin/js/keymaster.js"></script>
 <script type="text/javascript" src="../../../../../plugin/js/zebra_datepicker.js"></script>
 <script type="text/javascript" src="../../../../../config/js/main.js"></script>
+
+<script type="text/javascript" src="../../../../../plugin/window/javascripts/prototype.js"></script>
+<script type="text/javascript" src="../../../../../plugin/window/javascripts/window.js"></script>
 <script type="text/javascript">
 jQuery(function($) {	
 	$('#nama').inputmask('varchar', { repeat: '30' });
