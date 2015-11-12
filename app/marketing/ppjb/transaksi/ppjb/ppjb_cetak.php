@@ -95,8 +95,13 @@
 		$document->setValue('tahun',$tahun);
 		$document->setValue('tahun_terbilang',$bilangan -> eja($tahun));
 		$document->setValue('nama_pembeli',$nama_pembeli);
+		$document->setValue('no_identitas',$no_identitas);
 		$document->setValue('alamat',$alamat);
-		$document->setValue('NAMA_PEJABAT',$PEJABAT_PPJB);
+		$document->setValue('telp1',$tlp1);
+		$document->setValue('telp3',$tlp3);
+
+		$document->setValue('NAMA_PEJABAT',$NAMA_PEJABAT);
+		$document->setValue('NAMA_JABATAN',$NAMA_JABATAN);
 		$document->setValue('PEJABAT_PPJB',$PEJABAT_PPJB);
 		$document->setValue('JABATAN_PPJB',$JABATAN_PPJB);
 		$document->setValue('NAMA_PT',$NAMA_PT);
@@ -133,10 +138,7 @@
 			$nama_file= "PAIJB ".$nama_template." ".$nama_pembeli." ". $tanggal . " " . $bulan . " " . $tahun .".doc";
 		} else if($jenis == 'ppjb'){
 			$nama_file= "PPJB ".$nama_template." ".$nama_pembeli." ". $tanggal . " " . $bulan . " " . $tahun .".doc";
-		}
-		// $document->save('E:\\andonnikahTemplate.docx');
-		//$document->save('E:\\'.$nama_file);
-		
+		}		
 		
 		// At least write the document to webspace:
 		$objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
@@ -156,8 +158,6 @@
 		flush();
 		readfile($temp_file); // or echo file_get_contents($temp_file);
 		unlink($temp_file);  // remove temp file
-		
-		
 		
 		exit;
 		

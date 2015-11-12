@@ -170,6 +170,7 @@ if ($act == 'Ubah')
 	$tlp1 				= $obj->fields['TELP_RUMAH'];
 	$tlp2 				= $obj->fields['TELP_KANTOR'];
 	$tlp3 				= $obj->fields['TELP_LAIN'];
+	$no_identitas		= $obj->fields['NO_IDENTITAS'];
 	
 	//DATA SPP
 	$tanggal_spp		= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_SPP'])));
@@ -251,6 +252,7 @@ if ($act == 'Ubah')
 	$tlp1 				= $obj->fields['TELP_RUMAH'];
 	$tlp2 				= $obj->fields['TELP_KANTOR'];
 	$tlp3 				= $obj->fields['TELP_LAIN'];
+	$no_identitas		= $obj->fields['NO_IDENTITAS'];
 	
 	//DATA SPP
 	$tanggal_spp		= date("d-m-Y", strtotime($obj->fields['TANGGAL_SPP']));
