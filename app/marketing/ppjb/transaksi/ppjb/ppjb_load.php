@@ -61,7 +61,7 @@ $page_start = (($page_num-1) * $per_page);
 if ($total_data > 0)
 {	
 	$query = "
-			SELECT a.KODE_BLOK, a.NAMA_PEMBELI,b.NOMOR, b.TANGGAL, c.NAMA_JENIS, b.STATUS_CETAK, b.STATUS_CETAK_PAIJB
+			SELECT a.KODE_BLOK, a.NAMA_PEMBELI, b.NOMOR, b.TANGGAL, c.NAMA_JENIS, b.STATUS_CETAK, b.STATUS_CETAK_PAIJB
 			FROM 
 				  SPP a
 			LEFT OUTER  JOIN CS_PPJB b ON a.KODE_BLOK = b.KODE_BLOK

@@ -147,7 +147,7 @@ if ($act == 'Ubah')
 		LEFT JOIN KELURAHAN g ON z.KODE_KELURAHAN = g.KODE_KELURAHAN
 		LEFT JOIN KECAMATAN h ON z.KODE_KECAMATAN = h.KODE_KECAMATAN
 		LEFT JOIN USER_APPLICATIONS i ON z.OFFICER_OTORISASI = i.USER_ID
-		LETF JOIN REALISASI r ON r.KODE_BLOK = z.KODE_BLOK
+		LEFT JOIN REALISASI r ON r.KODE_BLOK = z.KODE_BLOK
 	WHERE a.KODE_BLOK = '$id'";
 
 	$query2 = "
@@ -170,6 +170,7 @@ if ($act == 'Ubah')
 	$tlp1 				= $obj->fields['TELP_RUMAH'];
 	$tlp2 				= $obj->fields['TELP_KANTOR'];
 	$tlp3 				= $obj->fields['TELP_LAIN'];
+	$no_identitas		= $obj->fields['NO_IDENTITAS'];
 	
 	//DATA SPP
 	$tanggal_spp		= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL_SPP'])));
@@ -251,6 +252,7 @@ if ($act == 'Ubah')
 	$tlp1 				= $obj->fields['TELP_RUMAH'];
 	$tlp2 				= $obj->fields['TELP_KANTOR'];
 	$tlp3 				= $obj->fields['TELP_LAIN'];
+	$no_identitas		= $obj->fields['NO_IDENTITAS'];
 	
 	//DATA SPP
 	$tanggal_spp		= date("d-m-Y", strtotime($obj->fields['TANGGAL_SPP']));

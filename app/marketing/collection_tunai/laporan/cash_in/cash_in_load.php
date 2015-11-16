@@ -69,7 +69,7 @@ $array_bulan[0]		= 'Desember';
 $a	= 0;
 while($a <= $selisih)
 {
-	$next_bulan 	= $startMonth + $a +1;
+	$next_bulan 	= $startMonth + $a;
 	$next_tahun		= $startYear;
 	if($next_bulan > 12)
 	{
