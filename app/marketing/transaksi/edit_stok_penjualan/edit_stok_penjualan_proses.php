@@ -9,6 +9,7 @@ $id = (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
 $jenis = (isset($_REQUEST['jenis'])) ? clean($_REQUEST['jenis']) : '';
 $kode_sk_sebelumnya = (isset($_REQUEST['kode_sk_sebelumnya'])) ? clean($_REQUEST['kode_sk_sebelumnya']) : '';
 
+$no_va			= (isset($_REQUEST['no_va'])) ? clean($_REQUEST['no_va']) : '';
 $kode_blok		= (isset($_REQUEST['kode_blok'])) ? clean($_REQUEST['kode_blok']) : '';
 $kode_desa		= (isset($_REQUEST['kode_desa'])) ? clean($_REQUEST['kode_desa']) : '';
 $kode_lokasi	= (isset($_REQUEST['kode_lokasi'])) ? clean($_REQUEST['kode_lokasi']) : '';
@@ -16,7 +17,6 @@ $kode_unit		= (isset($_REQUEST['kode_unit'])) ? clean($_REQUEST['kode_unit']) : 
 $kode_sk_tanah	= (isset($_REQUEST['kode_sk_tanah'])) ? clean($_REQUEST['kode_sk_tanah']) : '';
 $kode_faktor	= (isset($_REQUEST['kode_faktor'])) ? clean($_REQUEST['kode_faktor']) : '';
 $kode_tipe		= (isset($_REQUEST['kode_tipe'])) ? clean($_REQUEST['kode_tipe']) : '';
-$kode_sk = (isset($_REQUEST['kode_sk'])) ? clean($_REQUEST['kode_sk']) : '';
 $kode_penjualan	= (isset($_REQUEST['kode_penjualan'])) ? clean($_REQUEST['kode_penjualan']) : '';
 
 $class					= (isset($_REQUEST['class'])) ? clean($_REQUEST['class']) : '';
@@ -32,6 +32,14 @@ $ppn_tanah		= (isset($_REQUEST['ppn_tanah'])) ? to_decimal($_REQUEST['ppn_tanah'
 $luas_bangunan	= (isset($_REQUEST['luas_bangunan'])) ? to_decimal($_REQUEST['luas_bangunan']) : '0';
 $disc_bangunan	= (isset($_REQUEST['disc_bangunan'])) ? to_decimal($_REQUEST['disc_bangunan'], 16) : '0';
 $ppn_bangunan	= (isset($_REQUEST['ppn_bangunan'])) ? to_decimal($_REQUEST['ppn_bangunan']) : '0';
+
+// HARGA DI TABEL SK
+$kode_sk	= (isset($_REQUEST['kode_sk'])) ? ($_REQUEST['kode_sk']) : '';;
+$harga_cash_keras	= (isset($_REQUEST['harga_cash_keras'])) ? bigintval($_REQUEST['harga_cash_keras']) : '0';;
+$CB36X	=(isset($_REQUEST['harga_CB36X'])) ? bigintval($_REQUEST['harga_CB36X']) : '0';;
+$CB48X	= (isset($_REQUEST['harga_CB48X'])) ? bigintval($_REQUEST['harga_CB48X']) : '0';;
+$KPA24X	=(isset($_REQUEST['harga_KPA24X'])) ? bigintval($_REQUEST['harga_KPA24X']) : '0';;
+$KPA36X	=(isset($_REQUEST['harga_KPA36X'])) ? bigintval($_REQUEST['harga_KPA36X']) : '0';;
 
 $nama_desa			= '';
 $lokasi				= '';
@@ -100,15 +108,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			
 			$query = "
 			UPDATE STOK 
-			SET KODE_SK = '$kode_sk', 
-			
-			WHERE
-			
+			SET NO_VA = '$no_va',
+			KODE_BLOK = '$kode_blok', 
+			KODE_UNIT = '$kode_unit', 
+			KODE_LOKASI = '$kode_lokasi', 
+			KODE_TIPE = '$kode_tipe', 
+			KODE_SK = '$kode_sk', 
+			KODE_PENJUALAN = '$kode_penjualan', 				
+			LUAS_BANGUNAN = '$luas_bangunan'
+			WHERE			
 			KODE_BLOK = '$id'
 			";
 			ex_false($conn->Execute($query), $query);
+
+			$query = "
+			UPDATE HARGA_SK 
+			SET 
+				HARGA_CASH_KERAS = '$harga_cash_keras',
+				CB36X = '$CB36X',
+				CB48X = '$CB48X',
+				KPA24X = '$KPA24X',
+				KPA36X = '$KPA36X'
+			WHERE
+				KODE_SK = '$kode_sk' 
+				AND KODE_BLOK = '$id'
+			";
+			ex_false($conn->Execute($query), $query);
 			
-			$msg = 'Data persediaan awal berhasil diubah.';
+			$msg = 'Data siap jual berhasil diubah.';
 		}
 		elseif ($act == 'Ubah_SK') # Proses Ubah
 		{
@@ -125,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				UPDATE STOK 
 				SET KODE_SK = '$kode_sk' 
 				WHERE
-				KODE_BLOK = '$kode_sk_sebelumnya' AND TERJUAL = '0'
+				KODE_SK = '$kode_sk_sebelumnya' AND TERJUAL = '0'
 				";
 			}
 			

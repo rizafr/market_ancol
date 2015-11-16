@@ -75,7 +75,7 @@ function get_kode_sk_bangunan() {
 <tr>
 	<td>SK Baru</td><td>:</td>
 <td>
-		<input type="text" name="kode_sk_bangunan" id="kode_sk_bangunan" size="10" value="<?php echo $kode_sk_bangunan; ?>">
+		<input type="text" name="kode_sk" id="kode_sk" size="10" value="<?php echo $kode_sk; ?>">
 		<button onclick="return get_kode_sk_bangunan()"  name="btn_sk_bangunan" id="btn_sk_bangunan"> > </button>
 	</td>
 </tr>

@@ -32,7 +32,7 @@ require_once('../../../../../config/config.php');
 			$('#no_va').inputmask('mask', { repeat: '15', mask : '9', groupSeparator : '', placeholder : '' });
 			$('#luas_tanah, #luas_bangunan').inputmask('numericDesc', {iMax:10, dMax:2});
 			$('#harga_tanah_tmp, #harga_tanah_total,#harga_ppn_tanah, #harga_disc_tanah, #harga_fs_tanah,#total_harga').inputmask('numericDesc', {iMax:10, dMax:16});
-			$('#harga_bangunan_tmp, #harga_bangunan_total,#harga_ppn_bangunan, #harga_disc_bangunan, #harga_fs_bangunan').inputmask('numericDesc', {iMax:10, dMax:16});
+			$('#harga_cash_keras, #harga_CB36X,#harga_CB48X, #harga_KPA24X, #harga_KPA36X').inputmask('numericDesc', {iMax:10, dMax:16});
 			$('#disc_tanah, #disc_bangunan').inputmask('numericDesc', {iMax:4, dMax:12});
 			$('#ppn_tanah, #ppn_bangunan').inputmask('numericDesc', {iMax:3, dMax:2});
 
@@ -194,31 +194,31 @@ function conv(x){
 			<tr>
 				<td>Cash Keras</td><td>:</td>
 				<td>
-					<input type="text" id="harga_cash_keras" class="text-right" size="15" value="<?php if(isset($harga_cash_keras)){echo to_money($harga_cash_keras);}else{echo '0';} ?>" readonly >
+					<input type="text" id="harga_cash_keras" name="harga_cash_keras" class="text-right" size="15" value="<?php if(isset($harga_cash_keras)){echo to_money($harga_cash_keras);}else{echo '0';} ?>" >
 				</td>
 			</tr>
 			<tr>
 				<td>CB36X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_CB36X" class="text-right" size="15" value="<?php if(isset($CB36X)){echo to_money($CB36X);}else{echo '0';} ?>" readonly >
+					<input type="text" id="harga_CB36X" name="harga_CB36X" class="text-right" size="15" value="<?php if(isset($CB36X)){echo to_money($CB36X);}else{echo '0';} ?>" >
 				</td>
 			</tr>
 			<tr>
 				<td>CB48X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_CB48X" class="text-right" size="15" value="<?php if(isset($CB48X)){echo to_money($CB48X);}else{echo '0';} ?>" readonly>
+					<input type="text" id="harga_CB48X" name="harga_CB48X" class="text-right" size="15" value="<?php if(isset($CB48X)){echo to_money($CB48X);}else{echo '0';} ?>" >
 				</td>
 			</tr>
 			<tr>
 				<td>KPA24X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_KPA24X" class="text-right" size="15" value="<?php if(isset($KPA24X)){echo to_money($KPA24X);}else{echo '0';} ?>" readonly >
+					<input type="text" id="harga_KPA24X" name="harga_KPA24X" class="text-right" size="15" value="<?php if(isset($KPA24X)){echo to_money($KPA24X);}else{echo '0';} ?>" >
 				</td>
 			</tr>
 			<tr>
 				<td>KPA36X</td><td>:</td>
 				<td>
-					<input type="text" id="harga_KPA36X" class="text-right" size="15" value="<?php if(isset($KPA36X)){echo to_money($KPA36X);}else{echo '0';} ?>" readonly>
+					<input type="text" id="harga_KPA36X" name="harga_KPA36X" class="text-right" size="15" value="<?php if(isset($KPA36X)){echo to_money($KPA36X);}else{echo '0';} ?>">
 				</td>
 			</tr>
 				<td>Jenis Penjualan</td><td>:</td>

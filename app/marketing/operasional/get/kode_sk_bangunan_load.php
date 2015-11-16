@@ -117,11 +117,11 @@
 					?>
 					<tr class="onclick" 
 					data-kode_sk="<?php echo $obj->fields['KODE_SK']; ?>"
-					data-harga_cash_keras="<?php echo to_money($obj->fields['HARGA_CASH_KERAS'],2); ?>"
-					data-harga="<?php echo to_money($obj->fields['CB36X'],2); ?>"
-					data-harga2="<?php echo to_money($obj->fields['CB48X'],2); ?>"
-					data-harga3="<?php echo to_money($obj->fields['KPA24X'],2); ?>"
-					data-harga4="<?php echo to_money($obj->fields['KPA36X'],2); ?>"
+					data-harga_cash_keras="<?php echo bigintval($obj->fields['HARGA_CASH_KERAS']); ?>"
+					data-harga="<?php echo bigintval($obj->fields['CB36X']); ?>"
+					data-harga2="<?php echo bigintval($obj->fields['CB48X']); ?>"
+					data-harga3="<?php echo bigintval($obj->fields['KPA24X']); ?>"
+					data-harga4="<?php echo bigintval($obj->fields['KPA36X']); ?>"
 					>
 						<td><?php echo $obj->fields['KODE_SK']?></td>
 						<td><?php echo date("d-m-Y", strtotime($obj->fields['TANGGAL'])); ?></td>

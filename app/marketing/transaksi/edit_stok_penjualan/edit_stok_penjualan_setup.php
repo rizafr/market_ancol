@@ -1,7 +1,6 @@
 <div class="title-page">STOK SIAP JUAL</div>
 <?php
 	$kode_sk = (isset($_REQUEST['kode_sk'])) ? clean($_REQUEST['kode_sk']) : '';
-
 ?>
 
 <form name="form" id="form" method="post">
@@ -11,7 +10,7 @@
 	<td>
 		<select name="s_opf1" id="s_opf1" class="auto">
 			<option value="s.KODE_BLOK"> KODE BLOK </option>
-			<option value="s.KODE_SK"> HARGA SK </option>
+			<option value="s.KODE_SK"> KODE SK HARGA </option>
 		</select>
 		<input type="text" name="s_opv1" id="s_opv1" class="apply" value="">
 	</td>
@@ -82,7 +81,7 @@ jQuery(function($) {
 				alert('Pilih SK Harga Yang Akan Ditampilkan');
 			}
 			else{
-			alert($('#kode_sk').val());
+			//alert($('#kode_sk').val());
 			loadData();
 			}
 		}

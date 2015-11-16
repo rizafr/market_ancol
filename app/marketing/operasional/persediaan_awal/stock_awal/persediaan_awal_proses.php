@@ -33,6 +33,19 @@ $luas_bangunan	= (isset($_REQUEST['luas_bangunan'])) ? to_decimal($_REQUEST['lua
 $disc_bangunan	= (isset($_REQUEST['disc_bangunan'])) ? to_decimal($_REQUEST['disc_bangunan'], 16) : '0';
 $ppn_bangunan	= (isset($_REQUEST['ppn_bangunan'])) ? to_decimal($_REQUEST['ppn_bangunan']) : '0';
 
+
+// HARGA DI TABEL SK
+$kode_sk	= (isset($_REQUEST['kode_sk'])) ? ($_REQUEST['kode_sk']) : '';;
+$harga_cash_keras	= (isset($_REQUEST['harga_cash_keras'])) ? bigintval($_REQUEST['harga_cash_keras']) : '0';;
+$CB36X	=(isset($_REQUEST['harga_CB36X'])) ? bigintval($_REQUEST['harga_CB36X']) : '0';;
+$CB48X	= (isset($_REQUEST['harga_CB48X'])) ? bigintval($_REQUEST['harga_CB48X']) : '0';;
+$KPA24X	=(isset($_REQUEST['harga_KPA24X'])) ? bigintval($_REQUEST['harga_KPA24X']) : '0';;
+$KPA36X	=(isset($_REQUEST['harga_KPA36X'])) ? bigintval($_REQUEST['harga_KPA36X']) : '0';;
+
+
+
+
+
 $lokasi				= '';
 $jenis_unit			= '';
 $harga_tanah_sk		= '';
@@ -141,13 +154,25 @@ $msg = 'Data persediaan awal berhasil ditambah.';
 			KODE_SK = '$kode_sk', 
 			KODE_PENJUALAN = '$kode_penjualan', 				
 			LUAS_BANGUNAN = '$luas_bangunan'
-			
-			
-			WHERE
-			
+			WHERE			
 			KODE_BLOK = '$id'
 			";
 			ex_false($conn->Execute($query), $query);
+
+			$query = "
+			UPDATE HARGA_SK 
+			SET 
+				HARGA_CASH_KERAS = '$harga_cash_keras',
+				CB36X = '$CB36X',
+				CB48X = '$CB48X',
+				KPA24X = '$KPA24X',
+				KPA36X = '$KPA36X'
+			WHERE
+				KODE_SK = '$kode_sk' 
+				AND KODE_BLOK = '$id'
+			";
+			ex_false($conn->Execute($query), $query);
+			
 			
 			$msg = 'Data persediaan awal  berhasil diubah.';
 		}

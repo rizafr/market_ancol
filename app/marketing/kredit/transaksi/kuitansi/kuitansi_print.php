@@ -148,7 +148,10 @@ ex_false($conn->execute($query), $query);
 <body onload="window.print()">
 	<div id = 'page'>
 		<table width="100%" border="0">
-
+			 <tr>
+                    <td width="90%" colspan="2"><div id = 'logo_ancol'><img src="../../../../../images/header_kiri.jpg" id = "logo_ancol_gambar"/></div></td>
+                    <td><div id = 'logo_seafront'><img src="../../../../../images/header_kanan.jpg" id = "logo_seafront_gambar"/></div></td>
+              </tr>
 			<tr>
 				<td colspan="2"></td>
 				<td><div id = 'id_kwitansi'><a>No. <?php echo $id; ?></a></div></td>

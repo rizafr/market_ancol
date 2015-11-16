@@ -168,14 +168,14 @@ function showPopupUpload(act, id) {
 
 function showPopup1(act, id) {
 	var url = this_base + 'stock_awal/persediaan_awal_popup.php?act=' + act + '&id=' + id;
-	setPopup(act + ' Persediaan Awal', url, 600, 600);
+	setPopup(act + ' Persediaan Awal', url, 700, 600);
 	return false;
 }
 
 //Button popup & Tutup reserve
 function showPopup2(act, id) {
 	var url = this_base + 'siap_jual/informasi_persediaan_popup.php?act=' + act + '&id=' + id;
-	setPopup('Informasi Persediaan', url, 600, 500);
+	setPopup('Informasi Persediaan', url, 700, 600);
 	return false;
 }
 

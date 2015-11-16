@@ -30,31 +30,32 @@ if($s_opf1 == 's.KODE_SK')
 # Pagination
 $query = "
 SELECT  
-			s.NO_VA,
-			s.KODE_BLOK,
-			s.LUAS_BANGUNAN,
-			s.STATUS_STOK,
-			s.TERJUAL,
-			t.TIPE_BANGUNAN,
-			hs.HARGA_CASH_KERAS,
-			hs.CB36X,
-			hs.CB48X,
-			hs.KPA24X,
-			hs.KPA36X, 
-			LOKASI, 
-			JENIS_UNIT
-		FROM 
-		STOK s
-		LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
-		LEFT JOIN HARGA_SK hs ON s.KODE_SK = hs.KODE_SK AND s.KODE_BLOK = hs.KODE_BLOK
-		LEFT JOIN LOKASI h ON s.KODE_LOKASI = h.KODE_LOKASI
-		LEFT JOIN JENIS_UNIT i ON s.KODE_UNIT = i.KODE_UNIT
-		WHERE TERJUAL = '0'
-		$query_search
-		ORDER BY s.KODE_BLOK ASC
+s.NO_VA,
+s.KODE_BLOK,
+s.LUAS_BANGUNAN,
+s.KODE_SK,
+s.STATUS_STOK,
+s.TERJUAL,
+t.TIPE_BANGUNAN,
+hs.HARGA_CASH_KERAS,
+hs.CB36X,
+hs.CB48X,
+hs.KPA24X,
+hs.KPA36X, 
+LOKASI, 
+JENIS_UNIT
+FROM 
+STOK s
+LEFT JOIN TIPE t ON s.KODE_TIPE = t.KODE_TIPE
+LEFT JOIN HARGA_SK hs ON s.KODE_SK = hs.KODE_SK AND s.KODE_BLOK = hs.KODE_BLOK
+LEFT JOIN LOKASI h ON s.KODE_LOKASI = h.KODE_LOKASI
+LEFT JOIN JENIS_UNIT i ON s.KODE_UNIT = i.KODE_UNIT
+WHERE TERJUAL = '0'
+$query_search
+ORDER BY s.KODE_BLOK ASC
 ";
 $total_data = $conn->Execute($query);
-	$total_data = $total_data->RecordCount();
+$total_data = $total_data->RecordCount();
 $total_page = ceil($total_data/$per_page);
 
 $page_num = ($page_num > $total_page) ? $total_page : $page_num;
@@ -63,19 +64,19 @@ $page_start = (($page_num-1) * $per_page);
 ?>
 
 <table id="pagging-1" class="t-control w90">
-<tr>
-	<td class="text-right">
-		<input type="button" id="prev_page" value=" < ">
-		Hal : <input type="text" name="page_num" size="5" class="page_num apply text-center" value="<?php echo $page_num; ?>">
-		Dari <?php echo $total_page ?> 
-		<input type="hidden" id="total_page" value="<?php echo $total_page; ?>">
-		<input type="button" id="next_page" value=" > ">
-	</td>
-</tr>
+	<tr>
+		<td class="text-right">
+			<input type="button" id="prev_page" value=" < ">
+			Hal : <input type="text" name="page_num" size="5" class="page_num apply text-center" value="<?php echo $page_num; ?>">
+			Dari <?php echo $total_page ?> 
+			<input type="hidden" id="total_page" value="<?php echo $total_page; ?>">
+			<input type="button" id="next_page" value=" > ">
+		</td>
+	</tr>
 </table>
 
 <table class="t-data w90">
-<tr>
+	<tr>
 		<th rowspan="2"><input type="checkbox" id="cb_all"></th>
 		<th rowspan="2" >VIRTUAL ACCOUNT</th>
 		<th rowspan="2">KODE BLOK</th>
@@ -85,6 +86,7 @@ $page_start = (($page_num-1) * $per_page);
 		<th rowspan="2">TIPE</th>
 		<th rowspan="2">CASH KERAS</th>
 		<th colspan="4">HARGA (Incl PPN)</th>
+		<th rowspan="2">KODE SK</th>
 	</tr>
 	<tr>
 
@@ -95,18 +97,18 @@ $page_start = (($page_num-1) * $per_page);
 		
 	</tr>
 
-<?php
-if ($total_data > 0)
-{
-	
-	$obj = $conn->SelectLimit($query, $per_page, $page_start);
-	
-	while( ! $obj->EOF)
+	<?php
+	if ($total_data > 0)
 	{
-		$id = $obj->fields['KODE_BLOK'];
-		?>
-		<tr class="onclick" id="<?php echo $id; ?>"> 
-			<td class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
+
+		$obj = $conn->SelectLimit($query, $per_page, $page_start);
+
+		while( ! $obj->EOF)
+		{
+			$id = $obj->fields['KODE_BLOK'];
+			?>
+			<tr class="onclick" id="<?php echo $id; ?>"> 
+				<td class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
 				<td><?php echo $obj->fields['NO_VA']; ?></td>
 				<td class="text-center"><?php echo $id; ?></td>
 				<td class="text-center"><?php echo to_decimal($obj->fields['LUAS_BANGUNAN']); ?></td>
@@ -118,21 +120,22 @@ if ($total_data > 0)
 				<td class="text-right"><?php echo to_money($obj->fields['CB48X']); ?></td>
 				<td class="text-right"><?php echo to_money($obj->fields['KPA24X']); ?></td>
 				<td class="text-right"><?php echo to_money($obj->fields['KPA36X']); ?></td>
-		</tr>
-		<?php
-		$obj->movenext();
+				<td><?php echo $obj->fields['KODE_SK']; ?></td>
+			</tr>
+			<?php
+			$obj->movenext();
+		}
 	}
-}
-?>
+	?>
 </table>
 
 <script type="text/javascript">
-jQuery(function($) {
-	$('#total-data').html('<?php echo $total_data; ?>');
-	$('#per_page').val('<?php echo $per_page; ?>');
-	$('.page_num').inputmask('integer');
-	t_strip('.t-data');
-});
+	jQuery(function($) {
+		$('#total-data').html('<?php echo $total_data; ?>');
+		$('#per_page').val('<?php echo $per_page; ?>');
+		$('.page_num').inputmask('integer');
+		t_strip('.t-data');
+	});
 </script>
 
 <?php

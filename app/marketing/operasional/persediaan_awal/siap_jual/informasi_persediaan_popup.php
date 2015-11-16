@@ -175,26 +175,24 @@ function hitung_bangunan(){
 		<table class="t-popup wauto f-left">
 			<tr>
 				<td width="120"><b>Kode Blok</td><td>:</b></td>
-				<td><input type="text" name="kode_blok" id="kode_blok" size="25" value="<?php if(isset($kode_blok)){echo $kode_blok;}else{echo '-';} ?>"></td>
+				<td><input type="text" name="kode_blok" id="kode_blok" size="25" value="<?php if(isset($kode_blok)){echo $kode_blok;}else{echo '-';} ?>" readonly></td>
 			</tr>
 			<tr>
 				<td width="120"><b>Nomor VA</td><td>:</b></td>
-				<td><input type="text" name="no_va" id="no_va" size="25" value="<?php if(isset($no_va)){echo $no_va;}else{echo '-';} ?>"></td>
+				<td><input type="text" name="no_va" id="no_va" size="25" value="<?php if(isset($no_va)){echo $no_va;}else{echo '-';} ?>" readonly></td>
 			</tr>
 			<tr>
 				<td>Tower</td><td>:</td>
 				<td>
-					<input type="hidden" name="kode_lokasi" id="kode_lokasi" size="1" value="<?php if(isset($kode_lokasi)){echo $kode_lokasi;}else{echo '-';} ?>">
-					<button onclick="return get_kode_lokasi()"> > </button>
-					<input type="text" id="lokasi" size="25" value="<?php if(isset($lokasi)){echo $lokasi;}else{echo '-';} ?>">
+					<input type="hidden" name="kode_lokasi" id="kode_lokasi" size="1" value="<?php if(isset($kode_lokasi)){echo $kode_lokasi;}else{echo '-';} ?>" readonly>
+					<input type="text" id="lokasi" size="25" value="<?php if(isset($lokasi)){echo $lokasi;}else{echo '-';} ?>" readonly>
 				</td>
 			</tr>
 			<tr>
 				<td>Jenis Unit</td><td>:</td>
 				<td>
 					<input type="hidden" name="kode_unit" id="kode_unit" size="1" value="<?php if(isset($kode_unit)){echo $kode_unit;}else{echo '-';} ?>">
-					<button onclick="return get_kode_unit()"> > </button>
-					<input type="text" id="jenis_unit" size="25" value="<?php if(isset($jenis_unit)){echo $jenis_unit;}else{echo '-';} ?>">
+					<input type="text" id="jenis_unit" size="25" value="<?php if(isset($jenis_unit)){echo $jenis_unit;}else{echo '-';} ?>" readonly>
 				</td>
 			</tr>
 
@@ -202,22 +200,20 @@ function hitung_bangunan(){
 				<td>Tipe</td><td>:</td>
 				<td>
 					<input type="hidden" name="kode_tipe" id="kode_tipe" size="1" value="<?php if(isset($kode_tipe)){echo $kode_tipe;}else{echo '-';} ?>">
-					<button onclick="return get_kode_tipe()"> > </button>
-					<input type="text" id="tipe_bangunan" size="25" value="<?php if(isset($tipe_bangunan)){echo $tipe_bangunan;}else{echo '-';} ?>">
+					<input type="text" id="tipe_bangunan" size="25" value="<?php if(isset($tipe_bangunan)){echo $tipe_bangunan;}else{echo '-';} ?>" readonly>
 				</td>
 			</tr>
 
 			<tr>
 				<td><b>Luas Semi Gross</b></td><td>:</td>
-				<td><input type="text" name="luas_bangunan" id="luas_bangunan" size="5" value="<?php echo to_decimal($luas_bangunan); ?>"> M&sup2;</td>
+				<td><input type="text" name="luas_bangunan" id="luas_bangunan" size="5" value="<?php echo to_decimal($luas_bangunan); ?>" readonly> M&sup2;</td>
 			</tr>
 
 			<tr>
 				<td>SK Harga</td><td>:</td>
 				<td>
 					<input type="text" name="kode_sk" id="kode_sk" size="10" value="<?php if(isset($kode_sk)){echo $kode_sk;}else{echo '-';} ?>" readonly>
-					<button onclick="return get_kode_sk_bangunan()"> > </button>
-				</td>
+					</td>
 			</tr>
 			<tr>
 				<td>Cash Keras</td><td>:</td>
@@ -253,8 +249,7 @@ function hitung_bangunan(){
 				<td>Jenis Penjualan</td><td>:</td>
 				<td>
 					<input type="hidden" name="kode_penjualan" id="kode_penjualan" size="1" value="<?php if(isset($kode_penjualan)){echo $kode_penjualan;}else{echo '-';} ?>">
-					<button onclick="return get_kode_penjualan()"> > </button>
-					<input type="text" id="jenis_penjualan" size="25" value="<?php if(isset($jenis_penjualan)){echo $jenis_penjualan;}else{echo '-';} ?>">
+					<input type="text" id="jenis_penjualan" size="25" value="<?php if(isset($jenis_penjualan)){echo $jenis_penjualan;}else{echo '-';} ?>" readonly>
 				</td>
 			</tr>
 		</table>
