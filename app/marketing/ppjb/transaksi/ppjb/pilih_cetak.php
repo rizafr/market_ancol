@@ -14,6 +14,7 @@ $jenis_ppjb = (isset($_REQUEST['jenis_ppjb'])) ? clean($_REQUEST['jenis_ppjb']) 
 $telah_bayar = (isset($_REQUEST['telah_bayar'])) ? clean($_REQUEST['telah_bayar']) : '';
 $persentase_paijb = (isset($_REQUEST['persentase_paijb'])) ? clean($_REQUEST['persentase_paijb']) : '';
 $persentase_ppjb = (isset($_REQUEST['persentase_ppjb'])) ? clean($_REQUEST['persentase_ppjb']) : '';
+$persentase_telah_bayar = (isset($_REQUEST['persentase_telah_bayar'])) ? clean($_REQUEST['persentase_telah_bayar']) : '';
 ?>
 
 <!DOCTYPE html>
@@ -50,14 +51,15 @@ jQuery(function($) {
 		var jenis = "paijb";
 		var kode_jenis_ppjb = <?php echo $kode_jenis_ppjb; ?>;
 		var jenis_ppjb = <?php echo $jenis_ppjb; ?>;
-		var telah_bayar = <?php echo bigintval($telah_bayar); ?>;
+		var telah_bayar = <?php echo $telah_bayar; ?>;
 		var persentase_ppjb = <?php echo $persentase_ppjb; ?>;
+		var persentase_telah_bayar = "<?php echo $persentase_telah_bayar; ?>";
 		if(telah_bayar >= persentase_ppjb){
 			window.open(base_marketing + 'ppjb/transaksi/ppjb/ppjb_cetak.php?id=<?php echo $id; ?>&act=Ubah&kode_jenis_ppjb='+kode_jenis_ppjb+'&jenis_ppjb='+jenis_ppjb+'&jenis='+jenis);		
 			parent.loadData(jenis);
 			return false;
 		}else{
-			alert("Anda telah membayar "+<?php echo $telah_bayar;?> +". Maaf Pembayaran Kurang dari 10%");
+			alert("Maaf Anda baru membayar "+persentase_telah_bayar+"% dan Pembayaran Kurang dari 10%");
 			return false;			
 		}
 	});
@@ -67,14 +69,15 @@ jQuery(function($) {
 		var jenis = "ppjb";
 		var kode_jenis_ppjb = <?php echo $kode_jenis_ppjb; ?>;
 		var jenis_ppjb = <?php echo $jenis_ppjb; ?>;
-		var telah_bayar = <?php echo bigintval($telah_bayar); ?>;
+		var telah_bayar = <?php echo $telah_bayar; ?>;
 		var persentase_ppjb = <?php echo $persentase_ppjb; ?>;
+		var persentase_telah_bayar = "<?php echo $persentase_telah_bayar; ?>";
 		if(telah_bayar >= persentase_ppjb){
 			window.open(base_marketing + 'ppjb/transaksi/ppjb/ppjb_cetak.php?id=<?php echo $id; ?>&act=Ubah&kode_jenis_ppjb='+kode_jenis_ppjb+'&jenis_ppjb='+jenis_ppjb+'&jenis='+jenis);		
 			parent.loadData(jenis);
 			return false;
 		}else{
-			alert("Anda telah membayar "+<?php echo $telah_bayar;?> +". Maaf Pembayaran Kurang dari 20%");
+			alert("Maaf Anda baru membayar "+persentase_telah_bayar+"% dan Pembayaran Kurang dari 20%");
 			return false;			
 		}
 		

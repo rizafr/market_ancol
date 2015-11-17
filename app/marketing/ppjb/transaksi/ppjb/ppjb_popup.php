@@ -28,37 +28,6 @@ jQuery(function($) {
 	var tanggal_ver;
 	tanggal_ver = $('#tanggal_ver').val();
 	
-	//disable jika sudah diverifikasi
-	//if(tanggal_ver!=''){
-		// readonly select
-		//$("select :selected").each(function(){
-		//	$(this).parent().data("default", this);
-		//});
-
-		//$("select").change(function(e) {
-		//	$($(this).data("default")).prop("selected", true);
-		//});
-		
-		
-		//$('#tanggal').attr('readonly', 'readonly');
-		//$('#pembangunan').attr('readonly', 'readonly');
-		//$('#prosentase').attr('readonly', 'readonly');
-		//$('#daya_listrik').attr('readonly', 'readonly');
-		//$('#jenis_ppjb').attr('readonly', 'readonly');
-		//$('#addendum').attr('readonly', 'readonly');
-		//$('#kelurahan').attr('readonly', 'readonly');
-		//$('#kecamatan').attr('readonly', 'readonly');
-		//$('#catatan').attr('readonly', 'readonly');
-		//$('#tgl1').attr('readonly', 'readonly');
-		//$('#tgl2').attr('readonly', 'readonly');
-		//$('#tgl3').attr('readonly', 'readonly');
-		//$('#tgl4').attr('readonly', 'readonly');
-		//$('#tercetak_belum').attr('readonly', 'readonly');
-		//$('#tercetak_sudah').attr('readonly', 'readonly');
-		//$('#no_arsip').attr('readonly', 'readonly');
-	//}
-	
-	
 	if (<?php echo $jml; ?> == 0) {
 		if (confirm("Data PPJB tidak ditemukan ! Proses dilanjutkan ?") == false)
 		{
@@ -148,7 +117,8 @@ jQuery(function($) {
 		var telah_bayar = <?php echo bigintval($telah_bayar); ?>;
 		var persentase_paijb = $('#persentase_paijb').val();
 		var persentase_ppjb = $('#persentase_ppjb').val();
-		var url = base_marketing + 'ppjb/transaksi/ppjb/pilih_cetak.php?id=<?php echo $id; ?>&act=Ubah&kode_jenis_ppjb='+kode_jenis_ppjb+'&jenis_ppjb='+jenis_ppjb+'&telah_bayar='+telah_bayar+'&persentase_paijb='+persentase_paijb+'&persentase_ppjb='+persentase_ppjb;
+		var persentase_telah_bayar = $('#persentase_telah_bayar').val();
+		var url = base_marketing + 'ppjb/transaksi/ppjb/pilih_cetak.php?id=<?php echo $id; ?>&act=Ubah&kode_jenis_ppjb='+kode_jenis_ppjb+'&jenis_ppjb='+jenis_ppjb+'&telah_bayar='+telah_bayar+'&persentase_paijb='+persentase_paijb+'&persentase_ppjb='+persentase_ppjb+'&persentase_telah_bayar='+persentase_telah_bayar;
 		setPopup('Cetak PAIJB/PPJB', url, 260, 100);
 		return false;
 	});
@@ -220,7 +190,7 @@ jQuery(function($) {
 </tr>
 <tr>
 	<td width="100">Blok / Nomor</td><td>:</td>
-	<td><?php echo $kode_blok; ?></td>
+	<td><?php echo $id; ?></td>
 </tr>
 <tr>
 	<td>Nama Pembeli</td></td><td>:</td>
@@ -459,6 +429,7 @@ jQuery(function($) {
 <input type="hidden" name="act" id="act" value="<?php echo $act; ?>">
 <input type="hidden" name="persentase_paijb" id="persentase_paijb" value="<?php echo $persentase_paijb; ?>">
 <input type="hidden" name="persentase_ppjb" id="persentase_ppjb" value="<?php echo $persentase_ppjb; ?>">
+<input type="hidden" name="persentase_telah_bayar" id="persentase_telah_bayar" value="<?php echo round($persentase_telah_bayar,2); ?>">
 </form>
 
 </body>
