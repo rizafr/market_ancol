@@ -68,7 +68,7 @@ die_conn($conn);
 
 if ($act == 'Pembatalan')
 {
-	$query = "SELECT * FROM CS_PPJB WHERE KODE_BLOK = '$id'";
+	$query = "SELECT S.KODE_BLOK, S.NAMA_PEMBELI, P.NOMOR FROM SPP S LEFT JOIN CS_PPJB P ON P.KODE_BLOK = S.KODE_BLOK WHERE S.KODE_BLOK = '$id'";
 	$obj = $conn->execute($query);
 	$blok_nomor = $obj->fields['KODE_BLOK'];
 	$nama_pembeli = $obj->fields['NAMA_PEMBELI'];

@@ -81,20 +81,20 @@ if ($total_data > 0)
 
 		if($STATUS_CETAK==NULL || $STATUS_CETAK=='0'){
 			$STATUS_PPJB="BELUM CETAK PPJB";
-			$cek="belum";
+			$cek="belum_ppjb";
 		}else{
 			$STATUS_PPJB="SUDAH CETAK PPJB";
-			$cek="sudah";
+			$cek="sudah_ppjb";
 		}
 		if($STATUS_CETAK_PAIJB==NULL || $STATUS_CETAK_PAIJB=='0'){
 			$STATUS_PAIJB="BELUM CETAK PAIJB";
-			$cek="belum";
+			$cek2="belum_paijb";
 		}else{
 			$STATUS_PAIJB="SUDAH CETAK PAIJB";
-			$cek="sudah";
+			$cek2="sudah_paijb";
 		}
 		?>
-		<tr class="onclick <?php echo $cek; ?>" id="<?php echo $id; ?>" > 
+		<tr class="onclick <?php echo $cek; ?> <?php echo $cek2; ?>" id="<?php echo $id; ?>" > 
 			<td class="text-center"><?php echo $id; ?></td>
 			<td><?php echo $obj->fields['NAMA_PEMBELI'];  ?></td>
 			<td class="text-center"><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL']))); ?></td>

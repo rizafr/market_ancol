@@ -14,11 +14,19 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Status PAIJB / PPJB</td><td>:</td>
+			<td>Status PAIJB</td><td>:</td>
 			<td>
-				<input type="radio" name="status_ppjb" id="all" class="status" value="0" checked="true"> <label for="sbs">All</label>
-				<input type="radio" name="status_ppjb" id="sudah" class="status" value="1" > <label for="sbb">Sudah</label>&nbsp;&nbsp;
-				<input type="radio" name="status_ppjb" id="belum" class="status" value="2"> <label for="sbs">Belum</label>
+				<input type="radio" name="status_paijb" id="all_paijb" class="status" value="0" checked="true"> <label for="sbs">All</label>
+				<input type="radio" name="status_paijb" id="sudah_paijb" class="status" value="1" > <label for="sbb">Sudah</label>&nbsp;&nbsp;
+				<input type="radio" name="status_paijb" id="belum_paijb" class="status" value="2"> <label for="sbs">Belum</label>
+			</td>
+		</tr>
+		<tr>
+			<td>Status PPJB</td><td>:</td>
+			<td>
+				<input type="radio" name="status_ppjb" id="all_ppjb" class="status" value="0" checked="true"> <label for="sbs">All</label>
+				<input type="radio" name="status_ppjb" id="sudah_ppjb" class="status" value="1" > <label for="sbb">Sudah</label>&nbsp;&nbsp;
+				<input type="radio" name="status_ppjb" id="belum_ppjb" class="status" value="2"> <label for="sbs">Belum</label>
 			</td>
 		</tr>
 		<tr>
@@ -69,14 +77,30 @@
 				e.preventDefault();
 				
 				if($(this).val() == '0'){	//all	
-					$('.sudah').show();
-					$('.belum').show();
+					$('.sudah_ppjb').show();
+					$('.belum_ppjb').show();
 				} else if($(this).val() == '1'){ //sudah
-					$('.sudah').show();
-					$('.belum').hide();
+					$('.sudah_ppjb').show();
+					$('.belum_ppjb').hide();
 				} else if($(this).val() == '2'){ //belum
-					$('.sudah').hide();
-					$('.belum').show();
+					$('.sudah_ppjb').hide();
+					$('.belum_ppjb').show();
+				}
+				return false;
+			});
+
+			$('input:radio[name="status_paijb"]').change(function(e){
+				e.preventDefault();
+				
+				if($(this).val() == '0'){	//all	
+					$('.sudah_paijb').show();
+					$('.belum_paijb').show();
+				} else if($(this).val() == '1'){ //sudah
+					$('.sudah_paijb').show();
+					$('.belum_paijb').hide();
+				} else if($(this).val() == '2'){ //belum
+					$('.sudah_paijb').hide();
+					$('.belum_paijb').show();
 				}
 				return false;
 			});
