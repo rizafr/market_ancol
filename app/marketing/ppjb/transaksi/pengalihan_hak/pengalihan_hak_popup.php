@@ -137,7 +137,7 @@ function daftar_ppjb() {
 	<td><input readonly="readonly" type="text" name="tanggal_awal" id="tanggal_awal" size="15" value="<?php echo $tanggal_awal; ?>"></td>
 </tr>
 <tr>
-	<td>Harga</td><td>:</td>
+	<td>Harga Awal</td><td>:</td>
 	<td>Rp. <input readonly="readonly" type="text" name="harga_awal" id="harga_awal" size="20" value="<?php echo to_money($harga_awal); ?>"></td>
 </tr>
 </table>
@@ -160,7 +160,7 @@ function daftar_ppjb() {
 	<td><input type="text" name="no_va_ph" id="no_va_ph" size="20" value="<?php echo $no_va_ph; ?>" readonly></td>
 </tr>
 <tr>
-	<td>Tanggal</td><td>:</td>
+	<td>Tanggal Pengalihan</td><td>:</td>
 	<td><input type="text" name="tanggal" id="tanggal" size="15" class="apply dd-mm-yyyy" value="<?php echo $tanggal; ?>"></td>
 </tr>
 <tr>
@@ -172,7 +172,7 @@ function daftar_ppjb() {
 	<td><input type="text" name="tanggal_persetujuan" id="tanggal_persetujuan" size="15" class="apply dd-mm-yyyy" value="<?php echo $tanggal_persetujuan; ?>"></td>
 </tr>
 <tr>
-	<td>Harga</td><td>:</td>
+	<td>Harga Pengalihan</td><td>:</td>
 	<td>Rp. <input type="text" name="harga_hak" id="harga_hak" size="20" value="<?php echo to_money($harga_hak); ?>"></td>
 </tr>
 	<td>Biaya</td><td>:</td>

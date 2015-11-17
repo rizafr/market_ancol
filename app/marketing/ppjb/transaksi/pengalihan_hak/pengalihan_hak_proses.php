@@ -62,14 +62,14 @@
 				// ex_ha('JB09', 'I');
 				
 				//penambahan jumlah pengalihan hak
-				$n = strlen($no_va);
-				$no_va_kiri = substr($no_va,0,$n-2);
-				$no_va_kanan = intval(substr($no_va, $n-2,2))+1;
-				if($no_va_kanan<10){
-					$no_va_kanan = '0'.$no_va_kanan;
-				}
-				$no_va_ph = $no_va_kiri.$no_va_kanan;
-				
+				// $n = strlen($no_va);
+				// $no_va_kiri = substr($no_va,0,$n-2);
+				// $no_va_kanan = intval(substr($no_va, $n-2,2))+1;
+				// if($no_va_kanan<10){
+				// 	$no_va_kanan = '0'.$no_va_kanan;
+				// }
+				// $no_va_ph = $no_va_kiri.$no_va_kanan;
+				$no_va_ph = $no_va;
 				ex_empty($tanggal, 'Tanggal harus diisi.');
 				ex_empty($harga_hak, 'Harga harus diisi.');
 				ex_empty($biaya, 'Biaya harus diisi.');
@@ -90,11 +90,11 @@
 				
 				//masukan data ke tabel cs pengalihan hak
 				$query = "
-				INSERT INTO CS_PENGALIHAN_HAK (KODE_BLOK, NO_VA_PH, NO_PPJB_PH, TANGGAL, 
+				INSERT INTO CS_PENGALIHAN_HAK (KODE_BLOK, NO_VA, NO_VA_PH, NO_PPJB_PH, TANGGAL, 
 				PIHAK_PERTAMA, ALAMAT_PIHAK_PERTAMA, NO_ID_PIHAK_PERTAMA, NO_TELP_PIHAK_PERTAMA, NO_HP_PIHAK_PERTAMA, NO_FAX_PIHAK_PERTAMA, EMAIL_PIHAK_PERTAMA, SUAMI_ISTRI,
 				PIHAK_KEDUA,NPWP, ALAMAT_PIHAK_KEDUA, NO_ID_PIHAK_KEDUA, NO_TELP_PIHAK_KEDUA, NO_HP_PIHAK_KEDUA, NO_FAX_PIHAK_KEDUA, EMAIL_PIHAK_KEDUA, NAMA_SUAMI_ISTRI, 
 				HARGA_AWAL, NO_PPJB_AWAL, TANGGAL_PPJB_AWAL, TANGGAL_PERMOHONAN, TANGGAL_PERSETUJUAN, BIAYA_PENGALIHAN_HAK, MASA_BANGUN, HARGA_PENGALIHAN_HAK, KETERANGAN)
-				VALUES ('$kode','$no_va_ph', 'XXX', CONVERT(DATETIME,'$tanggal',105), 
+				VALUES ('$kode','$no_va','$no_va_ph', 'XXX', CONVERT(DATETIME,'$tanggal',105), 
 				'$pihak_pertama', '$alamat', '$no_id', '$tlp1', '$tlp3', '$no_fax', '$email', '$suami_istri',
 				'$pihak_kedua','$npwp', '$alamat_hak', '$no_id_hak', '$tlp1_hak', '$tlp3_hak', '$no_fax_hak', '$email_hak', '$suami_istri_hak', 
 				$harga_awal, '$no_ppjb_awal', CONVERT(DATETIME,'$tanggal_awal',105), CONVERT(DATETIME,'$tanggal_permohonan',105), CONVERT(DATETIME,'$tanggal_persetujuan',105), $biaya, '$masa_bangun', $harga_hak, '$keterangan')
@@ -113,6 +113,7 @@
 				INSERT INTO CS_HISTORY_PENGALIHAN_HAK
 				([KODE_BLOK]
 				,[NO_VA_PH]
+				,[NO_VA]
 				,[NO_PPJB_PH]
 				,[TANGGAL]
 				,[PIHAK_PERTAMA]
@@ -123,7 +124,7 @@
 				,[NO_FAX_PIHAK_PERTAMA]
 				,[EMAIL_PIHAK_PERTAMA]
 				,[SUAMI_ISTRI])
-				VALUES ('$kode','$no_va_ph', '$no_ppjb_hak', CONVERT(DATETIME,'$tanggal_sekarang',105), 
+				VALUES ('$kode','$no_va_ph','$no_va', '$no_ppjb_hak', CONVERT(DATETIME,'$tanggal_sekarang',105), 
 				'$pihak_pertama', '$alamat', '$no_id', '$tlp1', '$tlp3', '$no_fax', '$email', '$suami_istri')
 				";
 				
@@ -289,6 +290,7 @@
 		$obj = $conn->execute($query);
 		
 		$kode	 		= $obj->fields['KODE_BLOK'];
+		$no_va	 		= $obj->fields['NO_VA'];
 		$no_va_ph	 	= $obj->fields['NO_VA_PH'];
 		$nomor 			= $obj->fields['NO_PPJB_AWAL'];
 		$tanggal_awal	= f_tgl($obj->fields['TANGGAL_PPJB_AWAL']);
