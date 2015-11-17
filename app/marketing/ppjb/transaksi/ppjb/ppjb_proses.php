@@ -21,7 +21,7 @@ $tanggal_pinjam_pembeli	= (isset($_REQUEST['tgl1'])) ? clean($_REQUEST['tgl1']) 
 $tanggal_tt_pembeli		= (isset($_REQUEST['tgl2'])) ? clean($_REQUEST['tgl2']) : '';
 $tanggal_tt_pejabat		= (isset($_REQUEST['tgl3'])) ? clean($_REQUEST['tgl3']) : '';
 $tanggal_penyerahan		= (isset($_REQUEST['tgl4'])) ? clean($_REQUEST['tgl4']) : '';
-$nama_pembeli			= (isset($_REQUEST['nama_pembeli'])) ? clean($_REQUEST['nama_pembeli']) : '';
+$nama_pembeli 			= (isset($_REQUEST['nama_pembeli'])) ? clean($_REQUEST['nama_pembeli']) : '';
 $nomor_arsip			= (isset($_REQUEST['no_arsip'])) ? clean($_REQUEST['no_arsip']) : '';
 $status_cetak			= (isset($_REQUEST['tercetak_ppjb'])) ? clean($_REQUEST['tercetak_ppjb']) : '0';
 $status_cetak_paijb		= (isset($_REQUEST['tercetak_paijb'])) ? clean($_REQUEST['tercetak_paijb']) : '0';
@@ -135,25 +135,38 @@ die_conn($conn);
 	
 if ($act == 'Ubah')
 {
+	// $query = "
+	// SELECT *, z.TANGGAL, z.MASA_BANGUN, z.DAYA_LISTRIK, z.KODE_KELURAHAN, z.KODE_KECAMATAN, z.TANGGAL_OTORISASI
+	// FROM
+	// 	CS_PPJB z
+	// 	JOIN SPP a ON z.KODE_BLOK = a.KODE_BLOK
+	// 	LEFT JOIN STOK b ON a.KODE_BLOK = b.KODE_BLOK
+	// 	LEFT JOIN TIPE c ON b.KODE_TIPE = c.KODE_TIPE
+	// 	LEFT JOIN HARGA_BANGUNAN e ON b.KODE_SK_BANGUNAN = e.KODE_SK
+	// 	LEFT JOIN FAKTOR f ON b.KODE_FAKTOR = f.KODE_FAKTOR
+	// 	LEFT JOIN KELURAHAN g ON z.KODE_KELURAHAN = g.KODE_KELURAHAN
+	// 	LEFT JOIN KECAMATAN h ON z.KODE_KECAMATAN = h.KODE_KECAMATAN
+	// 	LEFT JOIN USER_APPLICATIONS i ON z.OFFICER_OTORISASI = i.USER_ID
+	// 	LEFT JOIN REALISASI r ON r.KODE_BLOK = z.KODE_BLOK
+	// WHERE a.KODE_BLOK = '$id'";
+
 	$query = "
-	SELECT *, z.TANGGAL, z.MASA_BANGUN, z.DAYA_LISTRIK, z.KODE_KELURAHAN, z.KODE_KECAMATAN, z.TANGGAL_OTORISASI
+	SELECT *, a.NAMA_PEMBELI AS CUSTOMER
 	FROM
-		CS_PPJB z
-		JOIN SPP a ON z.KODE_BLOK = a.KODE_BLOK
+		SPP a
 		LEFT JOIN STOK b ON a.KODE_BLOK = b.KODE_BLOK
 		LEFT JOIN TIPE c ON b.KODE_TIPE = c.KODE_TIPE
 		LEFT JOIN HARGA_BANGUNAN e ON b.KODE_SK_BANGUNAN = e.KODE_SK
 		LEFT JOIN FAKTOR f ON b.KODE_FAKTOR = f.KODE_FAKTOR
-		LEFT JOIN KELURAHAN g ON z.KODE_KELURAHAN = g.KODE_KELURAHAN
-		LEFT JOIN KECAMATAN h ON z.KODE_KECAMATAN = h.KODE_KECAMATAN
-		LEFT JOIN USER_APPLICATIONS i ON z.OFFICER_OTORISASI = i.USER_ID
-		LEFT JOIN REALISASI r ON r.KODE_BLOK = z.KODE_BLOK
+		LEFT JOIN REALISASI r ON r.KODE_BLOK = a.KODE_BLOK
+		LEFT JOIN CS_PPJB p ON p.KODE_BLOK = a.KODE_BLOK
+		LEFT JOIN USER_APPLICATIONS i ON p.OFFICER_OTORISASI = i.USER_ID		
 	WHERE a.KODE_BLOK = '$id'";
 
 	$query2 = "
 	SELECT P.KODE_BLOK, SUM(R.NILAI) AS JUMLAH
 	FROM
-	CS_PPJB P, REALISASI R
+	SPP P, REALISASI R
 	WHERE P.KODE_BLOK = R.KODE_BLOK AND
 	P.KODE_BLOK = '$id'
 	GROUP BY P.KODE_BLOK
@@ -164,7 +177,7 @@ if ($act == 'Ubah')
 	
 	//DATA PEMBELI
 	$kode_blok 			= $obj->fields['KODE_BLOK'];
-	$nama_pembeli 		= $obj->fields['NAMA_PEMBELI'];
+	$nama_pembeli 		= $obj->fields['CUSTOMER'];
 	$no_kartu 			= $obj->fields['NOMOR_CUSTOMER'];
 	$alamat 			= $obj->fields['ALAMAT_RUMAH'];
 	$tlp1 				= $obj->fields['TELP_RUMAH'];
@@ -184,7 +197,9 @@ if ($act == 'Ubah')
 	$sisa_pembayaran	= to_money(($total_harga) - $obj->fields['TANDA_JADI'] - $obj2->fields['JUMLAH']);	
 
 	$persentase_paijb   = (10/100)*$total_harga;
-	$persentase_ppjb	= (20/100)*$total_harga;		
+	$persentase_ppjb	= (20/100)*$total_harga;
+
+	$persentase_telah_bayar = ($telah_bayar/$total_harga)*100;		
 
 	//DATA PPJB
 	$nomor 				= $obj->fields['NOMOR'];
@@ -220,7 +235,7 @@ if ($act == 'Ubah')
 if ($act == 'Ubah')
 {
 	$query = "
-	SELECT *
+	SELECT *, a.NAMA_PEMBELI AS CUSTOMER
 	FROM
 		SPP a
 		LEFT JOIN STOK b ON a.KODE_BLOK = b.KODE_BLOK
@@ -235,7 +250,7 @@ if ($act == 'Ubah')
 	$query2 = "
 	SELECT P.KODE_BLOK, SUM(R.NILAI) AS JUMLAH
 	FROM
-	CS_PPJB P, REALISASI R
+	SPP P, REALISASI R
 	WHERE P.KODE_BLOK = R.KODE_BLOK AND
 	P.KODE_BLOK = '$id'
 	GROUP BY P.KODE_BLOK
@@ -246,7 +261,7 @@ if ($act == 'Ubah')
 	
 	//DATA PEMBELI
 	$kode_blok 			= $obj->fields['KODE_BLOK'];
-	$nama_pembeli 		= $obj->fields['NAMA_PEMBELI'];
+	$nama_pembeli 		= $obj->fields['CUSTOMER'];
 	$no_kartu 			= $obj->fields['NOMOR_CUSTOMER'];
 	$alamat 			= $obj->fields['ALAMAT_RUMAH'];
 	$tlp1 				= $obj->fields['TELP_RUMAH'];
@@ -292,5 +307,7 @@ if ($act == 'Ubah')
 
 	$persentase_paijb   = 0.1*$total_harga;
 	$persentase_ppjb	= 0.2*$total_harga;
+
+	$persentase_telah_bayar = floatval(($obj2->fields['JUMLAH']/$total_harga)*100);
 } 
 ?>
