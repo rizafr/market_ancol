@@ -119,7 +119,7 @@
 							
 							while( ! $obj->EOF)
 							{
-								$luas_tanah 		= $obj->fields['LUAS_TANAH'];
+								$harga 		= $obj->fields['HARGA_TOTAL'];
 								$luas_bangunan 		= $obj->fields['LUAS_BANGUNAN'];
 								
 								$tanah 				= $luas_tanah * ($obj->fields['HARGA_TANAH']) ;
@@ -135,7 +135,7 @@
 								$total_bangunan		= $bangunan - $disc_bangunan;
 								$ppn_bangunan 		= round($total_bangunan * ($obj->fields['PPN_BANGUNAN'])/100,0) ;
 								
-								$harga	= ($total_tanah + $total_bangunan) + ($ppn_tanah + $ppn_bangunan);	
+							
 							?>
 							<tr class="onclick" 
 							data-kode_blok="<?php echo $obj->fields['KODE_BLOK']; ?>"
