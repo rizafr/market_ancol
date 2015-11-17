@@ -11,7 +11,7 @@
 	$kode_blok				= (isset($_REQUEST['kode_blok'])) ? to_number($_REQUEST['kode_blok']) : '';
 	$no_va					= (isset($_REQUEST['no_va'])) ? clean(trim($_REQUEST['no_va'])) : '';
 	$no_va_ph				= (isset($_REQUEST['no_va_ph'])) ? clean($_REQUEST['no_va_ph']) : '';
-	$harga_awal				= (isset($_REQUEST['harga_awal'])) ? to_number($_REQUEST['harga_awal']) : '';
+	$harga_awal				= (isset($_REQUEST['harga_awal'])) ? bigintval($_REQUEST['harga_awal']) : '';
 	$no_ppjb_awal			= (isset($_REQUEST['no_ppjb_awal'])) ? clean($_REQUEST['no_ppjb_awal']) : '';
 	$no_ppjb_hak			= (isset($_REQUEST['no_ppjb_hak'])) ? clean($_REQUEST['no_ppjb_hak']) : '';
 	$tanggal_awal			= (isset($_REQUEST['tanggal_awal'])) ? clean($_REQUEST['tanggal_awal']) : '';
@@ -21,8 +21,8 @@
 	$tanggal				= (isset($_REQUEST['tanggal'])) ? clean($_REQUEST['tanggal']) : '';
 	$tanggal_permohonan		= (isset($_REQUEST['tanggal_permohonan'])) ? clean($_REQUEST['tanggal_permohonan']) : '';
 	$tanggal_persetujuan	= (isset($_REQUEST['tanggal_persetujuan'])) ? clean($_REQUEST['tanggal_persetujuan']) : '';
-	$harga_hak				= (isset($_REQUEST['harga_hak'])) ? to_number($_REQUEST['harga_hak']) : '';
-	$biaya					= (isset($_REQUEST['biaya'])) ? to_number($_REQUEST['biaya']) : '';
+	$harga_hak				= (isset($_REQUEST['harga_hak'])) ? bigintval($_REQUEST['harga_hak']) : '';
+	$biaya					= (isset($_REQUEST['biaya'])) ? bigintval($_REQUEST['biaya']) : '';
 	$masa_bangun			= (isset($_REQUEST['masa_bangun'])) ? to_number($_REQUEST['masa_bangun']) : '';
 	$keterangan				= (isset($_REQUEST['keterangan'])) ? clean($_REQUEST['keterangan']) : '';
 	
