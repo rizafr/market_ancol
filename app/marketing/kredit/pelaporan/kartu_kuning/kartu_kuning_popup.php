@@ -50,53 +50,38 @@ jQuery(function($) {
 <table class="t-popup w35 f-left" style="margin-right:15px">
 <tr>
 	<td width="100">Blok / Nomor</td><td width="10">:</td>
-	<td colspan="2"><?php echo $kode_blok; ?></td>
+	<td colspan="2"><?php echo $id; ?></td>
 </tr>
-<tr>
-	<td>Luas Tanah</td></td><td>:</td>
-	<td colspan="2"><?php echo $luas_tanah.' m&sup2;'; ?></td>
-</tr>
-<tr>
-	<td>Luas Bangunan</td></td><td>:</td>
+<br>
+	<td>Luas Semi Gross</td></td><td>:</td>
 	<td colspan="2"><?php echo $luas_bangunan.' m&sup2;'; ?></td>
 </tr>
+<br>
 <tr>
 	<td>Tipe Rumah</td></td><td>:</td>
 	<td colspan="2"><?php echo $tipe_bangunan; ?></td>
 </tr>
 <tr>
-	<td>Harga Tanah & Bangunan</td></td><td>: </td><td>Rp.</td>
-	<td class="text-right"><?php echo $total_harga; ?></td>
-</tr>
-<tr>
-	<td>P.P.N.</td></td><td>: </td><td>Rp.</td>
-	<td class="text-right"><?php echo $total_ppn; ?></td>
-</tr>
-<tr>
-	<td></td></td><td></td>
-	<td colspan="2"><hr></td>
+	<td>Pola Pembayaran</td></td><td>:</td>
+	<td colspan="2"><?php echo $pola_bayar; ?></td>
 </tr>
 <tr>
 	<td>Total Harga</td></td><td>: </td><td>Rp.</td>
-	<td class="text-right"><?php echo to_money($sisa_pembayaran); ?></td>
+	<td class="text-right"><?php echo to_money($harga_total,2); ?></td>
 </tr>
 </table>
 
 <table class="t-popup w60 f-right">
 <tr>
-	<td width="100">No. Customer</td></td><td width="10">:</td>
-	<td><?php echo $no_cust; ?></td>
-</tr>
-<tr>
-	<td width="100">Nama</td></td><td>:</td>
+	<td width="100">Nama</td></td><td width="10">:</td>
 	<td><?php echo $nama_pembeli; ?></td>
 </tr>
 <tr>
-	<td>Alamat</td></td><td>:</td>
+	<td>Alamat</td><td>:</td>
 	<td><?php echo $alamat; ?></td>
 </tr>
 <tr>
-	<td>Telp. / HP.</td></td><td>:</td>
+	<td>Telp. / HP.</td><td>:</td>
 	<td><?php echo $tlp1.' / '.$tlp2.' / '.$tlp3; ?></td>
 </tr>
 <tr>

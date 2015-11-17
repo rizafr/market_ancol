@@ -162,20 +162,20 @@ function showPopup(act, id) {
 
 function showPopupUpload(act, id) {
 	var url = this_base + 'stock_awal/persediaan_awal_upload_popup.php?act=' + act + '&id=' + id;
-	setPopup(act + ' Data Stock', url, 635, 550);
+	setPopup(act + ' Data Stock', url, 835, 550);
 	return false;
 }
 
 function showPopup1(act, id) {
 	var url = this_base + 'stock_awal/persediaan_awal_popup.php?act=' + act + '&id=' + id;
-	setPopup(act + ' Persediaan Awal', url, 700, 600);
+	setPopup(act + ' Persediaan Awal', url, 800, 600);
 	return false;
 }
 
 //Button popup & Tutup reserve
 function showPopup2(act, id) {
 	var url = this_base + 'siap_jual/informasi_persediaan_popup.php?act=' + act + '&id=' + id;
-	setPopup('Informasi Persediaan', url, 700, 600);
+	setPopup('Informasi Persediaan', url, 800, 600);
 	return false;
 }
 

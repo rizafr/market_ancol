@@ -116,6 +116,8 @@ $harga_total    		= $obj->fields['HARGA_TOTAL'];
 $r_tipe_bangunan		= $obj->fields['TIPE_BANGUNAN'];
 $r_harga_bangunan_sk	= $obj->fields['HARGA_BANGUNAN_SK'];
 $r_jenis_penjualan		= $obj->fields['JENIS_PENJUALAN'];
+$NO_FAX					= $obj->fields['NO_FAX'];
+$tgl_lahir			= tgltgl(f_tgl($obj->fields['TANGGAL_LAHIR'])); 
 
 
 
@@ -228,7 +230,7 @@ $t = $conn->execute("
 				<td height="5"></td>
 			</tr>
 			<tr>
-				<td class="garis_isian"><a><?= $nama ?></a></td>
+				<td class="garis_isian"><a><?= strtoupper($nama) ?></a></td>
 				<td></td>
 				<td class="garis_isian"><a><?= $nup ?></a></td>
 			</tr>
@@ -243,7 +245,7 @@ $t = $conn->execute("
 				<td height="5"></td>
 			</tr>
 			<tr>
-				<td class="garis_isian"><a><?= $alamat_rumah ?></a></td>
+				<td class="garis_isian"><a><?= strtoupper($alamat_rumah) ?></a></td>
 				<td class="garis_isian"><a><?= $npwp ?></a></td>
 			</tr>
 		</table>
@@ -260,9 +262,9 @@ $t = $conn->execute("
 			</tr>
 			<tr>
 				<td class="garis_isian"><a><?= $tlp_rumah ?></a></td>
-				<td class="garis_isian"><a><?= $npwp ?> </a></td>
-				<td class="garis_isian"><a><?= $npwp ?></a></td>
-				<td class="garis_isian"><a><?= $npwp ?></a></td>
+				<td class="garis_isian"><a><?= $tlp_lain ?> </a></td>
+				<td class="garis_isian"><a><?= $tlp_kantor ?></a></td>
+				<td class="garis_isian"><a><?= $NO_FAX ?></a></td>
 			</tr>
 		</table>
 
@@ -277,7 +279,7 @@ $t = $conn->execute("
 			</tr>
 			<tr>
 				<td class="garis_isian"><a><?= $no_identitas ?> </a></td>
-				<td class="garis_isian"><a></a></td>
+				<td class="garis_isian"><a><?= $tgl_lahir ?></a></td>
 				<td class="garis_isian"><a><?= $email ?> </a></td>
 			</tr>
 		</table>
@@ -290,7 +292,7 @@ $t = $conn->execute("
 				<td height="5"></td>
 			</tr>
 			<tr>
-				<td class="garis_isian"><a></a></td>
+				<td class="garis_isian"><a><?php echo strtoupper($alamat_surat)?></a></td>
 			</tr>
 		</table>
 
@@ -332,7 +334,7 @@ $t = $conn->execute("
 				<td></td>
 				<td class="garis_isian"><a><?php echo to_money($harga_total-($harga_total/1.1)) ?></a></td>
 				<td></td>
-				<td class="garis_isian"><a><?= $keterangan ?></a></td>
+				<td class="garis_isian"><a><?= $pola_bayar ?></a></td>
 			</tr>
 			<tr>
 				<td>3. Lantai</td>

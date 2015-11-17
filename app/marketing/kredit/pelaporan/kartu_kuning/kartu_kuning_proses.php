@@ -78,6 +78,9 @@ if ($act == 'Detail')
 	$tlp2 				= $obj->fields['TELP_KANTOR'];
 	$tlp3 				= $obj->fields['TELP_LAIN'];
 	$no_cust			= $obj->fields['NOMOR_CUSTOMER'];
+	$pola_pembayaran		= $obj->fields['POLA_PEMBAYARAN'];	
+	$harga_total		= $obj->fields['HARGA_TOTAL'];	
+	$pola_bayar			= $obj->fields['POLA_BAYAR'];	
 	
 	//DATA SPP
 	$nomor_spp	 		= $obj->fields['NOMOR_SPP'];

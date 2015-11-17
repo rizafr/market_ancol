@@ -49,6 +49,8 @@ $page_start = (($page_num-1) * $per_page);
 <table class="t-data w60">
 <tr>
 	<th class="w15">BLOK / NOMOR</th>
+	<th class="w15">VIRTUAL ACCOUNT</th>
+	<th class="w15">COSTUMER ID</th>
 	<th class="w30">NAMA PEMBELI</th>
 </tr>
 
@@ -70,6 +72,8 @@ if ($total_data > 0)
 		?>
 		<tr class="onclick" id="<?php echo $id; ?>"> 
 			<td class="text-center"><?php echo $id; ?></td>
+			<td><?php echo $obj->fields['NOMOR_CUSTOMER'];  ?></td>
+			<td><?php echo $obj->fields['COSTUMER_ID'];  ?></td>
 			<td><?php echo $obj->fields['NAMA_PEMBELI'];  ?></td>
 		</tr>
 		<?php

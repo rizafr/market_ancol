@@ -41,7 +41,7 @@ jQuery(function($) {
 	$('#keterangan, #pihak_kedua, #suami_istri_hak').inputmask('varchar', { repeat: '60' });
 	$('#alamat_hak, #email').inputmask('varchar', { repeat: '100' });
 
-	$('#tlp1_hak, #tlp3_hak, #no_fax_hak').inputmask('mask', { repeat: '15', mask : '15', groupSeparator : '', placeholder : '' });
+	//$('#tlp1_hak, #tlp3_hak, #no_fax_hak').inputmask('mask', { repeat: '15', mask : '15', groupSeparator : '', placeholder : '' });
 	
 	$(document).on('click', '#histori', function(e) {
 		e.preventDefault();
@@ -200,11 +200,11 @@ function daftar_ppjb() {
 </tr>
 <tr>
 	<td width="130">Nama Pembeli</td></td><td>:</td>
-	<td><input readonly="readonly" type="input" name="pihak_pertama" id="pihak_pertama" size="35" value="<?php echo $pihak_pertama; ?>"></td>
+	<td><input readonly="readonly" type="text" name="pihak_pertama" id="pihak_pertama" size="35" value="<?php echo $pihak_pertama; ?>"></td>
 </tr>
 <tr>
 	<td>No. Identitas</td></td><td>:</td>
-	<td><input readonly="readonly" type="input" name="no_id" id="no_id" size="20" value="<?php echo $no_id; ?>"></td>
+	<td><input readonly="readonly" type="text" name="no_id" id="no_id" size="20" value="<?php echo $no_id; ?>"></td>
 </tr>
 
 <tr>
@@ -213,23 +213,23 @@ function daftar_ppjb() {
 </tr>
 <tr>
 	<td>No. Telp</td></td><td>:</td>
-	<td><input readonly="readonly" type="input" name="tlp1" id="tlp1" size="15" value="<?php echo $tlp1; ?>"></td>
+	<td><input readonly="readonly" type="text" name="tlp1" id="tlp1" size="15" value="<?php echo $tlp1; ?>"></td>
 </tr>
 <tr>
 	<td>No. HP</td></td><td>:</td>
-	<td><input readonly="readonly" type="tel" name="tlp3" id="tlp3" size="15" value="<?php echo $tlp3; ?>"></td>
+	<td><input readonly="readonly" type="text" name="tlp3" id="tlp3" size="15" value="<?php echo $tlp3; ?>"></td>
 </tr>
 <tr>
 	<td>Email</td></td><td>:</td>
-	<td><input readonly="readonly" type="email" name="email" id="email" size="30" value="<?php echo $email; ?>"></td>
+	<td><input readonly="readonly" type="text" name="email" id="email" size="30" value="<?php echo $email; ?>"></td>
 </tr>
 <tr>
 	<td>Nama Suami / Istri</td></td><td>:</td>
-	<td><input readonly="readonly" type="input" name="suami_istri" id="suami_istri" size="35" value="<?php echo $suami_istri; ?>"></td>
+	<td><input readonly="readonly" type="text" name="suami_istri" id="suami_istri" size="35" value="<?php echo $suami_istri; ?>"></td>
 </tr>
 <tr>
 	<td>No. Fax</td></td><td>:</td>
-	<td><input readonly="readonly" type="input" name="no_fax" id="no_fax" size="15" value="<?php echo $no_fax; ?>"></td>
+	<td><input readonly="readonly" type="text" name="no_fax" id="no_fax" size="15" value="<?php echo $no_fax; ?>"></td>
 </tr>
 </table>
 

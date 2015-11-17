@@ -145,7 +145,7 @@ if ($act == 'Ubah')
 	$catatan_penagihan		= $obj->fields['CATATAN_PENAGIHAN'];	
 	$pola_pembayaran		= $obj->fields['POLA_PEMBAYARAN'];	
 	$harga_total		= $obj->fields['HARGA_TOTAL'];	
-	$pola_bayar		= $obj->fields['POLA_BAYAR'];	
+	$pola_bayar			= $obj->fields['POLA_BAYAR'];	
 	
 //DATA RENCANA & REALISASI	
 	$luas_tanah			= $obj->fields['LUAS_TANAH'];
