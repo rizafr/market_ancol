@@ -116,8 +116,9 @@ if ($total_data > 0)
 	$query = "
 	SELECT KODE_BLOK,NAMA_PEMBELI,HARGA_TOTAL
 	FROM
-		SPP a 
-		$query_search
+		SPP 
+	$query_search
+	GROUP BY KODE_BLOK	
 	";
 	
 	$obj = $conn->selectlimit($query, $per_page, $page_start);

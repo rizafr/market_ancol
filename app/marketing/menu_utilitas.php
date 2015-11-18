@@ -23,7 +23,7 @@
 			<ul>
 				<li><a href="<?php echo base64_encode('A01_parameter'); ?>">Parameter Nomor Register</a></li>
 				<li><a href="<?php echo base64_encode('A01_penomoran_fp'); ?>">Penomoran Faktur Pajak</a></li>
-				<li><a href="<?php echo base64_encode('A01_kartu_pembeli'); ?>">Cetak Kartu Pembeli</a></li>
+				<!--<li><a href="<?php echo base64_encode('A01_kartu_pembeli'); ?>">Cetak Kartu Pembeli</a></li>-->
 			</ul>
 		</li>
 		<li class="separator"></li>

@@ -68,20 +68,20 @@
 		<ul>
 			<li><a href="<?php echo base64_encode('A01_proyeksi_penagihan'); ?>">Proyeksi Penagihan</a></li>
 			<li><a href="<?php echo base64_encode('A01_umur_piutang'); ?>">Umur Piutang</a></li>
+			<li><a href="<?php echo base64_encode('A01_daftar_spp'); ?>">Daftar SPP</a></li>
 			<li><a href="<?php echo base64_encode('A01_spp_lunas_tahunan'); ?>">Daftar SPP Lunas Tahunan</a></li>
+			<li><a href="<?php echo base64_encode('A01_pembatalan_spp'); ?>">Pembatalan SPP</a></li>
 			<li class="separator"></li>
 			<li><a href="<?php echo base64_encode('A01_pembebasan_denda'); ?>">Pembebasan Denda</a></li>
-			<li><a href="<?php echo base64_encode('A01_pembatalan_spp'); ?>">Pembatalan SPP</a></li>
 			<li><a href="<?php echo base64_encode('A01_surat_penagihan'); ?>">Status Surat Penagihan</a></li>
 			<li><a href="<?php echo base64_encode('A01_daftar_memo_pembatalan'); ?>">Daftar Memo Pembatalan</a></li>
-			<li class="separator"></li>
 			<li><a href="">Laporan Penerimaan<span></span></a>
 				<ul>
 					<li><a href="<?php echo base64_encode('A01_penerimaan_kwitansi'); ?>">Tanda jadi, uang muka dan pelunasan</a></li>
 					<li><a href="<?php echo base64_encode('A01_penerimaan_lain'); ?>">Lain-lain</a></li>
 				</ul>
-				<li><a href="<?php echo base64_encode('A01_rencana_realisasi_blok'); ?>">Rencana-Realisasi Seluruh Blok</a></li>
-				<li><a href="<?php echo base64_encode('A01_daftar_spp'); ?>">Daftar SPP</a></li>
+				<!--<li><a href="<?php echo base64_encode('A01_rencana_realisasi_blok'); ?>">Rencana-Realisasi Seluruh Blok</a></li>-->
+				
 			<!-- Start Edited by Kurniawan -->
 			<!-- Bandung 14 Oktober 2015 -->
 			<li class="separator"></li>
