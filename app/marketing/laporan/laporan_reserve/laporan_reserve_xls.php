@@ -38,15 +38,17 @@ $query_search
 
 $total_data = $conn->execute($query)->fields['TOTAL'];
 $i = 1;
-$filename = "LAPORAN RESERVE";
+$filename = "LAPORAN RESERVE.xls";
 
 header("Content-type: application/msexcel");
-header("Content-Disposition: attachment; filename=$filename.xls");
+header("Content-Disposition: attachment; filename=\"" . basename($filename) . "\"");
 header("Pragma: no-cache");
 header("Expires: 0");
 /* End Pagination */
 ?>
 
+<h1>LAPORAN RESERVE</h1>
+<?php echo '<h2>Periode ' .kontgl(date("d M Y", strtotime($periode_awal))). ' s/d ' .kontgl(date("d M Y", strtotime($periode_akhir))).'</h2>' ?>
 <table border="1">
 <tr>
 	<thead>

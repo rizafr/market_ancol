@@ -50,13 +50,14 @@ FROM
 ";
 $total_data = $conn->execute($query)->fields['TOTAL'];
 $i = 1;
-$filename = "LAPORAN PERSEDIAAN STOK";
+$filename = "LAPORAN PERSEDIAAN STOK.xls";
 
 header("Content-type: application/msexcel");
-header("Content-Disposition: attachment; filename=$filename.xls");
+header("Content-Disposition: attachment; filename=\"" . basename($filename) . "\"");
 header("Pragma: no-cache");
 header("Expires: 0");
 ?>
+<h1>LAPORAN PERSEDIAAN STOK</h1>
 
 <table border="1">
 	<thead>
