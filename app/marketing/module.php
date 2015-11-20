@@ -72,6 +72,9 @@ switch (trim(base64_decode($cmd)))
 	case 'A01_rights'					: die_mod('A05'); include('marketing/utilitas/security_management/rights/rights_setup.php');break;
 	case 'A01_pemulihan_spp'			: die_mod('A06'); include('marketing/utilitas/pemulihan_spp/pemulihan_spp_setup.php');break;
 	
+	#tambahan modul baru
+	case 'A01_manual_book'				: die_mod('A07'); include('marketing/utilitas/manual_book/manual_book_setup.php');break;	
+	
 }
 ?>
 <?php 
