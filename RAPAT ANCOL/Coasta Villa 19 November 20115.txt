@@ -1,0 +1,10 @@
+Pola Pembayaran:
+	CASH KERAS
+	CB12X
+	CB24X
+	CB36X
+	CB48X
+	KPA36X 30% (BALOON PAYMENT)
+	KPA24X 30%
+
+Menu Utilitas --> Manual Book

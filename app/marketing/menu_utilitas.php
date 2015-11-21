@@ -40,6 +40,9 @@
 				<li><a href="<?php echo base64_encode('A01_rights'); ?>">Application Rights</a></li>
 			</ul>
 		</li>
+		<li class="separator"></li>
+		<li><a href="<?php echo base64_encode('A01_manual_book'); ?>" target="_blank">MANUAL BOOK</a>
+		</li>
 	</ul>	
 </li>
 

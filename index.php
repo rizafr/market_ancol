@@ -31,7 +31,7 @@ jQuery(function($) {
 		e.preventDefault();
 		
 		var //app_id = $('#app_id').val(),
-			//db = $('#db').val(),
+			db = $('#db').val(),
 			login_id = $('#login_id').val(),
 			password_id = $('#password_id').val();
 			
