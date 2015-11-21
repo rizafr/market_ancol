@@ -242,7 +242,7 @@ if ($jml_kpr > 0) {
 	$nilai = 0;
 	while( ! $obj->EOF)
 	{
-			$bayar_via  = array('1' =>"Tunai",'2' =>"Giro / Cek",'3' =>"Bank O",'4' =>"Lain",'5' =>"Virutal Account" );
+			$bayar_via  = array('1' =>"Tunai",'2' =>"Giro / Cek",'3' =>"Bank O",'4' =>"Lain",'5' =>"Virtual Account" );
 			$keterangan= $bayar_via[$obj->fields['KETERANGAN']];
 		?>
 		<tr> 

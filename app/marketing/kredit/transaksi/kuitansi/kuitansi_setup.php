@@ -1,4 +1,4 @@
-<div class="title-page">KUITANSI PENJUALAN UNIT KAVELING / BANGUNAN</div>
+<div class="title-page">KUITANSI PENJUALAN</div>
 
 <form name="form" id="form" method="post">
 <table class="t-control wauto">

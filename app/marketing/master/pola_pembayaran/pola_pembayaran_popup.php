@@ -29,7 +29,7 @@ jQuery(function($) {
 	
 	$('#kode_bayar').inputmask('integer', { repeat: 3 });
 	$('#jenis_bayar').inputmask('varchar', { repeat: 30 });
-	$('#nilai1,#nilai2,#nilai3,#nilai4,#nilai5').inputmask('percent', { integerDigits:3, fractionalDigits:9, groupSize:3 });
+	//$('#nilai1,#nilai2,#nilai3,#nilai4,#nilai5').inputmask('percent', { integerDigits:3, fractionalDigits:9, groupSize:3 });
 	$('#kali1,#kali2,#kali3,#kali4,#kali5').inputmask('numeric', { repeat: '2' });
 	
 	var dua = <?php echo $non2; ?>;
@@ -250,31 +250,31 @@ function cek(nilai){
 <tr>
 	<td></td>
 	<td>1.</td>
-	<td><input type="text" name="nilai1" id="nilai1" size="20" value="<?php echo $nilai1; ?>"></td>
+	<td><input type="text" name="nilai1" id="nilai1" size="20" value="<?php echo floatval($nilai1); ?>"></td>
 	<td><input type="text" name="kali1" id="kali1" size="10" value="<?php echo $kali1; ?>"></td>
 </tr>
 <tr>
 	<td><input type="checkbox" name="cb2" id="cb2"></td>
 	<td>2.</td>
-	<td><input type="text" name="nilai2" id="nilai2" size="20" value="<?php echo $nilai2; ?>"></td>
+	<td><input type="text" name="nilai2" id="nilai2" size="20" value="<?php echo floatval($nilai2); ?>"></td>
 	<td><input type="text" name="kali2" id="kali2" size="10" value="<?php echo $kali2; ?>"></td>
 </tr>
 <tr>
 	<td><input type="checkbox" name="cb3" id="cb3"></td>
 	<td>3.</td>
-	<td><input type="text" name="nilai3" id="nilai3" size="20" value="<?php echo $nilai3; ?>"></td>
+	<td><input type="text" name="nilai3" id="nilai3" size="20" value="<?php echo floatval($nilai3); ?>"></td>
 	<td><input type="text" name="kali3" id="kali3" size="10" value="<?php echo $kali3; ?>"></td>
 </tr>
 <tr>
 	<td><input type="checkbox" name="cb4" id="cb4"></td>
 	<td>4.</td>
-	<td><input type="text" name="nilai4" id="nilai4" size="20" value="<?php echo $nilai4; ?>"></td>
+	<td><input type="text" name="nilai4" id="nilai4" size="20" value="<?php echo floatval($nilai4); ?>"></td>
 	<td><input type="text" name="kali4" id="kali4" size="10" value="<?php echo $kali4; ?>"></td>
 </tr>
 <tr>
 	<td><input type="checkbox" name="cb5" id="cb5"></td>
 	<td>5.</td>
-	<td><input type="text" name="nilai5" id="nilai5" size="20" value="<?php echo $nilai5; ?>"></td>
+	<td><input type="text" name="nilai5" id="nilai5" size="20" value="<?php echo floatval($nilai5); ?>"></td>
 	<td><input type="text" name="kali5" id="kali5" size="10" value="<?php echo $kali5; ?>"></td>
 </tr>
 <tr>
