@@ -18,7 +18,11 @@
 	$cek_auto_akad			= (isset($_REQUEST['cek_auto_akad'])) ? clean($_REQUEST['cek_auto_akad']) : '';
 	// $type					= (isset($_REQUEST['type'])) ? clean($_REQUEST['type']) : '';
 	
-	
+	list($x,$y) = explode("X",$kode_pola_bayar);  // or POST
+
+	 $kode_pola_bayar= $x; // 6
+
+
 	
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
