@@ -10,6 +10,7 @@
 	$kode_bayar				= (isset($_REQUEST['kode_bayar'])) ? clean($_REQUEST['kode_bayar']) : '';
 	// $keterangan				= (isset($_REQUEST['keterangan'])) ? clean($_REQUEST['keterangan']) : '';
 	$kode_pola_bayar		= (isset($_REQUEST['kode_pola_bayar'])) ? clean($_REQUEST['kode_pola_bayar']) : '';
+	$persentase				= (isset($_REQUEST['persentase'])) ? clean($_REQUEST['persentase']) : '';
 	$status_kompensasi		= (isset($_REQUEST['status_kompensasi'])) ? clean($_REQUEST['status_kompensasi']) : '';
 	$uang_muka				= (isset($_REQUEST['uang_muka'])) ? clean($_REQUEST['uang_muka']) : '';
 	$total					= (isset($_REQUEST['total'])) ? clean($_REQUEST['total']) : '';
@@ -137,6 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				}
 				
 				$jumlah_kpr = ($nilai * $nilai_jenis)/100 ;
+				// $jumlah_kpr = $nilai - ($nilai * $persentase)/100 ;
 				$jumlah_kali = $kali1+$kali2+$kali3+$kali4+$kali5;
 				$nilai_fix=0;
 				for($i=0;$i<$jumlah_kali;$i++){				

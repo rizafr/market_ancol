@@ -11,6 +11,8 @@ $blok = (isset($_REQUEST['blok'])) ? clean($_REQUEST['blok']) : '';
 $kode_sk = (isset($_REQUEST['kode_sk'])) ? clean($_REQUEST['kode_sk']) : '';
 $kode_blok = (isset($_REQUEST['kode_blok'])) ? clean($_REQUEST['kode_blok']) : '';
 $cash_keras = (isset($_REQUEST['cash_keras'])) ? bigintval($_REQUEST['cash_keras']) : '';
+$cb12x = (isset($_REQUEST['cb12x'])) ? bigintval($_REQUEST['cb12x']) : '';
+$cb24x = (isset($_REQUEST['cb24x'])) ? bigintval($_REQUEST['cb24x']) : '';
 $cb36x = (isset($_REQUEST['cb36x'])) ? bigintval($_REQUEST['cb36x']) : '';
 $cb48x = (isset($_REQUEST['cb48x'])) ? bigintval($_REQUEST['cb48x']) : '';
 $kpa24x = (isset($_REQUEST['kpa24x'])) ? bigintval($_REQUEST['kpa24x']) : '';
@@ -41,14 +43,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			// ex_empty($harga_bangunan, 'Harga bangunan > 0');
 			// ex_empty($tanggal, 'Pilih tanggal.');
 			
-			$query = "SELECT COUNT(KODE_SK) AS TOTAL FROM HARGA_SK WHERE KODE_SK = '$kode_sk'";
-			ex_found($conn->Execute($query)->fields['TOTAL'], "Kode sk \"$kode_sk\" telah terdaftar.");
+			$query = "SELECT COUNT(KODE_SK) AS TOTAL FROM HARGA_SK WHERE KODE_SK = '$kode_sk' AND KODE_BLOK = '$kode_blok' ";
+			ex_found($conn->Execute($query)->fields['TOTAL'], "Kode sk \"$kode_sk\" dengan blok \"$kode_blok\" telah terdaftar.");
 			
-			$query = "INSERT INTO HARGA_SK (KODE_SK, KODE_BLOK, HARGA_CASH_KERAS, CB36X, CB48X, KPA24X, KPA36X, TANGGAL, STATUS) VALUES 
+			$query = "INSERT INTO HARGA_SK (KODE_SK, KODE_BLOK, HARGA_CASH_KERAS, CB12X, CB24X, CB36X, CB48X, KPA24X, KPA36X, TANGGAL, STATUS) VALUES 
 			(
 				'$kode_sk',
 				'$kode_blok',
 				$cash_keras,
+				$cb12x,
+				$cb24x,
 				$cb36x,
 				$cb48x,
 				$kpa24x,
@@ -82,6 +86,8 @@ $msg = "Data harga sk berhasil ditambahkan.";
 			UPDATE HARGA_SK 
 			SET 
 				HARGA_CASH_KERAS = '$cash_keras',
+				CB12X = '$cb12x',
+				CB24X = '$cb24x',
 				CB36X = '$cb36x',
 				CB48X = '$cb48x',
 				KPA24X = '$kpa24x',
@@ -105,14 +111,18 @@ $msg = "Data harga sk berhasil ditambahkan.";
 			
 			foreach ($cb_data as $id_del)
 			{
-				$querySrc= "SELECT COUNT(KODE_SK) AS TOTAL FROM stok WHERE KODE_SK ='$id_del'";
-				ex_found($conn->Execute($querySrc)->fields['TOTAL'], "Kode SK \'$id_del\' telah terdaftar di stok.");
+				list($x,$y) = explode("X",$id_del);
+				$kode_sk = $x;
+				$kode_blok = $y;
+			
+				$querySrc= "SELECT COUNT(KODE_SK) AS TOTAL FROM stok WHERE KODE_SK ='$kode_sk' AND KODE_BLOK='$kode_blok'";
+				ex_found($conn->Execute($querySrc)->fields['TOTAL'], "Kode SK \'$kode_sk\' dengan blok \'$kode_blok\' telah terdaftar di stok.");
 
 				echo "querySrc";
 
-				$query = "DELETE FROM HARGA_SK WHERE KODE_SK = '$id_del' AND KODE_BLOK='$kode_blok'";
+				$query = "DELETE FROM HARGA_SK WHERE KODE_SK = '$kode_sk' AND KODE_BLOK='$kode_blok'";
 				if ($conn->Execute($query)) {
-					$act[] = $id_del;
+					$act[] = $kode_sk;
 				} else {
 					$error = TRUE;
 				}
@@ -157,6 +167,8 @@ if ($act == 'Ubah')
 		hb.KODE_BLOK,
 		hb.TANGGAL,
 		hb.HARGA_CASH_KERAS,
+		hb.CB12X,
+		hb.CB24X,
 		hb.CB36X,
 		hb.CB48X,
 		hb.KPA24X,
@@ -169,6 +181,8 @@ if ($act == 'Ubah')
 	$kode_sk = $id;
 	$kode_blok = $obj->fields['KODE_BLOK'];
 	$cash_keras = $obj->fields['HARGA_CASH_KERAS'];
+	$cb12x = $obj->fields['CB12X'];
+	$cb24x = $obj->fields['CB24X'];
 	$cb36x = $obj->fields['CB36X'];
 	$cb48x = $obj->fields['CB48X'];
 	$kpa24x = $obj->fields['KPA24X'];

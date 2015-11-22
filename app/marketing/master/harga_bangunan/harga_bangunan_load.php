@@ -70,10 +70,12 @@ $page_start = (($page_num-1) * $per_page);
 	<th class="w5">KODE SK</th>
 	<th class="w10">KODE BLOK</th>
 	<th class="w10">CASH KERAS</th>
+	<th class="w10">CB 12X</th>
+	<th class="w10">CB 24X</th>
 	<th class="w10">CB 36X</th>
 	<th class="w10">CB 48X</th>
-	<th class="w10">KPA 24X 40%</th>
-	<th class="w10">KPA 36X 40%</th>
+	<th class="w10">KPA 24X</th>
+	<th class="w10">KPA 36X</th>
 	<th class="w10">TANGGAL</th>
 	<th class="w5">STATUS</th>
 </tr>
@@ -87,6 +89,8 @@ if ($total_data > 0)
 		hb.KODE_BLOK,
 		hb.TANGGAL,
 		hb.HARGA_CASH_KERAS,
+		hb.CB12X,
+		hb.CB24X,
 		hb.CB36X,
 		hb.CB48X,
 		hb.KPA24X,
@@ -106,10 +110,12 @@ if ($total_data > 0)
 		$kode_blok = $obj->fields['KODE_BLOK'];
 		?>
 		<tr class="onclick" id="<?php echo $id; ?>" blok="<?php echo $kode_blok; ?>">
-			<td width="30" class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
+			<td width="30" class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?= $id."X".$kode_blok ?>"></td>
 			<td class="text-center"><?php echo $id; ?></td>
 			<td><?php echo $obj->fields['KODE_BLOK']; ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['HARGA_CASH_KERAS']); ?></td>
+			<td class="text-right"><?php echo to_money($obj->fields['CB12X']); ?></td>
+			<td class="text-right"><?php echo to_money($obj->fields['CB24X']); ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['CB36X']); ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['CB48X']); ?></td>
 			<td class="text-right"><?php echo to_money($obj->fields['KPA24X']); ?></td>

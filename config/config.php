@@ -31,6 +31,6 @@ define('APP_ROOT', 'C:\\uwamp\\www\\market_ancol\\');
 define('DNS', TRUE);
 
 define('DRIVER', 'mssql');
-define('HOST', 'SYSTEM\SQLEXPRESS');
+define('HOST', 'WAY\SQLEXPRESS');
 define('USR', '');
 define('PWD', '');

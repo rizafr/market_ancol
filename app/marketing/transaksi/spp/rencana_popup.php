@@ -48,22 +48,22 @@ $act			= (isset($_REQUEST['act'])) ? clean($_REQUEST['act']) : '';
 			$("#persentase").val(slideEvt.value);
 		});
 
-		$('#kode_pola_bayar').on('change', function(e) {
-			e.preventDefault();
-			var kode_pola_bayar = $('#kode_pola_bayar').val();
-			var kode_pola = kode_pola_bayar.split("X");
-			//alert(kode_pola[1]);
-			if(kode_pola[1]=='1'){
-				$('#label_persentase').show();
-				$('#label_nilai_persentase').show();
+		// $('#kode_pola_bayar').on('change', function(e) {
+			// e.preventDefault();
+			// var kode_pola_bayar = $('#kode_pola_bayar').val();
+			// var kode_pola = kode_pola_bayar.split("X");
+			// alert(kode_pola[1]);
+			// if(kode_pola[1]=='1'){
+				// $('#label_persentase').show();
+				// $('#label_nilai_persentase').show();
 
-			}else{
-				$('#label_persentase').hide();
-				$('#label_nilai_persentase').hide();
+			// }else{
+				// $('#label_persentase').hide();
+				// $('#label_nilai_persentase').hide();
 
-			}
-			return false;
-		});
+			// }
+			// return false;
+		// });
 
 
 		$('.cek_auto_akad').on('change', function(e) {
@@ -175,7 +175,7 @@ $act			= (isset($_REQUEST['act'])) ? clean($_REQUEST['act']) : '';
 						</select>
 						<td>
 						</tr>
-						<tr id="label_persentase">
+						<!--<tr id="label_persentase">
 							<td>Persentase KPA</td>
 							<td>:</td>
 							<td><input id="ex1" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="30"/></td>
@@ -184,7 +184,7 @@ $act			= (isset($_REQUEST['act'])) ? clean($_REQUEST['act']) : '';
 							<td></td>
 							<td>:</td>
 							<td><input id="persentase" type="text" name="persentase" value="" size="3" readonly/> %</td>
-						</tr>
+						</tr>-->
 						</div>
 						<tr>
 							<td>Tanggal Bayar Awal</td>

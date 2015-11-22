@@ -14,6 +14,8 @@
 	$path = (isset($_FILES['file']['name'])) ? clean($_FILES['file']['name']) : '';
 
 	$harga_cash_keras		= 0;
+	$CB12x					= 0;
+	$CB24x					= 0;
 	$CB36x					= 0;
 	$CB48x					= 0;
 	$KPA24x					= 0;
@@ -123,21 +125,23 @@
       			
       			$tanggal = date("d-m-Y H:i:s");
 				$harga_cash_keras		=  $val[2];
-				$CB36x					=  $val[3];
-				$CB48x					=  $val[4];
-				$KPA24x					=  $val[5];
-				$KPA36x					=  $val[6];
+				$CB12x					=  $val[3];
+				$CB24x					=  $val[4];
+				$CB36x					=  $val[5];
+				$CB48x					=  $val[6];
+				$KPA24x					=  $val[7];
+				$KPA36x					=  $val[8];
 				$status					=	'1';
 
 				
 				
 				$query = "
-				INSERT INTO HARGA_SK (KODE_SK, KODE_BLOK, TANGGAL, STATUS, HARGA_CASH_KERAS, CB36X, CB48X, KPA24X, KPA36X)
+				INSERT INTO HARGA_SK (KODE_SK, KODE_BLOK, TANGGAL, STATUS, HARGA_CASH_KERAS, CB12X, CB24X, CB36X, CB48X, KPA24X, KPA36X)
 					VALUES (
 						'$kode_sk',
 					 	'$kode_blok', 
 						CONVERT(DATETIME,'$tanggal',105), 
-						$status, $harga_cash_keras, $CB36x, $CB48x, $KPA24x, $KPA36x)		
+						$status, $harga_cash_keras, $CB12x, $CB24x, $CB36x, $CB48x, $KPA24x, $KPA36x)		
 				";					
 				ex_false($conn->Execute($query), $query);
 

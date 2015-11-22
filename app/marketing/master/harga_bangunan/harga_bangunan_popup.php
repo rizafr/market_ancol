@@ -28,6 +28,8 @@ jQuery(function($) {
 	$('#kode_sk').inputmask('varchar', { repeat: '15' });
 	$('#kode_blok').inputmask('varchar', { repeat: '15' });
 	$('#cash_keras').inputmask('numeric', { repeat: '12' });
+	$('#cb12x').inputmask('numeric', { repeat: '12' });
+	$('#cb24x').inputmask('numeric', { repeat: '12' });
 	$('#cb36x').inputmask('numeric', { repeat: '12' });
 	$('#cb48x').inputmask('numeric', { repeat: '12' });
 	$('#kpa24x').inputmask('numeric', { repeat: '12' });
@@ -97,6 +99,16 @@ jQuery(function($) {
 <tr>
 	<td>Harga Cash Keras</td><td>:</td>
 	<td><input type="text" class="text-right" name="cash_keras" id="cash_keras" value="<?php if(!isset($cash_keras)){$cash_keras = 0;}echo (($cash_keras)); ?>" size="20"></td>
+</tr>
+
+<tr>
+	<td>Harga CB12x</td><td>:</td>
+	<td><input type="text" name="cb12x" id="cb12x" value="<?php if(!isset($cb12x)){$cb12x = 0;}echo (($cb12x)); ?>" size="20"></td>
+</tr>
+
+<tr>
+	<td>Harga CB24x</td><td>:</td>
+	<td><input type="text" name="cb24x" id="cb24x" value="<?php if(!isset($cb24x)){$cb24x = 0;}echo (($cb24x)); ?>" size="20"></td>
 </tr>
 
 <tr>
