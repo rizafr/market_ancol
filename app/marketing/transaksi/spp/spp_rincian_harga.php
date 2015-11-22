@@ -46,11 +46,11 @@ die_conn($conn);
 		<td>Rp. <?php echo to_money($cb48x); ?></td>
 	</tr>
 	<tr>
-		<td>KPA 24X 40%</td><td>:</td>
+		<td>KPA 24X</td><td>:</td>
 		<td>Rp. <?php echo to_money($kpa24x); ?></td>
 	</tr>
 	<tr>
-		<td>KPA 36X 40%</td><td>:</td>
+		<td>KPA 36X</td><td>:</td>
 		<td>Rp. <?php echo to_money($kpa36x); ?></td>
 	</tr>
 

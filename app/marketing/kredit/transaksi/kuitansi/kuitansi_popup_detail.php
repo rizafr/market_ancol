@@ -54,7 +54,7 @@ function calculate(){
 		
 		awal				= kode_blok.search("/");
 		akhir				= kode_blok.search("-");
-		blok				= kode_blok.slice(awal+1,akhir);
+		blok				= kode_blok.slice(awal+2,akhir);
 		nomor				= kode_blok.slice(akhir+1);
 		
 		if (kode_bayar == 24) {
@@ -75,14 +75,13 @@ function calculate(){
 		} 
 
 		if ((kode_bayar == 25) || (kode_bayar == 26) || (kode_bayar == 27) || (kode_bayar == 28)) {
-		jp = 'Pembayaran '+ jenis_pembayaran + ' ke '+count_rencana+' atas pembelian ' + tanah_bangunan +
+		jp = 'Pembayaran '+ jenis_pembayaran + ' ke '+count_rencana+' atas pembelian Properti ' +
 			 '\ndi ' + lokasi + ' Lantai ' + blok + ' Nomor ' + nomor + ' (TYPE ' + tipe + ') \n' ;
 		}
 		else {
-		jp = 'Pembayaran '+ jenis_pembayaran + ' ke '+count_rencana+ ' atas pembelian ' + tanah_bangunan +
+		jp = 'Pembayaran '+ jenis_pembayaran + ' ke '+count_rencana+ ' atas pembelian Properti '+
 			 '\ndi ' + lokasi + ' Lantai ' + blok + ' Nomor ' + nomor + ' (TYPE ' + tipe + ') \n' +
-			 jenis_pembayaran + ' : Rp. ' + formatNumber(subtotal) + ',-' +
-			 '\nPPN : Rp. ' + formatNumber(ppn) + ',-' ;
+			 jenis_pembayaran + ' : Rp. ' + formatNumber(subtotal+ppn) + ',-';
 		}
 		
 		$('#keterangan').val(jp);
