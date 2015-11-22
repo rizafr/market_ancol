@@ -19,7 +19,7 @@ $id		= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
 	<?php
 	$query = "
 	
-	SELECT NOMOR_KWITANSI, STATUS_KWT, TANGGAL,NILAI, KETERANGAN, CATATAN, TYPE = 'KWITANSI'
+	SELECT NOMOR_KWITANSI, STATUS_KWT, TANGGAL,NILAI, KETERANGAN, CATATAN, TYPE = 'KWITANSI', CATATAN_KWT
 	FROM 
 	KWITANSI
 	WHERE KODE_BLOK = '$id'
@@ -63,7 +63,7 @@ else
 }
 ?>
 
-<td><?php echo $obj->fields['CATATAN'];  ?></td>
+<td><?php echo $obj->fields['CATATAN_KWT'];  ?></td>
 
 </tr>
 <?php

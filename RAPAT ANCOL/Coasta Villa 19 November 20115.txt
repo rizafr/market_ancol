@@ -4,7 +4,9 @@ Pola Pembayaran:
 	CB24X
 	CB36X
 	CB48X
-	KPA36X 30% (BALOON PAYMENT)
-	KPA24X 30%
+	KPA36X (BALOON PAYMENT)
+	KPA36X 	
+	KPA24X 
+	
 
 Menu Utilitas --> Manual Book
