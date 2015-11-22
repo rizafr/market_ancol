@@ -10,7 +10,6 @@ $per_page	= (isset($_REQUEST['per_page'])) ? max(1, $_REQUEST['per_page']) : 20;
 $page_num	= (isset($_REQUEST['page_num'])) ? max(1, $_REQUEST['page_num']) : 1;
 
 $periode_awal		= (isset($_REQUEST['periode_awal'])) ? clean($_REQUEST['periode_awal']) : '';
-$periode_akhir		= (isset($_REQUEST['periode_akhir'])) ? clean($_REQUEST['periode_akhir']) : '';
 $field1				= (isset($_REQUEST['field1'])) ? clean($_REQUEST['field1']) : '';
 $search1			= (isset($_REQUEST['search1'])) ? clean($_REQUEST['search1']) : '';
 
@@ -24,32 +23,10 @@ $array_bulan 		= array(1=>'Januari','Februari','Maret', 'April', 'Mei', 'Juni','
 
 $query_search = '';
 
-if($field1 == 'all')
+if ($search1 != '')
 {
-	if ($periode_awal <> '' || $periode_akhir <> '')
-	{
-		$query_search .= "WHERE a.TANGGAL_SPP >= CONVERT(DATETIME,'$periode_awal',105) AND a.TANGGAL_SPP <= CONVERT(DATETIME,'$periode_akhir',105)";
-	}
+	$query_search .= " WHERE $field1 LIKE '%$search1%' ";
 }
-
-if($field1 == 'kode_blok')
-{
-	$query_search .= "WHERE a.KODE_BLOK = '$search1'";
-
-}
-
-if($field1 == 'spp_distribusi')
-{
-	$query_search .= "WHERE a.TANGGAL_SPP >= CONVERT(DATETIME,'$periode_awal',105) AND a.TANGGAL_SPP <= CONVERT(DATETIME,'$periode_akhir',105) AND a.STATUS_SPP = '1'";
-
-}
-
-if($field1 == 'spp_belum')
-{
-	$query_search .= "WHERE a.TANGGAL_SPP >= CONVERT(DATETIME,'$periode_awal',105) AND a.TANGGAL_SPP <= CONVERT(DATETIME,'$periode_akhir',105) AND a.STATUS_SPP = '2'";
-
-}
-
 
 
 /* Pagination */
@@ -58,7 +35,7 @@ $query = "
 SELECT 
 	COUNT(*) AS TOTAL
 FROM
-	SPP a 
+	SPP
 $query_search
 ";
 
@@ -93,14 +70,13 @@ $page_start = (($page_num-1) * $per_page);
 	<th rowspan="2">TOTAL TRANSAKSI</th>
 	<th rowspan="2">TOTAL BELUM JATUH TEMPO</th>
 	<th rowspan="2">TOTAL SUDAH JATUH TEMPO</th>
-	<th colspan="2">RENCANA BAYAR</th>
+	<th rowspan="2">PEMBAYARAN</th>
+	<th rowspan="2">PIUTANG</th>
 	<th colspan="7">UMUR TAGIHAN SUDAH JATUH TEMPO</th>
 	<th rowspan="2">CARA PEMBAYARAN</th>
 	<th rowspan="2">CATATAN</th>
 </tr>
 <tr>
-	<th colspan="1">Tanggal</th>
-	<th colspan="1">Nilai</th>
 	<th colspan="1">0 to 30</th>
 	<th colspan="1">30 to 60 Hari</th>
 	<th colspan="1">60 to 90</th>
@@ -114,12 +90,12 @@ $page_start = (($page_num-1) * $per_page);
 if ($total_data > 0)
 {
 	$query = "
-	SELECT KODE_BLOK,NAMA_PEMBELI,HARGA_TOTAL,(SELECT SUM(NILAI) FROM RENCANA WHERE TANGGAL > '8/18/2017') AS BELUM_JATUH_TEMPO,
-	(SELECT SUM(NILAI) FROM RENCANA WHERE TANGGAL <= '8/18/2017') AS JATUH_TEMPO,
-	(SELECT SUM(NILAI) FROM REALISASI WHERE TANGGAL <= '8/18/2017') AS BAYARAN
+	SELECT KODE_BLOK,NAMA_PEMBELI,HARGA_TOTAL,(SELECT SUM(NILAI) FROM RENCANA WHERE TANGGAL > CONVERT(DATETIME,'$periode_awal',105)) AS BELUM_JATUH_TEMPO,
+		(SELECT SUM(NILAI) FROM RENCANA WHERE TANGGAL <= CONVERT(DATETIME,'$periode_awal',105)) AS JATUH_TEMPO,
+		(SELECT SUM(NILAI) FROM REALISASI WHERE TANGGAL <= CONVERT(DATETIME,'$periode_awal',105)) AS BAYARAN
 	FROM SPP 
 	$query_search
-	GROUP BY KODE_BLOK	
+	ORDER BY KODE_BLOK ASC
 	";
 	
 	$obj = $conn->selectlimit($query, $per_page, $page_start);
@@ -130,158 +106,22 @@ if ($total_data > 0)
 	{
 		$id 				= $obj->fields['KODE_BLOK'];		
 		$total_harga 		= $obj->fields['HARGA_TOTAL'];
-		
-		$sub_nilai 	= 0;
-		$sub_45		= 0;
-		$sub_4560	= 0;
-		$sub_60		= 0;
+		$belum_jatuh_tempo	= $obj->fields['BELUM_JATUH_TEMPO'];
+		$jatuh_tempo		= $obj->fields['JATUH_TEMPO'];
+		$pembayaran			= $obj->fields['BAYARAN'];
 		?>
-		
-		<?php
-		$query2 = "
-		SELECT COUNT(*) AS TOTAL,
-		TGL = CASE WHEN MIN(TANGGAL) IS null 
-		THEN 0 ELSE MIN(TANGGAL) END
-		FROM RENCANA WHERE KODE_BLOK = '$id'  
-		AND TANGGAL >= CONVERT(DATETIME,'$periode_awal',105) AND TANGGAL <= CONVERT(DATETIME,'$periode_akhir',105)
-		";
-		
-		$obj2 		= $conn->execute($query2);
-		$banyak		= $obj2->fields['TOTAL'];
-		$tgl_awal	= tgltgl(date("d-m-Y", strtotime($obj2->fields['TGL'])));
-		$iterasi	= 1;
-		$isi_data	= 0;
-		
-		if($banyak > 0)
-		{
-		$pecah_tanggal		= explode("-",$tgl_awal);
-		$tgl 				= $pecah_tanggal[0];
-		$bln 				= $pecah_tanggal[1];
-		$thn 				= $pecah_tanggal[2];		
-		}
-		
-		while($iterasi <= $banyak)
-		{
-
-		$query4 = "
-		SELECT COUNT(*) AS TOTAL
-		FROM REALISASI WHERE KODE_BLOK = '$id' AND TANGGAL >= CONVERT(DATETIME,'$tgl-$bln-$thn',105) 
-		AND TANGGAL <= CONVERT(DATETIME,'$periode_akhir',105) 
-		";
-		
-		$obj4 		= $conn->execute($query4);
-		$ada		= $obj4->fields['TOTAL'];
-		
-			if($ada == 0)
-			{
-			?>
-		
 			<tr class="onclick" id="<?php echo $id; ?>"> 
-				<?php if($iterasi == 1)
-				{
-				?>
-					<td><?php echo $obj->fields['KODE_BLOK']; ?></td>
-					<td><?php echo $obj->fields['NAMA_PEMBELI']; ?></td>
-					<td class="text-center"><?php echo to_money($total_harga); ?></td>
-					<?php $tgl = $tgl;?>
-				<?php
-				}
-				else
-				{
-				?>
-					<td></td><td></td><td></td>
-					<?php $tgl = 01;?>
-				<?php
-				}
-				?>
-
 				
-				<?php 
-				
-				$query3 = "
-				SELECT top 1 *
-				FROM RENCANA WHERE KODE_BLOK = '$id' AND TANGGAL >= CONVERT(DATETIME,'$tgl-$bln-$thn',105) AND TANGGAL <= CONVERT(DATETIME,'$periode_akhir',105) 
-				 order by TANGGAL
-				";
-				$obj3 = $conn->execute($query3);
-				$tanggal	= tgltgl(date("d-m-Y", strtotime($obj3->fields['TANGGAL'])));
-				$nilai		= $obj3->fields['NILAI'];
-				$sub_nilai 	= $sub_nilai + $nilai;
-				?>
-				
-				<td class="text-center"><?php echo $tanggal; ?></td>
-				<td class="text-center"><?php echo to_money($nilai); ?></td>
-				
-				<?php 
-				$tanggal_skg 	= f_tgl (date("Y-m-d")); 
-				$time1			= strtotime($tanggal);
-				$time2			= strtotime($tanggal_skg);
-				$selisih		=($time2-$time1)/(60*60*24);
-				
-				if($selisih <= 45)
-				{
-				?>
-					<td class="text-center"><?php echo to_money($nilai); ?></td>
-					<td class="text-center"><?php echo to_money(0); ?></td>
-					<td class="text-center"><?php echo to_money(0); ?></td>
-					<?php $sub_45 	= $sub_45 + $nilai;?>
-				<?php
-				}
-				else if($selisih <=60 && $selisih > 45) 
-				{
-				?>
-					<td class="text-center"><?php echo to_money(0); ?></td>
-					<td class="text-center"><?php echo to_money($nilai); ?></td>
-					<td class="text-center"><?php echo to_money(0); ?></td>
-					<?php $sub_4560 	= $sub_4560 + $nilai;?>
-				<?php
-				}
-				else
-				{
-				?>
-					<td class="text-center"><?php echo to_money(0); ?></td>
-					<td class="text-center"><?php echo to_money(0); ?></td>
-					<td class="text-center"><?php echo to_money($nilai); ?></td>
-					<?php $sub_60 	= $sub_60 + $nilai;?>
-				<?php
-				}
-				
-				$isi_data++;
-			}
-				?>
-				
+				<td><?php echo $obj->fields['KODE_BLOK']; ?></td>
+				<td><?php echo $obj->fields['NAMA_PEMBELI']; ?></td>
+				<td class="text-center"><?php echo to_money($total_harga); ?></td>
+				<td class="text-center"><?php echo to_money($belum_jatuh_tempo); ?></td>
+				<td class="text-center"><?php echo to_money($jatuh_tempo); ?></td>
+				<td class="text-center"><?php echo to_money($pembayaran); ?></td>
+				<td class="text-center"><?php echo to_money($jatuh_tempo-$pembayaran); ?></td>
+		
 			</tr>
-			<?php
-			$bln++;
-			$iterasi++;
 			
-			if($bln > 12)
-			{
-				$bln 	= $bln % 12;
-				$thn 	= $thn + 1; 
-			}
-				
-			
-		}
-		?>
-
-		<?php
-		if($isi_data > 0)
-		{
-		?>
-			<tr>
-				<td></td>
-				<td class="text-right">Sub Total</td>
-				<td></td>
-				<td></td>
-				<td class="text-center"><?php echo to_money($sub_nilai); ?></td>
-				<td class="text-center"><?php echo to_money($sub_45); ?></td>
-				<td class="text-center"><?php echo to_money($sub_4560); ?></td>
-				<td class="text-center"><?php echo to_money($sub_60); ?></td>
-			</tr>
-		<?php
-		}	
-		?>
 		
 		<?php
 		$i++;
