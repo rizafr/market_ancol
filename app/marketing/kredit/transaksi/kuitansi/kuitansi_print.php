@@ -11,6 +11,8 @@ $terbilang 	= new Terbilang;
 $id			= (isset($_REQUEST['id'])) ? base64_decode(clean($_REQUEST['id'])) : '';
 $catatan_kwt= (isset($_REQUEST['catatan_kwt'])) ? (clean($_REQUEST['catatan_kwt'])) : '';
 
+
+
 $query = "
 SELECT * 
 FROM KWITANSI
@@ -34,7 +36,7 @@ WHERE NOMOR_KWITANSI = '$id'
 ";
 ex_false($conn->Execute($query), $query);
 
-
+// INSERT KE TABLE REALISASI
 $query = " SELECT COUNT(*) AS TOTAL FROM REALISASI WHERE NOMOR_KWITANSI = '$id' ";
 $obj = $conn->execute($query);
 $total	 = $obj->fields['TOTAL'];	
@@ -45,12 +47,107 @@ if($total == 0)
 	INSERT INTO REALISASI (
 		KODE_BLOK, TANGGAL, NILAI, NOMOR_KWITANSI, KODE_BAYAR, KETERANGAN
 		)
-	VALUES(
+VALUES(
 	'$kode_blok', CONVERT(DATETIME,'$tgl_bayar',105), $nilai, '$id', '$kode_bayar', '$keterangan'
 	)
 ";
 ex_false($conn->execute($query), $query);
 }
+// END INSERT KE TABLE REALISASI
+
+//BEGIN INSERT KE TABLE CUSTOMER
+
+$query = "
+SELECT * 
+FROM SPP
+WHERE KODE_BLOK = '$kode_blok'
+";
+$obj = $conn->execute($query);
+
+
+$CustID = $obj->fields['COSTUMER_ID'] ;
+$Old_ID= '-';
+$CustName=$obj->fields['NAMA_PEMBELI'];
+$Adress=$obj->fields['ALAMAT_RUMAH'];
+$PostCode='-';
+$Phones=$obj->fields['TELP_LAIN'];
+$Telex=0;
+$Fax=$obj->fields['NO_FAX'];
+$email=$obj->fields['ALAMAT_EMAIL'];
+$TaxID=$obj->fields['NPWP'];
+$TaxName=$obj->fields['NAMA_PEMBELI'];
+$TaxAdress=$obj->fields['ALAMAT_NPWP'];
+$City='-';
+$State='-';
+
+// INSERT KE TABLE REALISASI
+$query = " SELECT COUNT(*) AS TOTAL FROM CUSTOMER WHERE CustID = '$CustID' ";
+$obj = $conn->execute($query);
+$total	 = $obj->fields['TOTAL'];	
+
+if($total == 0)
+{			
+
+	$query="INSERT INTO CUSTOMER (CustID, Old_ID, CustName, Address, PostCode, Phones, Telex, Fax, email, TaxID, TaxName, TaxAdress, City, State)
+	VALUES ('$CustID', '$Old_ID', '$CustName', '$Adress', '$PostCode', '$Phones', '$Telex', '$Fax', '$email', '$TaxID', '$TaxName', '$TaxAdress', '$City', '$State')";
+	ex_false($conn->execute($query), $query);
+}else{
+	$query="
+	UPDATE CUSTOMER
+	SET Old_ID = '$Old_ID',
+		CustName = '$CustName',
+		Address = '$Adress',
+		PostCode = '$PostCode',
+		Phones = '$Phones',
+		Telex = '$Telex',
+		Fax = '$Fax',
+		email = '$email',
+		TaxID = '$TaxID',
+		TaxName = '$TaxName',
+		TaxAdress = '$TaxAdress',
+		City = '$City',
+		State = '$State'
+	WHERE CustID='$CustID'
+	";
+	ex_false($conn->Execute($query), $query);
+}
+
+// END INSERT KE TABLE CUSTOMER
+
+//BEGIN INSERT KE TABLE INVOICE
+$SiteID=1;
+$EntityID=32;
+$Tr=explode('/',$id);
+$TrNo_Prop=$Tr[0];
+$Trno='-';
+$TrManualRef='Manual';
+$TrDate=$tgl_bayar;
+$TrType='S32KV';
+$CustID=$CustID;
+$TaxCalc=1;
+$HeaderNote=$keterangan;
+$FooterNote=$catatan_kwt;
+$Taxable=$nilai;
+$Tax=$nilai-($nilai/1.1);
+$Netamt=$nilai/1.1;
+
+// INSERT KE TABLE REALISASI
+$query = " SELECT COUNT(*) AS TOTAL FROM INVOICE WHERE TrNo_Prop = '$TrNo_Prop' ";
+$obj = $conn->execute($query);
+$total	 = $obj->fields['TOTAL'];	
+
+if($total == 0)
+{			
+
+
+	$query="INSERT INTO INVOICE (SiteID, EntityID, TrNo_Prop, Trno, TrManualRef, TrDate, TrType, CustID, TaxCalc, HeaderNote, FooterNote, Taxable, Tax, Netamt)
+	VALUES ('$SiteID', '$EntityID', '$TrNo_Prop', '$Trno', '$TrManualRef',CONVERT(DATETIME,'$TrDate',105), '$TrType', '$CustID', '$TaxCalc', '$HeaderNote', '$FooterNote', $Taxable, $Tax, $Netamt)";
+	ex_false($conn->execute($query), $query);
+}
+// END INSERT KE TABLE INVOICE
+
+
+
 
 ?>
 
@@ -148,10 +245,10 @@ ex_false($conn->execute($query), $query);
 <body onload="window.print()">
 	<div id = 'page'>
 		<table width="100%" border="0">
-			 <tr>
-                    <td width="90%" colspan="2"><div id = 'logo_ancol'><img src="../../../../../images/header_kiri.jpg" id = "logo_ancol_gambar"/></div></td>
-                    <td><div id = 'logo_seafront'><img src="../../../../../images/header_kanan.jpg" id = "logo_seafront_gambar"/></div></td>
-              </tr>
+			<tr>
+				<td width="90%" colspan="2"><div id = 'logo_ancol'><img src="../../../../../images/header_kiri.jpg" id = "logo_ancol_gambar"/></div></td>
+				<td><div id = 'logo_seafront'><img src="../../../../../images/header_kanan.jpg" id = "logo_seafront_gambar"/></div></td>
+			</tr>
 			<tr>
 				<td colspan="2"></td>
 				<td><div id = 'id_kwitansi'><a>No. <?php echo $id; ?></a></div></td>
