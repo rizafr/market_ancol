@@ -1,4 +1,4 @@
-<div class="title-page">MASTER JENIS ADDENDUM PPJB</div>
+<div class="title-page">MASTER JENIS PAIJB</div>
 
 <form name="form" id="form" method="post">
 <table class="t-control wauto">
@@ -7,7 +7,7 @@
 	<td>
 		<select name="field1" id="field1" class="wauto">
 			<option value="KODE_JENIS"> KODE </option>
-			<option value="NAMA_JENIS"> JENIS ADDENDUM PPJB </option>
+			<option value="NAMA_JENIS"> JENIS PAIJB </option>
 			<option value="NAMA_FILE"> NAMA FILE </option>
 		</select>
 		<input type="text" name="search1" id="search1" class="apply" value="">
@@ -99,7 +99,7 @@ function loadData()
 function showPopup(act, id)
 {
 	var url =	base_marketing + 'ppjb/master/jappjb/jappjb_popup.php' + '?act=' + act + '&id=' + id;
-	setPopup(act + ' Jenis Addendum PPJB', url, 500, 200);	
+	setPopup(act + ' Jenis PAIJB', url, 900, 350);	
 	return false;
 }
 

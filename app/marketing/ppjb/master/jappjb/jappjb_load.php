@@ -23,7 +23,7 @@ $query = "
 SELECT 
 	COUNT(KODE_JENIS) AS TOTAL
 FROM 
-	CS_JENIS_PPJB_ADDENDUM
+	CS_JENIS_PAIJB
 $query_search
 ";
 $total_data = $conn->execute($query)->fields['TOTAL'];
@@ -54,7 +54,7 @@ $page_start = (($page_num-1) * $per_page);
 <tr>
 	<th class="w5"><input type="checkbox" id="cb_all"></th>
 	<th class="w5">KODE</th>
-	<th class="w30">JENIS ADDENDUM PPJB</th>
+	<th class="w30">JENIS PAIJB</th>
 	<th class="w70">NAMA FILE</th>
 </tr>
 
@@ -64,7 +64,7 @@ if ($total_data > 0)
 	$query = "
 	SELECT *
 	FROM 
-		CS_JENIS_PPJB_ADDENDUM
+		CS_JENIS_PAIJB
 	$query_search
 	ORDER BY KODE_JENIS
 	";

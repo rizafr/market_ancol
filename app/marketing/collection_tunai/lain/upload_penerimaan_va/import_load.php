@@ -51,7 +51,7 @@
 			<?php
 				
 				$uploaded_file = $path . "upload.$ext";
-				echo $uploaded_file;
+				//echo $uploaded_file;
 				if ( ! file_exists($uploaded_file))
 				{
 					echo '<tr><td colspan="14">Error. File import tidak ditemukan.</td></tr>';
