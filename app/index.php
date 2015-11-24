@@ -77,7 +77,7 @@
 				</ul>
 				<div id="profil">
 					<a href="index.php"><?php echo $_SESSION['FULL_NAME']; ?></a> | 
-					<a href="<?php echo BASE_URL; ?>app/authentic.php?act=logout">Logout</a>
+					<a href="authentic.php?act=logout">Logout</a>
 				</div>
 				<div class="clear"></div>
 			</div>

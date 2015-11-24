@@ -30,6 +30,7 @@ jQuery(function($) {
 		$('#print').hide();	
 	}else{
 		$('#daftar').hide();	
+		$('#print').hide();	
 	}	
 	
 

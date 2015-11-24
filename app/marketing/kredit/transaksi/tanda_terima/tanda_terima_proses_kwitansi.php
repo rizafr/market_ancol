@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					}
 					$jumlah =  intval($tanda_jadi);
 				}
-				$keterangan		= 'Pembayaran TANDA JADI atas pembelian '.$bangunan.' di '.$lokasi.' Blok '.$blok.' Nomor '.$nomor.' (TYPE '.$tipe.')'.' nilai : Rp. '.to_money($jumlah).',-'.' PPN : Rp. '.to_money($ppn).',-';
+				$keterangan		= 'Pembayaran TANDA JADI atas pembelian '.$bangunan.' di '.$lokasi.' Blok '.$kode_blok.'(TYPE '.$tipe.')'.' nilai : Rp. '.to_money($jumlah).',-'.' PPN : Rp. '.to_money($ppn).',-';
 
 				$query = "SELECT COUNT(KODE_BLOK) AS TOTAL FROM KWITANSI_TANDA_TERIMA WHERE KODE_BLOK = '$kode_blok' AND STATUS_KWT = '1'";
 				$total = $conn->Execute($query)->fields['TOTAL'];
@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$total = $conn->Execute("SELECT COUNT(KODE_BLOK) AS TOTAL FROM KWITANSI_LAIN_LAIN WHERE NOMOR_KWITANSI = '$id' ")->fields['TOTAL'];
 				ex_found($total, "Kwitansi Sudah Ada");
 	
-				$keterangan			= 'Pembayaran '.$pembayaran.' atas pembelian '.$bangunan.' di '.$lokasi.' Blok '.$blok.' Nomor '.$nomor.' (TYPE '.$tipe.')';
+				$keterangan			= 'Pembayaran '.$pembayaran.' atas pembelian '.$bangunan.' di '.$lokasi.' Blok '.$kode_blok.' (TYPE '.$tipe.')';
 								
 				$query2 = "
 				INSERT INTO KWITANSI_LAIN_LAIN (
