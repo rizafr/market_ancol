@@ -27,11 +27,12 @@
 </li>
 <li><a href="">PPJB<span></span></a>
 	<ul>
+		<!--
 		<li><a href="<?php echo base64_encode('A01_kelurahan'); ?>">Kelurahan</a></li>
-		<li><a href="<?php echo base64_encode('A01_kecamatan'); ?>">Kecamatan</a></li>
-		<li><a href="<?php echo base64_encode('A01_jenis_ppjb'); ?>">Jenis PPJB</a></li>
-		<li><a href="<?php echo base64_encode('A01_jenis_add_ppjb'); ?>">Jenis Addendum PPJB</a></li>
 		<li><a href="<?php echo base64_encode('A01_tipe_bangunan'); ?>">Tipe Bangunan</a></li>
+		<li><a href="<?php echo base64_encode('A01_kecamatan'); ?>">Kecamatan</a></li>-->
+		<li><a href="<?php echo base64_encode('A01_jenis_add_ppjb'); ?>">Jenis PAIJB</a></li>
+		<li><a href="<?php echo base64_encode('A01_jenis_ppjb'); ?>">Jenis PPJB</a></li>
 	</ul>
 </li>
 </ul>	
