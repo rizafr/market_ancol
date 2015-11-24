@@ -13,11 +13,16 @@ $periode_awal		= (isset($_REQUEST['periode_awal'])) ? clean($_REQUEST['periode_a
 $field1				= (isset($_REQUEST['field1'])) ? clean($_REQUEST['field1']) : '';
 $search1			= (isset($_REQUEST['search1'])) ? clean($_REQUEST['search1']) : '';
 
+$tanggal_awl		= explode("-",$periode_awal);
+$tgl_awl			= $tanggal_awl[0];
+$bln_awl			= $tanggal_awl[1];
+$thn_awl			= $tanggal_awl[2];
+
 $tanggal 			= f_tgl (date("Y-m-d"));
-$pecah_tanggal		= explode("-",$tanggal);
-$tgl 				= $pecah_tanggal[0];
-$bln 				= $pecah_tanggal[1];
-$thn 				= $pecah_tanggal[2];
+$tanggal_skg		= explode("-",$tanggal);
+$tgl_skg			= $tanggal_skg[0];
+$bln_skg			= $tanggal_skg[1];
+$thn_skg			= $tanggal_skg[2];
 $array_bulan 		= array(1=>'Januari','Februari','Maret', 'April', 'Mei', 'Juni','Juli','Agustus','September','Oktober', 'November','Desember'); 
 	
 
@@ -90,7 +95,7 @@ $page_start = (($page_num-1) * $per_page);
 if ($total_data > 0)
 {
 	$query = "
-	SELECT KODE_BLOK,NAMA_PEMBELI,HARGA_TOTAL,(SELECT SUM(NILAI) FROM RENCANA WHERE TANGGAL > CONVERT(DATETIME,'$periode_awal',105)) AS BELUM_JATUH_TEMPO,
+	SELECT KODE_BLOK,NAMA_PEMBELI,HARGA_TOTAL,TANDA_JADI,(SELECT SUM(NILAI) FROM RENCANA WHERE TANGGAL > CONVERT(DATETIME,'$periode_awal',105)) AS BELUM_JATUH_TEMPO,
 		(SELECT SUM(NILAI) FROM RENCANA WHERE TANGGAL <= CONVERT(DATETIME,'$periode_awal',105)) AS JATUH_TEMPO,
 		(SELECT SUM(NILAI) FROM REALISASI WHERE TANGGAL <= CONVERT(DATETIME,'$periode_awal',105)) AS BAYARAN
 	FROM SPP 
@@ -106,6 +111,7 @@ if ($total_data > 0)
 	{
 		$id 				= $obj->fields['KODE_BLOK'];		
 		$total_harga 		= $obj->fields['HARGA_TOTAL'];
+		$tanda_jadi 		= $obj->fields['TANDA_JADI'];
 		$belum_jatuh_tempo	= $obj->fields['BELUM_JATUH_TEMPO'];
 		$jatuh_tempo		= $obj->fields['JATUH_TEMPO'];
 		$pembayaran			= $obj->fields['BAYARAN'];
@@ -116,9 +122,9 @@ if ($total_data > 0)
 				<td><?php echo $obj->fields['NAMA_PEMBELI']; ?></td>
 				<td class="text-center"><?php echo to_money($total_harga); ?></td>
 				<td class="text-center"><?php echo to_money($belum_jatuh_tempo); ?></td>
-				<td class="text-center"><?php echo to_money($jatuh_tempo); ?></td>
+				<td class="text-center"><?php echo to_money($jatuh_tempo+$tanda_jadi); ?></td>
 				<td class="text-center"><?php echo to_money($pembayaran); ?></td>
-				<td class="text-center"><?php echo to_money($jatuh_tempo-$pembayaran); ?></td>
+				<td class="text-center"><?php echo to_money(($jatuh_tempo+$tanda_jadi)-$pembayaran); ?></td>
 		
 			</tr>
 			
