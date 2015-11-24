@@ -117,8 +117,8 @@ jQuery(function($) {
 
 ?>
 <tr>
-	<td>TOTAL</td>
-	<td><?php echo to_money($total+$tanda_jadi);?></td>
+	<td>Harga Pemesanan</td>
+	<td><?php $harga = $total+$tanda_jadi ;echo to_money($harga);?></td>
 	<td></td>
 
 </tr>
@@ -169,7 +169,7 @@ jQuery(function($) {
 </tr>
 <tr>
 	<th lass="text-center">SISA</th>
-	<td class="text-right"><?php echo to_money($sisa_pembayaran - $obj->fields['TOTAL']);  ?></td>
+	<td class="text-right"><?php echo to_money($harga - $obj->fields['TOTAL']);  ?></td>
 </tr>
 </table>
 

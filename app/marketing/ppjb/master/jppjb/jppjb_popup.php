@@ -18,6 +18,26 @@ require_once('jppjb_proses.php');
 <script type="text/javascript" src="../../../../../plugin/js/zebra_datepicker.js"></script>
 <script type="text/javascript" src="../../../../../config/js/main.js"></script>
 <script type="text/javascript">
+
+	function setvalueuplfile(v,n,f) { 
+		if (f!="") {
+			var pass=false;
+			var af=f.split("/");
+			var nval=eval("document.forms[0]."+n);
+			var ext=v.substring(v.lastIndexOf(".")+1,v.length);
+			if ((ext==f)||(ext=='doc')||(ext=='docx')||(ext=='DOC')||(ext=='DOCX')){ 
+				//document.forms[0].a_file.value=v; 
+			}
+			else{
+				alert ("Hanya untuk file berekstensi '"+f+"'");
+				nval.value="";
+				document.forms[0].a_file.value=""; 
+				return;	  
+			}
+		}
+	}
+</script>
+<script type="text/javascript">
 $(function() {
 	$('#kode_jenis').inputmask('numeric', { repeat: '3' });
 	$('#nama_jenis').inputmask('varchar', { repeat: '30' });
@@ -27,31 +47,86 @@ $(function() {
 		e.preventDefault();
 		return parent.loadData();
 	});
+
+	$('#data_upload').change(function() {
+				var filename = $('#data_upload').val();
+				if (filename.substring(3,11) == 'fakepath' )    { 
+					filename = filename.substring(12); 
+			        }// remove c:\fake at beginning from localhost chrome
+			        $('#nama_file').val(filename);
+			 });
+
 	
-	$('#save').on('click', function(e) {
-		e.preventDefault();
-		var url		= base_marketing + 'ppjb/master/jppjb/jppjb_proses.php',
-			data	= $('#form').serialize();
+	// $('#save').on('click', function(e) {
+	// 	e.preventDefault();
+	// 	var url		= base_marketing + 'ppjb/master/jppjb/jppjb_proses.php',
+	// 		data	= $('#form').serialize();
 			
-		$.post(url, data, function(data) {			
-			if (data.error == true)
-			{
-				alert(data.msg);
-			}
-			else
-			{
-				if (data.act == 'Tambah')
-				{
+	// 	$.post(url, data, function(data) {			
+	// 		if (data.error == true)
+	// 		{
+	// 			alert(data.msg);
+	// 		}
+	// 		else
+	// 		{
+	// 			if (data.act == 'Tambah')
+	// 			{
+	// 				alert(data.msg);
+	// 				$('#reset').click();
+	// 			}
+	// 			else if (data.act == 'Ubah')
+	// 			{
+	// 				alert(data.msg);
+	// 				parent.loadData();
+	// 			}
+	// 		}
+	// 	}, 'json');		
+	// 	return false;
+	// });
+
+	$("#form").submit(function(){
+
+		var formData = new FormData($(this)[0]);
+		var data	= $('#form').serialize();
+		var url		= base_marketing + 'ppjb/master/jppjb/jppjb_proses.php';
+		$.ajax({
+			url: url,
+			type: 'POST',
+			//data: data,
+			data: new FormData(this),
+			 dataType: "json",
+	        contentType: "application/json; charset=utf-8",
+			  async: true,
+			success: function (data) {
+				//alert(data);
+				if (data.error == true)
+				{	
+
 					alert(data.msg);
-					$('#reset').click();
 				}
-				else if (data.act == 'Ubah')
+				else
 				{
-					alert(data.msg);
-					parent.loadData();
-				}
-			}
-		}, 'json');		
+					if (data.act == 'Tambah')
+					{
+						alert(data.msg);
+						$('#reset').click();
+						parent.loadData();
+					}
+					else if (data.act == 'Ubah')
+					{
+						alert(data.msg);
+						parent.loadData();
+					}
+				}				
+			},
+			error: function(data) {
+				alert(data.error);
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+
 		return false;
 	});
 });
@@ -59,7 +134,7 @@ $(function() {
 </head>
 <body class="popup">
 
-<form name="form" id="form" method="post">
+<form name="form" id="form" method="post" enctype="multipart/form-data">
 <table class="t-popup">
 <tr>
 	<td width="100">Kode</td><td>:</td>
@@ -71,7 +146,19 @@ $(function() {
 </tr>
 <tr>
 	<td>Nama File</td><td>:</td>
-	<td><input type="text" name="nama_file" id="nama_file" size="40" value="<?php echo $nama_file; ?>"></td>
+	<td><input type="text" name="nama_file" id="nama_file" size="40" value="<?php echo $nama_file; ?>" readonly></td>
+</tr>
+<tr>
+	<td>Pilih File Template:</td><td>:</td>
+	<td  width="420">
+		<!--<input type="file" name="file" id="file" onChange="setvalueuplfile(this.value,'file','xls')" required />-->
+		<input type="file" name="data_upload" id="data_upload" onChange="setvalueuplfile(this.value,'data_upload', 'doc')" required="true">
+	</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td width="120"><i>*Hanya files dengan ekstensi doc atau docx</i></td>
 </tr>
 <tr>
 	<td colspan="3" class="td-action text-center">

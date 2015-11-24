@@ -205,14 +205,13 @@ if ($jml_kpr > 0) {
 	<td class="text-center"><?php echo $i; ?></td>
 	<td class="text-right"></td>
 	<td class="text-right"><?php echo to_money($jml_kpr);  ?></td>
-	<td>K.P.R</td>
+	<td>KPA</td>
 </tr>
-</table>
 <?php } ?>
 
 <tr>
-	<td class="text-center" colspan="2">TOTAL</td>
-	<td><?php echo to_money($total+$tanda_jadi);?></td>
+	<td class="text-center" colspan="2">HARGA PEMESANAN</td>
+	<td><?php $harga= $total+$tanda_jadi;echo to_money($harga);?></td>
 
 </tr>
 </table>
@@ -269,7 +268,7 @@ if ($jml_kpr > 0) {
 </tr>
 <tr>
 	<th colspan=2 lass="text-center">SISA</th>
-	<td class="text-right"><?php echo to_money($sisa_pembayaran - $obj->fields['TOTAL']);  ?></td>
+	<td class="text-right"><?php echo to_money($harga-$obj->fields['TOTAL']);  ?></td>
 </tr>
 </table>
 
