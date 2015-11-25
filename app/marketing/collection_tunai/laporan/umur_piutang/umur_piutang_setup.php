@@ -15,7 +15,7 @@
 
 <tr>	
 	<td width="100">Periode</td><td width="10">:</td>
-	<td><input type="text" name="periode_awal" id="periode_awal" class="apply dd-mm-yyyy" size="15" value="<?php echo date('d-m-Y') ?>"></td>
+	<td><input type="text" name="periode_awal" id="periode_awal" class="apply mm-yyyy" size="15" value="<?php echo date('d-m-Y') ?>"></td>
 </tr>
 <tr>
 	<td>Jumlah Baris</td><td>:</td>
