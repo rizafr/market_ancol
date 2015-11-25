@@ -119,6 +119,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND $act == 'login')
 elseif ($act == 'logout') {
 	echo "<script>alert(test) </script>";
 	session_destroy();
+	$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+	//echo '<script>window.location.href="http://192.168.1.100:81/market_ancol"</script>';
 	header('location: ' . BASE_URL);
 }
 
