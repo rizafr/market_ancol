@@ -10,6 +10,10 @@ $nm 	= (isset($_REQUEST['nm'])) ? clean($_REQUEST['nm']) : '';
 
 $nomor_id	 	= (isset($_REQUEST['nomor_id'])) ? clean($_REQUEST['nomor_id']) : '';
 $nama 			= (isset($_REQUEST['nama'])) ? clean($_REQUEST['nama']) : '';
+$no_telp 			= (isset($_REQUEST['no_telp'])) ? clean($_REQUEST['no_telp']) : '';
+$email 			= (isset($_REQUEST['email'])) ? clean($_REQUEST['email']) : '';
+$npwp 			= (isset($_REQUEST['npwp'])) ? clean($_REQUEST['npwp']) : '';
+$nomor_kartu_identitas		= (isset($_REQUEST['nomor_kartu_identitas'])) ? clean($_REQUEST['nomor_kartu_identitas']) : '';
 $alamat 		= (isset($_REQUEST['alamat'])) ? clean($_REQUEST['alamat']) : '';
 $jabatan		= (isset($_REQUEST['jabatan'])) ? to_number($_REQUEST['jabatan']) : '';
 
@@ -55,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			}
 
 
-			$query = "INSERT INTO CLUB_PERSONAL (NOMOR_ID, NAMA, ALAMAT, JABATAN_KLUB)
-			VALUES('$hasil', '$nama', '$alamat', '$jabatan')";
+			$query = "INSERT INTO CLUB_PERSONAL (NOMOR_ID, NAMA,NOMOR_TELEPON,EMAIL,NPWP, NOMOR_KARTU_IDENTITAS,ALAMAT, JABATAN_KLUB)
+			VALUES('$hasil', '$nama', '$no_telp', '$email', '$npwp', '$nomor_kartu_identitas', '$alamat', '$jabatan')";
 			ex_false($conn->Execute($query), $query);		
 			$msg = "Data Koordinator telah ditambahkan.";
 		}
@@ -84,7 +88,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$query = "
 			UPDATE CLUB_PERSONAL
 			SET NOMOR_ID 	= '$nomor_id',
-				NAMA	 	= '$nama',
+				NAMA	 	= '$nama',				
+				NOMOR_TELEPON	 	= '$no_telp',
+				EMAIL	 			= '$email',
+				NPWP	 			= '$npwp',
+				NOMOR_KARTU_IDENTITAS	 	= '$nomor_kartu_identitas',
 				ALAMAT		= '$alamat',	
 				JABATAN_KLUB= '$jabatan'
 			WHERE
@@ -144,7 +152,11 @@ if ($act == 'Ubah')
 {
 	$obj = $conn->Execute("SELECT * FROM CLUB_PERSONAL WHERE NOMOR_ID = '$id'");
 	$nomor_id	= $obj->fields['NOMOR_ID'];
-	$nama		= $obj->fields['NAMA'];
+	$nama		= $obj->fields['NAMA'];	
+	$no_telp	= $obj->fields['NOMOR_TELEPON'];
+	$email		= $obj->fields['EMAIL'];
+	$npwp		= $obj->fields['NPWP'];
+	$nomor_kartu_identitas		= $obj->fields['NOMOR_KARTU_IDENTITAS'];
 	$alamat		= $obj->fields['ALAMAT'];
 	$jabatan	= $obj->fields['JABATAN_KLUB'];
 

@@ -57,8 +57,12 @@ $page_start = (($page_num-1) * $per_page);
 <table class="t-data w90">
 <tr>
 	<th class="w5"><input type="checkbox" id="cb_all"></th>
-	<th class="w10">NOMOR ID</th>
-	<th class="w25">NAMA</th>
+	<th class="w8">ID</th>
+	<th class="w20">NAMA</th>
+	<th class="w15">NO TELP</th>
+	<th class="w10">EMAIL</th>
+	<th class="w10">NPWP</th>
+	<th class="w10">NO KTP</th>
 	<th class="w50">ALAMAT</th>
 	<th class="w10">JABATAN</th>
 </tr>
@@ -68,7 +72,7 @@ if ($total_data > 0)
 {
 	$query = "
 	SELECT 
-		NOMOR_ID, case When ALAMAT is null then '' else ALAMAT end as ALAMAT, NAMA, JABATAN_KLUB
+		NOMOR_ID, case When ALAMAT is null then '' else ALAMAT end as ALAMAT, NAMA,NOMOR_TELEPON, EMAIL, NPWP,NOMOR_KARTU_IDENTITAS ,JABATAN_KLUB
 	FROM 
 		CLUB_PERSONAL
 	WHERE	
@@ -91,6 +95,10 @@ if ($total_data > 0)
 			<td width="30" class="notclick text-center"><input type="checkbox" name="cb_data[]" class="cb_data" value="<?php echo $id; ?>"></td>
 			<td class="text-center"><?php echo $id; ?></td>
 			<td><?php echo $obj->fields['NAMA']; ?></td>
+			<td><?php echo $obj->fields['NOMOR_TELEPON']; ?></td>
+			<td><?php echo $obj->fields['EMAIL']; ?></td>
+			<td><?php echo $obj->fields['NPWP']; ?></td>
+			<td><?php echo $obj->fields['NOMOR_KARTU_IDENTITAS']; ?></td>
 			<td><?php echo $obj->fields['ALAMAT']; ?></td>
 			<td class="text-left"><?php echo $jabatan ?></td>
 		</tr>

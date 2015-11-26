@@ -87,14 +87,31 @@ jQuery(function($) {
 <tr>
 	<!--<td width="">Nomor ID</td><td>:</td>-->
 	<td><input type="hidden" name="nomor_id" id="nomor_id" size="15" value="<?php echo $nomor_id; ?>"></td>
+	<td><input type="hidden" name="nomor_id" id="nomor_id" size="15" value="<?php echo $nomor_id; ?>"></td>
 </tr>
 <tr>
 	<td>Nama</td><td>:</td>
 	<td><input type="text" name="nama" id="nama" size="40" value="<?php echo $nama; ?>"></td>
 </tr>
 <tr>
+	<td>No Telp</td><td>:</td>
+	<td><input type="text" name="no_telp" id="no_telp" size="40" value="<?php echo $no_telp; ?>"></td>
+</tr>
+<tr>
+	<td>Email</td><td>:</td>
+	<td><input type="text" name="email" id="email" size="40" value="<?php echo $email; ?>"></td>
+</tr>
+<tr>
+	<td>NPWP</td><td>:</td>
+	<td><input type="text" name="npwp" id="npwp" size="40" value="<?php echo $npwp; ?>"></td>
+</tr>
+<tr>
+	<td>No KTP</td><td>:</td>
+	<td><input type="text" name="nomor_kartu_identitas" id="nomor_kartu_identitas" size="40" value="<?php echo $nomor_kartu_identitas; ?>"></td>
+</tr>
+<tr>
 	<td>Alamat</td><td>:</td>
-	<td><input type="text" name="alamat" id="alamat" size="50" value="<?php echo $alamat; ?>"></td>
+	<td><textarea name="alamat" id="alamat" ><?php echo $alamat; ?></textarea></td>
 </tr>
 <!--<tr>
 	<td>Jabatan</td><td>:</td>
