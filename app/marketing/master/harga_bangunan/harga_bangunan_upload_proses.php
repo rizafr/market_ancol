@@ -61,9 +61,7 @@
 			move_uploaded_file($_FILES['data_upload']['tmp_name'], './' . $_FILES['data_upload']['name']);
 			// Load PHPExcel
 
-			if(file_exists($file_name)){
-				echo 'tidak ada';
-			}
+			
 			$objPHPExcel = PHPExcel_IOFactory::load($file_name);
 
 			foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
@@ -157,6 +155,9 @@
 			//@unlink($file_name);
 			$msg = " Data berhasil diupload \n ". $jumlah_berhasil." data baru \n ". $jumlah_gagal." data replace " ;
 			
+			if(file_exists($file_name)){
+				@unlink($file_name);
+			}
 			
 		}
 		catch(Exception $e)

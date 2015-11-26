@@ -213,7 +213,7 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 			// loadData1();
 			return false;
 		}
-		
+
 		//disable jika sudah diotoritas
 		$('input:radio[name="status_spp"]').change(function(e){
 			e.preventDefault();
