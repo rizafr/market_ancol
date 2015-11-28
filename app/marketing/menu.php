@@ -13,7 +13,8 @@
 		LEFT JOIN APPLICATIONS a ON a.APP_ID = m.APP_ID
 		LEFT JOIN APPLICATION_MENU am ON am.MENU_ID = m.MENU_ID
 		LEFT JOIN USER_APPLICATIONS ua ON ua.USER_ID = am.USER_ID
-	WHERE ua.LOGIN_ID='$login_id'";
+	WHERE ua.LOGIN_ID='$login_id'
+	ORDER BY m.MENU_ORDER ASC";
 	
 	$obj = $conn->Execute($query);
 	

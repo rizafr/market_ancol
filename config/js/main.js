@@ -5,6 +5,7 @@ var path				= window.location.href.split('/'),
 	base_app			= base_url + 'app/',
 	
 	base_marketing				= base_app + 'marketing/', 
+	base_marketing_akunting	= base_marketing + 'akunting/',
 	base_marketing_operasional	= base_marketing + 'operasional/',
 	base_marketing_transaksi	= base_marketing + 'transaksi/', 
 	base_marketing_collection_tunai = base_marketing + 'collection_tunai/',
