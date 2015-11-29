@@ -97,9 +97,7 @@ $page_start = (($page_num-1) * $per_page);
 if ($total_data > 0)
 {
 	$query = "
-	SELECT KODE_BLOK,NAMA_PEMBELI,HARGA_TOTAL,TANDA_JADI,(SELECT SUM(NILAI) FROM RENCANA WHERE TANGGAL > CONVERT(DATETIME,'$periode_awal',105)) AS BELUM_JATUH_TEMPO,
-		(SELECT SUM(NILAI) FROM RENCANA WHERE TANGGAL <= CONVERT(DATETIME,'$periode_awal',105)) AS JATUH_TEMPO,
-		(SELECT SUM(NILAI) FROM REALISASI WHERE TANGGAL <= CONVERT(DATETIME,'$periode_awal',105) AND KODE_BAYAR = '4' OR KODE_BAYAR = '5') AS BAYARAN
+	SELECT KODE_BLOK,NAMA_PEMBELI,HARGA_TOTAL,TANDA_JADI
 	FROM SPP 
 	$query_search
 	ORDER BY KODE_BLOK ASC
@@ -111,20 +109,28 @@ if ($total_data > 0)
 	$cek_piutang = 0;
 	$nilai_piutang = 0;
 	while( ! $obj->EOF)
-	{
+	{	
 		$id 				= $obj->fields['KODE_BLOK'];		
+		$nama 				= $obj->fields['NAMA_PEMBELI']; 		
 		$total_harga 		= $obj->fields['HARGA_TOTAL'];
 		$tanda_jadi 		= $obj->fields['TANDA_JADI'];
-		$belum_jatuh_tempo	= $obj->fields['BELUM_JATUH_TEMPO'];
-		$jatuh_tempo		= $obj->fields['JATUH_TEMPO'];
-		$pembayaran			= $obj->fields['BAYARAN'];
+	
+		$query_jatuh_tempo = "SELECT SUM (NILAI) AS JATUH_TEMPO FROM RENCANA WHERE TANGGAL <= CONVERT(DATETIME,'$periode_awal',105) AND KODE_BLOK = '$id'";
+		$query_belum_jatuh_tempo = "SELECT SUM (NILAI) AS BELUM_JATUH_TEMPO FROM RENCANA WHERE TANGGAL > CONVERT(DATETIME,'$periode_awal',105) AND KODE_BLOK = '$id'";
+		$query_bayaran = "SELECT SUM (NILAI) AS BAYARAN FROM REALISASI WHERE TANGGAL <= CONVERT(DATETIME,'$periode_awal',105) AND KODE_BLOK = '$id' AND KODE_BAYAR = '4' OR KODE_BAYAR = '5'";
+		$obj_jatuh_tempo 	= $conn->execute($query_jatuh_tempo);
+		$obj_belum_jt	 	= $conn->execute($query_belum_jatuh_tempo);
+		$obj_bayaran	 	= $conn->execute($query_bayaran);
+		
+		$belum_jatuh_tempo	= $obj_belum_jt ->fields['BELUM_JATUH_TEMPO'];
+		$jatuh_tempo		= $obj_jatuh_tempo ->fields['JATUH_TEMPO'];
+		$pembayaran			= $obj_bayaran ->fields['BAYARAN'];
 		$piutang			= $jatuh_tempo-$pembayaran;
 		?>
-			<tr class="onclick" id="<?php echo $id; ?>"> 
-				
-				<td><?php echo $obj->fields['KODE_BLOK']; ?></td>
-				<td><?php echo $obj->fields['NAMA_PEMBELI']; ?></td>
-				<td class="text-center"><?php echo to_money($total_harga); ?></td>
+			<tr> 				
+				<td><?php echo $id ?></td>
+				<td><?php echo $nama ?></td>
+				<td class="text-center"><?php echo to_money($total_harga-$tanda_jadi); ?></td>
 				<td class="text-center"><?php echo to_money($belum_jatuh_tempo); ?></td>
 				<td class="text-center"><?php echo to_money($jatuh_tempo); ?></td>
 				<td class="text-center"><?php echo to_money($pembayaran); ?></td>
@@ -138,7 +144,7 @@ if ($total_data > 0)
 					$bln = $bln_awl-$counter;
 					if($bln<1){
 						$bln = 12+$bln;
-						$thn = $thn_awl--;
+						$thn = $thn_awl-1;
 					}else{
 						$bln = $bln_awl-$counter;
 						$thn = $thn_awl;
@@ -153,50 +159,52 @@ if ($total_data > 0)
 					$nilai_realisasi = $obj2->fields['NILAI_REALISASI'];
 					
 					$cek_piutang = $nilai_rencana-$nilai_realisasi;
-					$piutang = $piutang-$cek_piutang;
 					if($piutang>=0)
 						$nilai_piutang = $cek_piutang;
 					else
 						$nilai_piutang = 0;
+						
+					$piutang = $piutang-$cek_piutang;
+					
 			?>
 			
-				<td class="text-center"><?php echo to_money($nilai_piutang); ?></td>
+				<td class="text-center"><?php echo ($nilai_piutang == 0) ? '-':to_money($nilai_piutang) ?></td>
 			
 			<?php
 					$counter++;
 				}
 				
-				$query3 = "SELECT SUM(NILAI) AS NILAI_REALISASI FROM REALISASI WHERE KODE_BLOK = '$id' AND TANGGAL >= DATEADD(MONTH,-11,CONVERT(DATETIME,'$periode_awal',105)) AND TANGGAL < DATEADD(MONTH,-4,CONVERT(DATETIME,'$periode_awal',105)) AND KODE_BAYAR = '4' OR KODE_BAYAR = '5'";					
+				$query3 = "SELECT SUM(NILAI) AS NILAI_REALISASI FROM REALISASI WHERE KODE_BLOK = '$id' AND TANGGAL <= DATEADD(MONTH,-4,CONVERT(DATETIME,'$periode_awal',105)) AND TANGGAL > DATEADD(MONTH,-12,CONVERT(DATETIME,'$periode_awal',105)) AND KODE_BAYAR = '4' OR KODE_BAYAR = '5'";					
 				$obj3 	= $conn->execute($query3);
 				$nilai_realisasi = $obj3->fields['NILAI_REALISASI'];
-				$query4 = "SELECT SUM(NILAI) AS NILAI_RENCANA FROM RENCANA WHERE KODE_BLOK = '$id' AND TANGGAL >= DATEADD(MONTH,-11,CONVERT(DATETIME,'$periode_awal',105)) AND TANGGAL < DATEADD(MONTH,-4,CONVERT(DATETIME,'$periode_awal',105))";					
+				$query4 = "SELECT SUM(NILAI) AS NILAI_RENCANA FROM RENCANA WHERE KODE_BLOK = '$id' AND TANGGAL <= DATEADD(MONTH,-4,CONVERT(DATETIME,'$periode_awal',105)) AND TANGGAL > DATEADD(MONTH,-12,CONVERT(DATETIME,'$periode_awal',105))";					
 				$obj4 	= $conn->execute($query4);
 				$nilai_rencana = $obj4->fields['NILAI_RENCANA'];
 				$cek_piutang = $nilai_rencana - $nilai_realisasi;
-				$piutang = $piutang-$cek_piutang;
 				if($piutang>=0)
 					$nilai_piutang = $cek_piutang;
 				else
 					$nilai_piutang = 0;
+				$piutang = $piutang-$cek_piutang;
 			?>
 			
-				<td class="text-center"><?php echo to_money($nilai_piutang); ?></td>
+				<td class="text-center"><?php echo ($nilai_piutang == 0) ? '-':to_money($nilai_piutang); ?></td>
 			
 			<?php
-				$query5 = "SELECT SUM(NILAI) AS NILAI_REALISASI FROM REALISASI WHERE KODE_BLOK = '$id' AND TANGGAL >= DATEADD(MONTH,-23,CONVERT(DATETIME,'$periode_awal',105)) AND TANGGAL <= DATEADD(MONTH,-12,CONVERT(DATETIME,'$periode_awal',105)) AND KODE_BAYAR = '4' OR KODE_BAYAR = '5'";					
+				$query5 = "SELECT SUM(NILAI) AS NILAI_REALISASI FROM REALISASI WHERE KODE_BLOK = '$id' AND TANGGAL <= DATEADD(MONTH,-12,CONVERT(DATETIME,'$periode_awal',105)) AND TANGGAL > DATEADD(MONTH,-24,CONVERT(DATETIME,'$periode_awal',105)) AND KODE_BAYAR = '4' OR KODE_BAYAR = '5'";					
 				$obj5 	= $conn->execute($query5);
 				$nilai_realisasi = $obj5->fields['NILAI_REALISASI'];
-				$query6 = "SELECT SUM(NILAI) AS NILAI_RENCANA FROM RENCANA WHERE KODE_BLOK = '$id' AND TANGGAL >= DATEADD(MONTH,-23,CONVERT(DATETIME,'$periode_awal',105)) AND TANGGAL <= DATEADD(MONTH,-12,CONVERT(DATETIME,'$periode_awal',105))";					
+				$query6 = "SELECT SUM(NILAI) AS NILAI_RENCANA FROM RENCANA WHERE KODE_BLOK = '$id' AND TANGGAL <= DATEADD(MONTH,-12,CONVERT(DATETIME,'$periode_awal',105)) AND TANGGAL > DATEADD(MONTH,-24,CONVERT(DATETIME,'$periode_awal',105))";					
 				$obj6 	= $conn->execute($query6);
 				$nilai_rencana = $obj6->fields['NILAI_RENCANA'];
 				$cek_piutang = $nilai_rencana - $nilai_realisasi;
-				$piutang = $piutang-$cek_piutang;
 				if($piutang>=0)
 					$nilai_piutang = $cek_piutang;
 				else
 					$nilai_piutang = 0;
+				$piutang = $piutang-$cek_piutang;
 			?>
-				<td class="text-center"><?php echo to_money($nilai_piutang); ?></td>
+				<td class="text-center"><?php echo ($nilai_piutang == 0) ? '-':to_money($nilai_piutang) ?></td>
 			<?php
 				$query7 = "SELECT SUM(NILAI) AS NILAI_REALISASI FROM REALISASI WHERE KODE_BLOK = '$id' AND TANGGAL <= DATEADD(MONTH,-24,CONVERT(DATETIME,'$periode_awal',105)) AND KODE_BAYAR = '4' OR KODE_BAYAR = '5'";					
 				$obj7 	= $conn->execute($query7);
@@ -205,13 +213,13 @@ if ($total_data > 0)
 				$obj8 	= $conn->execute($query8);
 				$nilai_rencana = $obj8->fields['NILAI_RENCANA'];
 				$cek_piutang = $nilai_rencana - $nilai_realisasi;
-				$piutang = $piutang-$cek_piutang;
 				if($piutang>=0)
 					$nilai_piutang = $cek_piutang;
 				else
 					$nilai_piutang = 0;
+				$piutang = $piutang-$cek_piutang;
 			?>
-				<td class="text-center"><?php echo to_money($nilai_piutang); ?></td>
+				<td class="text-center"><?php echo ($nilai_piutang == 0) ? '-':to_money($nilai_piutang) ?></td>
 			<?php
 			}else{
 			?>
@@ -225,8 +233,15 @@ if ($total_data > 0)
 			
 			<?php	
 			}
+			$query_kwitansi = "SELECT TOP 1 BAYAR_VIA,CATATAN_KWT FROM KWITANSI WHERE KODE_BLOK = '$id'";
+			$obj_kwt 	= $conn->execute($query_kwitansi);
 			
+			$bayar_via  = array('1' =>"Tunai",'2' =>"Giro / Cek",'3' =>"Bank O",'4' =>"Lain",'5' =>"Virtual Account" );
+			$bayar_via = $bayar_via[$obj_kwt->fields['BAYAR_VIA']];
+			$catatan = $obj_kwt->fields['CATATAN_KWT'];			
 			?>
+				<td class="text-center"><?php echo (empty($bayar_via)) ? '-': $bayar_via ?></td>
+				<td class="text-center"><?php echo (empty($catatan)) ? '-': $catatan ?></td>
 			</tr>
 		<?php
 		$i++;

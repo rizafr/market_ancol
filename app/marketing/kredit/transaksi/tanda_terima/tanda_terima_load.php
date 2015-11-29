@@ -68,7 +68,6 @@ $page_start = (($page_num-1) * $per_page);
 	<th class="w10">KODE BLOK</th>
 	<th class="w20">NAMA PEMBAYAR</th>
 	<th class="w10">TANGGAL</th>
-	<th class="w10" >STATUS / NOMOR KWITANSI</th>	
 </tr>
 
 <?php
@@ -102,7 +101,6 @@ if ($total_data > 0)
 				}
 			?>
 			<td><?php echo tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL']))); ?></td>
-			<td class = 'text-center'><?php echo $data;?></td>
 		</tr>
 		<?php
 		$obj->movenext();
