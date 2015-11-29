@@ -68,7 +68,7 @@
 
 <div id="t-detail"></div>
 <div class="clear"><br></div>
-<div class="title-page">DAFTAR JATUH TEMPO <br /> BULAN INI</div>
+<div class="title-page">DAFTAR JATUH TEMPO</div>
 <div id="t-somasi"></div>
 
 

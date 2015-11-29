@@ -48,8 +48,7 @@ SELECT
 		SPP A JOIN RENCANA B ON A.KODE_BLOK = B.KODE_BLOK
 	WHERE
 		B.TANGGAL >= CONVERT(DATETIME,'$tgl',105)  
-		AND B.TANGGAL <= DATEADD(MONTH,1,CONVERT(DATETIME,'$tgl',105))   
-		and b.KODE_BLOK NOT IN($query_blok_lunas_bayar)
+		AND B.TANGGAL <= DATEADD(day,15,CONVERT(DATETIME,'$tgl',105))   
 	ORDER BY A.KODE_BLOK
 ";
 		
@@ -81,7 +80,7 @@ $page_start = (($page_num-1) * $per_page);
 	<th class="w10">TELEPON</th>
 	<th class="w10">NILAI JATUH TEMPO <br /> (Rp.)</th>
 	<th class="w10">TANGGAL JATUH TEMPO</th>
-	<th class="w10">SELISIH HARI</th>
+	<th class="w10">AKAN JATUH TEMPO DALAM</th>
 </tr>
 
 <?php
@@ -94,8 +93,7 @@ if ($total_data > 0)
 		SPP A JOIN RENCANA B ON A.KODE_BLOK = B.KODE_BLOK
 	WHERE
 		B.TANGGAL >= CONVERT(DATETIME,'$tgl',105) 
-		AND B.TANGGAL <= DATEADD(MONTH,1,CONVERT(DATETIME,'$tgl',105)) 
-		and b.KODE_BLOK NOT IN($query_blok_lunas_bayar)
+		AND B.TANGGAL <= DATEADD(day,15,CONVERT(DATETIME,'$tgl',105))
 	ORDER BY A.KODE_BLOK
 	";
 	$obj = $conn->selectlimit($query, $per_page, $page_start);
