@@ -45,6 +45,7 @@
 			});
 			
 			loadData();
+			loadDataSomasi();
 		});
 		function loadData()
 		{
@@ -54,9 +55,23 @@
 			return false;
 		}
 		
+		function loadDataSomasi()
+		{
+			if (popup) { popup.close(); }
+			jQuery('#t-somasi').load(base_marketing + 'home/somasi_satu_load.php', data);	
+			var data = jQuery('#form').serialize();
+			return false;
+		}
+		
 	</script>
 </form>
 
 <div id="t-detail"></div>
+<div class="clear"><br></div>
+<div class="title-page">DAFTAR JATUH TEMPO <br /> BULAN INI</div>
+<div id="t-somasi"></div>
+
+
+
 
 
