@@ -57,7 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$query = "SELECT ($pola_bayar) as HARGA FROM HARGA_SK WHERE KODE_SK = (SELECT KODE_SK FROM STOK WHERE KODE_BLOK = '$id') AND KODE_BLOK = '$id'";
 				$obj = $conn->execute($query);
 				
-				$harga_total = $obj->fields['HARGA'];
+				$harga_pemesanan = $obj->fields['HARGA'];
+				$harga_total = $harga_pemesanan - $tanda_jadi;
 				
 				//update harga total yang dipalkai pada tabel spp
 				$query = "UPDATE SPP SET 
@@ -145,13 +146,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					
 					if($i==0){
 							$tanggal = date("Y-m-d",strtotime($tanggal_input));
-							$nilai_fix = $hasil_bagi[$i] - $tanda_jadi;
-							if($nilai_fix < 0)
-							{	$sisa = $nilai_fix * -1;
-								$nilai_fix = 0;
-							}
+							$nilai_fix = $hasil_bagi[$i];
+							// if($nilai_fix < 0)
+							// {	$sisa = $nilai_fix * -1;
+								// $nilai_fix = 0;
+							// }
 					}else 
-					if($i==1){
+					/*if($i==1){
 							$query 		= "SELECT TOP 1 DATEADD(month,1,TANGGAL) AS TANGGAL
 										FROM RENCANA
 										WHERE KODE_BLOK = '$id'
@@ -178,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 							{	$sisa = $nilai_fix * -1;
 								$nilai_fix = 0;
 							}
-					}else 
+					}else */
 					if ($i == $jumlah_kali-1){
 						$obj = $conn->execute("		
 										SELECT SUM(NILAI) AS JUMLAH FROM RENCANA
