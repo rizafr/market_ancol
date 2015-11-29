@@ -225,6 +225,7 @@ if ($total_data > 0)
 			
 			<?php	
 			}
+			
 			?>
 			</tr>
 		<?php
