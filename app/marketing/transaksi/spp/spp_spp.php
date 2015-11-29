@@ -18,8 +18,7 @@ if($status_otorisasi=='0'){
 	// 24-6-2015
 	//cek dlu isi status_spp
 $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
-
-
+echo "Status SPP: ".$status_spp;
 ?>
 
 
@@ -163,13 +162,18 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 		
 		$(document).on('click', '#otorisasi', function(e) {
 			e.preventDefault();
-			if (confirm('Apakah anda yakin akan mengotorisasi data ini ?')) 
-			{
-				otorisasiData();
-				
-			}
-			loadData1();
-			return false;
+			var status_spp = "<?php echo $status_spp;?>";
+			if(status_spp==2){
+				alert('Status SPP belum di distribusikan');
+				return false;					
+			} else if (status_spp==1) {
+				if (confirm('Apakah anda yakin akan mengotorisasi data ini ?')) 
+				{
+					otorisasiData();					
+				}
+				loadData1();
+				return false;
+			}; 						
 		});
 
 		$(document).on('click', '#batal_otorisasi', function(e) {
