@@ -51,9 +51,6 @@ switch (trim(base64_decode($cmd)))
 	
 	# Layout Sold
 	case 'A01_layout_sold'				: die_mod('M25'); include('marketing/layout/layout_sold_setup.php');break;
-	
-
-
 
 	# Utilitas
 	
@@ -192,6 +189,8 @@ switch (trim(base64_decode($cmd)))
 	case 'A01_penomoran_fp'				: die_mod('K10');include('marketing/kredit/utilitas/penomoran_fp/penomoran_fp_setup.php');break;
 	case 'A01_kartu_pembeli'			: die_mod('K11');include('marketing/kredit/utilitas/kartu_pembeli/kartu_pembeli_setup.php');break;
 	
+	#AKUNTING
+	case 'A01_laporan_akunting'			: die_mod('K11');include('marketing/akunting/akunting_setup.php');break;
 }
 
 switch ($_SESSION['HOME'])

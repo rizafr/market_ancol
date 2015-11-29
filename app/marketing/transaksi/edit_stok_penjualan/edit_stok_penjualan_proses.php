@@ -124,14 +124,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$query = "
 			UPDATE HARGA_SK 
 			SET 
-				HARGA_CASH_KERAS = '$harga_cash_keras',
-				CB36X = '$CB36X',
-				CB48X = '$CB48X',
-				KPA24X = '$KPA24X',
-				KPA36X = '$KPA36X'
+			HARGA_CASH_KERAS = '$harga_cash_keras',
+			CB36X = '$CB36X',
+			CB48X = '$CB48X',
+			KPA24X = '$KPA24X',
+			KPA36X = '$KPA36X'
 			WHERE
-				KODE_SK = '$kode_sk' 
-				AND KODE_BLOK = '$id'
+			KODE_SK = '$kode_sk' 
+			AND KODE_BLOK = '$id'
 			";
 			ex_false($conn->Execute($query), $query);
 			
@@ -145,20 +145,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			{
 				ex_empty($kode_sk, 'SK Harga baru harus diisi.');
 			}
-						
+
 			if($jenis == 'Harga_SK')
 			{
+				// //$query = "
+				// UPDATE STOK 
+				// SET KODE_SK = '$kode_sk' 
+				// WHERE
+				// KODE_SK = '$kode_sk_sebelumnya' AND TERJUAL = '0'
+				// ";
+
 				$query = "
-				UPDATE STOK 
+				
+				UPDATE STOK
 				SET KODE_SK = '$kode_sk' 
-				WHERE
-				KODE_SK = '$kode_sk_sebelumnya' AND TERJUAL = '0'
+				WHERE 
+				KODE_SK = '$kode_sk_sebelumnya' AND TERJUAL = '0' AND 
+				KODE_BLOK IN  (SELECT S.KODE_BLOK FROM HARGA_SK HS, STOK S WHERE S.KODE_BLOK = HS.KODE_BLOK AND HS.KODE_SK='$kode_sk')
 				";
+
+				ex_false($conn->Execute($query), $query);
+			
+			$msg = "Harga SK berhasil diubah";
 			}
 			
-			ex_false($conn->Execute($query), $query);
 			
-			$msg = 'Data SK berhasil diubah.';
 		}
 		elseif ($act == 'Hapus-Status-Reserve') # Proses Hapus Status Reserve
 		{

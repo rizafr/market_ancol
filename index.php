@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>PT JAYA ANCOL PEMBANGUNAN Tbk.</title>
+<title>PT PEMBANGUNAN JAYA ANCOL Tbk.</title>
 <link type="image/x-icon" rel="icon" href="../images/ancol.png">
 
 <!-- CSS -->
