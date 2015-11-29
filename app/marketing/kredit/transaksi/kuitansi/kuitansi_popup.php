@@ -112,6 +112,10 @@ function deleteData()
 <form name="form" id="form" method="post">
 <table class="t-popup w50 f-left" style="margin-right:35px">
 <tr>
+	<td width="100">Customer ID</td><td width="10">:</td>
+	<td><?php echo $customer_id; ?></td>
+</tr>
+<tr>
 	<td width="100">Blok / Nomor</td><td width="10">:</td>
 	<td><?php echo $kode_blok; ?></td>
 </tr>
