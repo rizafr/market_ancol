@@ -36,34 +36,23 @@ $id		= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
 		?>
 		<tr class="onclick" id="<?php echo $id; ?>" tipe = "<?php echo $type;?>">			
 			<td class="text-center"><?php echo $i; ?></td>
-			<?php 
+			<td>&nbsp;</td>
+			<td><?php echo date("d M Y", strtotime($obj->fields['TANGGAL']));  ?></td>
+			<td class="text-right"><?php echo to_money($obj->fields['NILAI']);  ?></td>
+			<?php
 			if($status == '0')
 				{?>
 			<td>-</td>
 			<?php
 		}
-		else 
+		else
 			{?>
-		<td><?php echo $id; ?></td>
+		<td><?php echo $obj->fields['KETERANGAN'];  ?></td>
 		<?php
 	}
 	?>
-	<td><?php echo date("d M Y", strtotime($obj->fields['TANGGAL']));  ?></td>
-	<td class="text-right"><?php echo to_money($obj->fields['NILAI']);  ?></td>
-	<?php
-	if($status == '0')
-		{?>
-	<td>-</td>
-	<?php
-}
-else
-	{?>
-<td><?php echo $obj->fields['KETERANGAN'];  ?></td>
-<?php
-}
-?>
 
-<td><?php echo $obj->fields['CATATAN_KWT'];  ?></td>
+	<td><?php echo $obj->fields['CATATAN_KWT'];  ?></td>
 
 </tr>
 <?php

@@ -239,6 +239,7 @@ jQuery('#grafikStok').highcharts({
 
 
 <?php
+
 close($conn);
 exit;
 ?>

@@ -222,6 +222,7 @@ $query = "
 		a.KODE_BLOK = '$id'";
 	$obj = $conn->execute($query);
 	
+	$customer_id 		= $obj->fields['COSTUMER_ID'];
 	$kode_blok 			= $obj->fields['KODE_BLOK'];
 	$nama_pembeli 		= $obj->fields['NAMA_PEMBELI'];
 	$alamat 			= $obj->fields['ALAMAT_RUMAH'];

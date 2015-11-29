@@ -12,7 +12,7 @@
 				<li><a href="<?php echo base64_encode('A01_laporan_kuitansi'); ?>">Daftar Kuitansi Penjualan Unit</a></li>
 				<li><a href="<?php echo base64_encode('A01_laporan_kuitansi_lain'); ?>">Daftar Kuitansi Lain-lain</a></li>
 				<li><a href="<?php echo base64_encode('A01_progres_penerimaan'); ?>">Progres Penerimaan</a></li>
-				<li><a href="<?php echo base64_encode('A01_kartu_kuning'); ?>">Kartu Kuning</a></li>
+				<!--<li><a href="<?php echo base64_encode('A01_kartu_kuning'); ?>">Kartu Kuning</a></li>-->
 			</ul>
 		</li>
 	</ul>
