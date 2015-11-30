@@ -18,7 +18,7 @@ if($status_otorisasi=='0'){
 	// 24-6-2015
 	//cek dlu isi status_spp
 $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
-echo "Status SPP: ".$status_spp;
+// echo "Status SPP: ".$status_spp;
 ?>
 
 
@@ -159,21 +159,27 @@ echo "Status SPP: ".$status_spp;
 			$('#nama_tombol').val('Batal Otorisasi');
 			$('#tombol').val('batal_otorisasi');
 		}
+
+		// var status_spp = "<?php echo $status_spp;?>";
+		// if(status_spp == '1'){
+		// 	$('#otorisasi').show();
+		// } else if (status_spp == '2'){
+		// 	$('#otorisasi').hide();
+		// }
 		
 		$(document).on('click', '#otorisasi', function(e) {
 			e.preventDefault();
 			var status_spp = "<?php echo $status_spp;?>";
-			if(status_spp==2){
-				alert('Status SPP belum di distribusikan');
-				return false;					
-			} else if (status_spp==1) {
+			if(status_spp=='2'){
+				alert('Status SPP belum di distribusikan');					
+			} else if (status_spp=='1') {
 				if (confirm('Apakah anda yakin akan mengotorisasi data ini ?')) 
 				{
 					otorisasiData();					
 				}
 				loadData1();
 				return false;
-			}; 						
+			} 						
 		});
 
 		$(document).on('click', '#batal_otorisasi', function(e) {
@@ -431,7 +437,7 @@ echo "Status SPP: ".$status_spp;
 
 			<input type="text" name="tgl_proses" id="tgl_proses" size="10" class="apply dd-mm-yyyy" value="<?php echo $tgl_proses; ?>">
 		</td>
-		<td align="left"> Tanda Jadi : <input type="text" name="tanda_jadi" id="tanda_jadi" size="20" value="<?php if(!isset($tanda_jadi)){$tanda_jadi = 20000000;}echo ((to_money($tanda_jadi))); ?>"></td>
+		<td align="left"> Tanda Jadi : <input type="text" name="tanda_jadi" id="tanda_jadi" size="20" value="<?php if(!isset($tanda_jadi)){$tanda_jadi = 25000000;}echo ((to_money($tanda_jadi))); ?>"></td>
 	</tr>
 
 

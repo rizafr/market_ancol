@@ -133,10 +133,7 @@ jQuery(function($) {
 		jQuery('#sejumlah').val(sejumlah);
 		jQuery('#diposting').val(jumlah);
 
-	var tgl_terima = jQuery('#tgl_terima').val();
-	if(tgl_terima==''){
-		alert('Tanggal Pembayaran Diterima Harus Diisi');
-	}
+
 	
 	$('#nama_pembayar').inputmask('varchar', { repeat: '60' });
 	$('#jumlah, #diposting').inputmask('numeric', { repeat: '16' });	
@@ -229,6 +226,7 @@ jQuery(function($) {
 		var tgl_terima = jQuery('#tgl_terima').val();
 		if(tgl_terima==''){
 			alert('Tanggal Pembayaran Diterima Harus Diisi');
+			tgl_terima.focus();
 			return false;
 		}
 		e.preventDefault	
@@ -315,7 +313,7 @@ jQuery(function($) {
 	</td>
 </tr>
 <tr>
-	<td>Pembayaran Diterima Tanggal : <input type="text" name="tgl_terima" id="tgl_terima" size="15" class="apply dd-mm-yyyy" value=""></td>
+	<td>Pembayaran Diterima Tanggal : <input type="text" name="tgl_terima" id="tgl_terima" size="15" class="apply dd-mm-yyyy" value="<?php echo $tgl_terima ?>"></td>
 </tr>
 <tr>
 	<td colspan ="2">Catatan Collection : <textarea type="text" name="catatan" id="catatan" readonly="readonly" rows="3" cols="100"><?php echo $catatan; ?></textarea></td>

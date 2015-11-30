@@ -296,8 +296,7 @@ jQuery(function($) {
 	</select> Bulan
 	</td>
 </tr>
-<!--
-<tr>
+<!-- <tr>
 	<td>Prosentase P. Hak</td><td>:</td>
 	<td>
 	<select name="prosentase" id="prosentase">
@@ -311,8 +310,7 @@ jQuery(function($) {
 		<option value="7" <?php echo is_selected('7', $prosentase1); ?>> 20% </option>
 	</select>
 	</td>
-</tr>
--->
+</tr> -->
 <tr>
 	<td>Daya Listrik</td><td>:</td>
 	<td><input type="text" name="daya_listrik" id="daya_listrik" size="4" value="<?php echo $daya_listrik; ?>"> Watt</td>

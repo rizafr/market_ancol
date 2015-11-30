@@ -1,0 +1,21 @@
+1RETENSI         : RA.1B/6B/10T                LAPORAN TRANSAKSI VIA E-BANKING & COUNTER                         FREKWENSI :   HARIAN
+ LAPORAN         : R-5401                             UNTUK PERUSAHAAN KERJASAMA                                 TANGGAL   : 13/07/15
+ CABANG          : 0006350-KCP MENARA ANCOL                                                                      HALAMAN   :        1
+ NAMA PERUSAHAAN : 01686-PT PEMBANGUNAN JAYA ANCOL                                                                                   
+ ====================================================================================================================================
+ NO.   NO.PELANGGAN/NO.TXN   NAMA PELANGGAN         NILAI TRANSAKSI      TGL. TXN    WAKTU   LOKASI     KETERANGAN1     KETERANGAN2  
+ ====================================================================================================================================
+                                                                                                                                     
+ SUB-COMP 00000                                                                                                                      
+     1  8883621             RIZA              IDR         73,105,613.00  13/10/15  11:50:25  95011  -                -               
+     2  8882517             YULIANA           IDR         27,302,605.00  13/10/15  11:23:06  52161  CCA    00000000  00000000000000  
+     3  8882703             FRANKY HARTONO    IDR         48,768,165.00  11/10/15  11:36:09  95011  -                -               
+     4  8881115             RITA SUTEDJA      IDR         36,094,996.00  11/10/15  11:18:22  700H1  RITA SUTEDJA LT  UNIT 15 ASS 7   
+     5  8880609             RITA SUTEDJA      IDR         35,741,127.00  11/10/15  11:15:52  700H1  RITA SUTEDJA LT  NIT09 ASS 7     
+      SUB TOTAL TRANSAKSI    IDR        :       5                                                                                    
+      SUB TOTAL NILAI TRANSAKSI         :  IDR      221,012,506.00                                                                   
+                                                                                                                                     
+      TOTAL TRANSAKSI        IDR        :       5                                                                                    
+      TOTAL NILAI TRANSAKSI             :  IDR      221,012,506.00                                                                   
+                                                                                                                                     
+

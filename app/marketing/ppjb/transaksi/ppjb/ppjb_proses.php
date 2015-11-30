@@ -10,7 +10,7 @@ $id		= (isset($_REQUEST['id'])) ? clean($_REQUEST['id']) : '';
 $nomor					= (isset($_REQUEST['nomor'])) ? clean($_REQUEST['nomor']) : '';
 $tanggal				= (isset($_REQUEST['tanggal'])) ? clean($_REQUEST['tanggal']) : '';
 $masa_bangun			= (isset($_REQUEST['pembangunan'])) ? clean($_REQUEST['pembangunan']) : '';
-$prosen_p_hak			= (isset($_REQUEST['prosentase'])) ? clean($_REQUEST['prosentase']) : '';
+// $prosen_p_hak			= (isset($_REQUEST['prosentase'])) ? clean($_REQUEST['prosentase']) : '';
 $daya_listrik			= (isset($_REQUEST['daya_listrik'])) ? to_number($_REQUEST['daya_listrik']) : '';
 $jenis_ppjb				= (isset($_REQUEST['jenis_ppjb'])) ? clean($_REQUEST['jenis_ppjb']) : '';
 $addendum				= (isset($_REQUEST['addendum'])) ? clean($_REQUEST['addendum']) : '';
@@ -49,12 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 			$query = "
 			INSERT INTO CS_PPJB (KODE_BLOK, TANGGAL,  
-			MASA_BANGUN, PROSEN_P_HAK, DAYA_LISTRIK, JENIS, ADDENDUM, CATATAN,
+			MASA_BANGUN, DAYA_LISTRIK, JENIS, ADDENDUM, CATATAN,
 			TANGGAL_PINJAM_PEMBELI, TANGGAL_TT_PEMBELI, TANGGAL_TT_PEJABAT, TANGGAL_PENYERAHAN,
 			STATUS_CETAK, STATUS_CETAK_PAIJB, NAMA_PEMBELI, NOMOR_ARSIP)
 			
 			VALUES ('$id', CONVERT(DATETIME,'$tanggal',105),  
-			'$masa_bangun', '$prosen_p_hak', '$daya_listrik', '$jenis_ppjb', '$addendum', '$catatan',
+			'$masa_bangun', '$daya_listrik', '$jenis_ppjb', '$addendum', '$catatan',
 			CONVERT(DATETIME,'$tanggal_pinjam_pembeli',105), CONVERT(DATETIME,'$tanggal_tt_pembeli',105), CONVERT(DATETIME,'$tanggal_tt_pejabat',105), CONVERT(DATETIME,'$tanggal_penyerahan',105),
 			'$status_cetak', '$status_cetak_paijb', '$nama_pembeli', '$nomor_arsip')
 			";
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$query = "
 			UPDATE CS_PPJB SET
 			TANGGAL = CONVERT(DATETIME,'$tanggal',105),  
-			MASA_BANGUN = '$masa_bangun', PROSEN_P_HAK = '$prosen_p_hak', DAYA_LISTRIK = '$daya_listrik', JENIS = '$jenis_ppjb', ADDENDUM = '$addendum', 
+			MASA_BANGUN = '$masa_bangun', DAYA_LISTRIK = '$daya_listrik', JENIS = '$jenis_ppjb', ADDENDUM = '$addendum', 
 			CATATAN = '$catatan',
 			TANGGAL_PINJAM_PEMBELI = CONVERT(DATETIME,'$tanggal_pinjam_pembeli',105), TANGGAL_TT_PEMBELI = CONVERT(DATETIME,'$tanggal_tt_pembeli',105), TANGGAL_TT_PEJABAT = CONVERT(DATETIME,'$tanggal_tt_pejabat',105), TANGGAL_PENYERAHAN = CONVERT(DATETIME,'$tanggal_penyerahan',105),
 			STATUS_CETAK = '$status_cetak', STATUS_CETAK_PAIJB='$status_cetak_paijb', NOMOR_ARSIP = '$nomor_arsip'			
@@ -206,8 +206,8 @@ if ($act == 'Ubah')
 	$tanggal			= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL'])));
 	$pembangunan1		= $obj->fields['MASA_BANGUN'];
 	$pembangunan2		= pembangunan($obj->fields['MASA_BANGUN']);
-	$prosentase1		= $obj->fields['PROSEN_P_HAK'];
-	$prosentase2		= prosentase($obj->fields['PROSEN_P_HAK']);
+	// $prosentase1		= $obj->fields['PROSEN_P_HAK'];
+	// $prosentase2		= prosentase($obj->fields['PROSEN_P_HAK']);
 	$daya_listrik		= $obj->fields['DAYA_LISTRIK'];
 	$jenis_ppjb			= $obj->fields['JENIS'];
 	$addendum			= $obj->fields['ADDENDUM'];
@@ -280,8 +280,8 @@ if ($act == 'Ubah')
 	$tanggal			= tgltgl(date("d-m-Y", strtotime($obj->fields['TANGGAL'])));
 	$pembangunan1		= $obj->fields['MASA_BANGUN'];
 	$pembangunan2		= pembangunan($obj->fields['MASA_BANGUN']);
-	$prosentase1		= $obj->fields['PROSEN_P_HAK'];
-	$prosentase2		= prosentase($obj->fields['PROSEN_P_HAK']);
+	// $prosentase1		= $obj->fields['PROSEN_P_HAK'];
+	// $prosentase2		= prosentase($obj->fields['PROSEN_P_HAK']);
 	$daya_listrik		= $obj->fields['DAYA_LISTRIK'];
 	$jenis_ppjb			= $obj->fields['JENIS'];
 	$addendum			= $obj->fields['ADDENDUM'];
