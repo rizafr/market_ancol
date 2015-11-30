@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$total_tagihan += floatval($conn->Execute($query)->fields['TOTAL_TAGIHAN']);
 
 			if($total_uang!=$total_tagihan){
-				ex_false(false, 'Data Pembayaran Dan Tagihan Tidak Sesuai, Cek Kembali File Upload, Total uang : '.to_money($total_uang).',  Total_tagihan : '.to_money($total_tagihan));
+				ex_false(false, 'Data Pembayaran Dan Tagihan Tidak Sesuai, Cek Kembali File Upload, Total uang : '.to_money($total_uang).',  Total tagihan : '.to_money($total_tagihan));
 			}
 
 			$query = "	UPDATE TAGIHAN SET STATUS_BAYAR = '2' WHERE KODE_BLOK = '$id' 
