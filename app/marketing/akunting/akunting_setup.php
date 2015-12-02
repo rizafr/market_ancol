@@ -2,6 +2,16 @@
 
 <form name="form" id="form" method="post">
 <table class="t-control wauto">
+<tr>
+	<td width="100">Pencarian</td><td width="10">:</td>
+	<td>
+		<select name="s_opf1" id="s_opf1" class="auto">
+			<option value="COSTUMER_ID">CUSTOMER ID</option>
+			<option value="NAMA_PEMBELI"> NAMA PEMBELI </option>
+		</select>
+		<input type="text" name="s_opv1" id="s_opv1" class="apply" value="">
+	</td>
+</tr>
 <tr>	
 	<td width="100">Periode</td><td width="10">:</td>
 	<td><input type="text" name="periode_awal" id="periode_awal" class="apply dd-mm-yyyy" size="15" value=""> s/d
@@ -26,7 +36,20 @@ jQuery(function($) {
 	/* -- FILTER -- */
 	$(document).on('keypress', '.apply', function(e) {
 		var code = (e.keyCode ? e.keyCode : e.which);
-		if (code == 13) { $('#apply').trigger('click'); return false; }
+		if (code == 13) { $('#apply').trigger('click'); }
+	});
+	
+	/* -- BUTTON -- */
+	$(document).on('click', '#apply', function(e) {
+		e.preventDefault();
+		loadData();
+		return false;
+	});
+	
+	$(document).on('keyup', '#s_opv1', function(e) {
+		e.preventDefault();
+		loadData();
+		return false;
 	});
 	
 	/* -- BUTTON -- */

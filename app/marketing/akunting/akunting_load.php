@@ -9,6 +9,10 @@ die_conn($conn);
 $per_page	= (isset($_REQUEST['per_page'])) ? max(1, $_REQUEST['per_page']) : 20;
 $page_num	= (isset($_REQUEST['page_num'])) ? max(1, $_REQUEST['page_num']) : 1;
 
+$s_opf1		= (isset($_REQUEST['s_opf1'])) ? clean($_REQUEST['s_opf1']) : '';
+$s_opv1		= (isset($_REQUEST['s_opv1'])) ? clean($_REQUEST['s_opv1']) : '';
+
+
 $periode_awal		= (isset($_REQUEST['periode_awal'])) ? clean($_REQUEST['periode_awal']) : '';
 $periode_akhir		= (isset($_REQUEST['periode_akhir'])) ? clean($_REQUEST['periode_akhir']) : '';
 
@@ -18,6 +22,12 @@ if ($periode_awal <> '' || $periode_akhir <> '')
 {
 	$query_search .= "WHERE TANGGAL_SPP >= CONVERT(DATETIME,'$periode_awal',105) AND TANGGAL_SPP <= CONVERT(DATETIME,'$periode_akhir',105)";
 }
+
+if ($s_opv1 != '')
+{
+	$query_search .= " AND $s_opf1 LIKE '%$s_opv1%' ";
+}
+
 
 /* Pagination */
 $query = "
@@ -58,7 +68,7 @@ $page_start = (($page_num-1) * $per_page);
 
 if ($total_data > 0)
 {
-	$query_pembeli ="SELECT * FROM SPP";
+	$query_pembeli ="SELECT * FROM SPP $query_search";
 	$obj_pembeli = $conn->selectlimit($query_pembeli, $per_page, $page_start);
 	while( ! $obj_pembeli->EOF)
 	{
