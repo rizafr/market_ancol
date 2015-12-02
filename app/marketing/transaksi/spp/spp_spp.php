@@ -19,6 +19,9 @@ if($status_otorisasi=='0'){
 	//cek dlu isi status_spp
 $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 // echo "Status SPP: ".$status_spp;
+
+
+
 ?>
 
 
@@ -38,8 +41,6 @@ $status_spp			= (!empty($status_spp)) ?($status_spp) : "3";
 				jQuery('#alamat_npwp').val("");
 			}
 		});
-
-
 
 		var status_spp = "<?php echo $status_spp ?>";
 		//alert(status_spp);

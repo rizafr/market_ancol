@@ -137,9 +137,7 @@ $obj = $conn->execute($query);
 $total	 = $obj->fields['TOTAL'];	
 
 if($total == 0)
-{			
-
-
+{	
 	$query="INSERT INTO INVOICE (SiteID, EntityID, TrNo_Prop, Trno, TrManualRef, TrDate, TrType, CustID, TaxCalc, HeaderNote, FooterNote, Taxable, Tax, Netamt)
 	VALUES ('$SiteID', '$EntityID', '$TrNo_Prop', '$Trno', '$TrManualRef',CONVERT(DATETIME,'$TrDate',105), '$TrType', '$CustID', '$TaxCalc', '$HeaderNote', '$FooterNote', $Taxable, $Tax, $Netamt)";
 	ex_false($conn->execute($query), $query);

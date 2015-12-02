@@ -183,13 +183,14 @@ function daftar_pemesan() {
 		SELECT *
 		FROM 
 			JENIS_PEMBAYARAN
+		WHERE KELOMPOK='1'
 		");
 		while( ! $obj->EOF)
 		{
 			$ov = $obj->fields['KODE_BAYAR'];
 			$oj = $obj->fields['JENIS_BAYAR'];
 			$kel = $obj->fields['KELOMPOK'];
-			echo "<option value='$ov#$kel' data-jenis='$oj'".is_selected($ov, $kode_bayar)."> $oj </option>";
+			echo "<option value='$ov#$kel' data-jenis='$oj'".is_selected($ov, 29)."> $oj </option>";
 			$obj->movenext();
 		}
 		?>

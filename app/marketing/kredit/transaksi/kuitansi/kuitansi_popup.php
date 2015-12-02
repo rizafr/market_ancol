@@ -1,5 +1,15 @@
 <?php
 require_once('kuitansi_proses.php');
+
+$query_jatuh_tempo = "SELECT SUM (NILAI) AS JATUH_TEMPO FROM RENCANA WHERE KODE_BLOK = '$kode_blok'";
+$query_bayaran = "SELECT SUM (NILAI) AS BAYARAN FROM REALISASI WHERE KODE_BLOK = '$kode_blok' AND KODE_BAYAR = '4' OR KODE_BAYAR = '5'";
+$obj_jatuh_tempo 	= $conn->execute($query_jatuh_tempo);
+$obj_bayaran	 	= $conn->execute($query_bayaran);
+
+$jatuh_tempo		= $obj_jatuh_tempo ->fields['JATUH_TEMPO'];
+$pembayaran			= $obj_bayaran ->fields['BAYARAN'];
+$piutang			= $jatuh_tempo-$pembayaran;
+
 ?>
 
 <!DOCTYPE html>
