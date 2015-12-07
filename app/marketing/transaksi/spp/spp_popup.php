@@ -2,6 +2,9 @@
 require_once('spp_proses.php');
 require_once('../../../../config/terbilang.php');
 $terbilang = new Terbilang;
+
+$cek_rencana = "SELECT COUNT (*) FROM RENCANA WHERE KODE_BLOK = '$id'";
+$cek_rencana 	= $conn->execute($cek_rencana);
 ?>
 
 <!DOCTYPE html>
@@ -100,13 +103,19 @@ jQuery(function($) {
 	
 	$(document).on('click', '#print', function(e) {
 		e.preventDefault();
+		var id = $('#id').val();
+		var rencana = <?php echo $cek_rencana ?> ;
+		if(rencana<1){
+			alert("Maaf silakan buat rencana terlebih dahulu");
+		}else{
 		if (confirm('Apa anda yakin akan mencetak surat untuk data ini?')) {
 			e.preventDefault();
-			var id = $('#id').val();
+			
 			// location.href = base_marketing_transaksi + 'spp/print_spp.php?' + $('#form').serialize();	
 			var url = base_marketing_transaksi + 'spp/print_spp.php?id=<?php echo $id; ?>&act=Print';
 			open_print(url);
 		}
+	}
 		return false;
 	});
 	
