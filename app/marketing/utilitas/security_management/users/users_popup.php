@@ -28,7 +28,7 @@ var this_base = base_marketing + 'utilitas/security_management/users/';
 jQuery(function($) {
 	
 	$('#user_id').inputmask('varchar', { repeat: 5 });
-	$('#login_id').inputmask('varchar', { repeat: 10 });
+	$('#login_id').inputmask('varchar', { repeat: 30 });
 	$('#password_id').inputmask('varchar', { repeat: 20 });
 	$('#full_name').inputmask('varchar', { repeat: 40 });
 	

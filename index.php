@@ -73,7 +73,7 @@ jQuery(function($) {
 				<td><label for="db">Database</label></td>
 				<td>
 					<select name="db" id="db" class="w100">
-						<option value=""> -- Database -- </option>
+						<!-- <option value=""> -- Database -- </option> -->
 						<option value="ANCOL"> ANCOL </option>
 					</select>
 				</td>
